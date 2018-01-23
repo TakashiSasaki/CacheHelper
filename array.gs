@@ -1,6 +1,9 @@
 function putArray(key, array) {
   if(!(array instanceof Array)) throw "putArray: expects array";
-  cache.put("[" + key + "]", array.length);
+  var all = {};
+  all["[" + key + "]"] = "" + array.length;
+  //cache.put("[" + key + "]", array.length);
+  cache.putAll(all);
   for(var i=0; i<array.length; ++i) {
     putAny("[" + key + "]" + i, array[i]);
   }//for

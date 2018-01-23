@@ -106,7 +106,6 @@ function testObject2(){
 }
 
 function testObject3(){
-  setMaxLength(10);
   var o1 = {aaa: 1111, bbb: "2222", ccc: null};
   var k1 = "keykeykey5";
   putAny(k1, o1);

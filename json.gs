@@ -1,6 +1,10 @@
 function putJson(key, any) {
   var jsonString = JSON.stringify(any);
-  cache.put("(" + key + ")", jsonString);
+  var all = {};
+  all["(" + key + ")"] = jsonString;
+  //cache.put("(" + key + ")", jsonString);
+  cache.putAll(all);
+  return all;
 }
 
 /**
