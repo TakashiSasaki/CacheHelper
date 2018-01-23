@@ -61,14 +61,14 @@ function testSplitByLength(){
   Logger.log(splitByLength("", 4));
 }
 
-function testGetString(){
+function testString(){
   var a = "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso";
   var nMaxValueLength_old = nMaxValueLength;
   nMaxValueLength = 10;
-  putString("kkk", a, true);
+  cache.putAll(putString("kkk", a));
   var b = getString("kkk");
   if(a !== b) throw "a !== b";
-  putString("kk1", "", true);
+  cache.putAll(putString("kk1", ""));
   var c = getString("kk1");
   Logger.log(c);
   nMaxValueLength = nMaxValueLength_old;

@@ -67,7 +67,7 @@ function testObject(){
     b: null,
     c: "hello"
   };
-  putObject("k", o, true);
+  cache.putAll(putObject("k", o));
   var got = getObject("k");
   if(JSON.stringify(o) !== JSON.stringify(got)) throw "testObject: o != got.";
 }

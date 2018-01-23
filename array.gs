@@ -53,7 +53,7 @@ function merge(o1, o2){
 
 function testArray(){
   var a = [1, 2, 3, "a", "b", "c"];
-  putArray("k", a, true);
+  cache.putAll(putArray("k", a));
   var got = getArray("k");
   Logger.log(got);
   if(JSON.stringify(a) !== JSON.stringify(got)) throw "testArray: a != got.";

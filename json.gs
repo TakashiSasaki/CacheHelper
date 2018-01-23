@@ -42,7 +42,7 @@ function testJson(){
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   };
-  putJson("k", o, true);
+  cache.putAll(putJson("k", o));
   var got = getJson("k");
   Logger.log(got);
   if(JSON.stringify(o) !== JSON.stringify(got)) throw "testJson: o != got.";
