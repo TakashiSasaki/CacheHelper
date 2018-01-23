@@ -67,29 +67,29 @@ function getAny(key, values){
 }
 
 function testNull(){
-  putAny("k", null, true);
+  put("k", null);
   var got = getAny("k");
   if(got !== null) throw "testNull: null is expected.";
 }
 
 function testEmptyString(){
-  putAny("emptyString", "", true);
+  put("emptyString", "");
   var got = getAny("emptyString");
   if(got !== "") throw "testEmptyString: empty string is expected.";
   if(got.length !== 0) throw "testEmptyString: length should be 0.";
 }
 
 function testBoolean(){
-  putAny("putBoolean", true, true);
+  put("putBoolean", true);
   var got = getAny("putBoolean");
   if(got !== true) throw "testBoolean: true is expected.";
-  putAny("putBoolean", false, true);
+  put("putBoolean", false);
   var got = getAny("putBoolean");
   if(got !== false) throw "testBoolean: false is expected.";
 }
 
 function testNumber(){
-  putAny("testNumber", 1.234E6, true);
+  put("testNumber", 1.234E6);
   var got = getAny("testNumber");
   if(got !== 1.234E6) throw "testNumber: 1.234E6 is expected.";
 }
@@ -103,12 +103,12 @@ function testObject1(){
     2 : 222,
     3 : 333
   }
-  putAny("testObject1" ,o0, true);
+  put("testObject1" ,o0);
   var o0got = getAny("testObject1");
   if(JSON.stringify(o0) !== JSON.stringify(o0got)) throw "testObject1: o0 does not match.";
   
   var o1 = {a:"aaa", b:"bbb", 1:0.111, 2:0.222};
-  putAny("testObject1", o1, true);
+  put("testObject1", o1);
   var o1got = getAny("testObject1");
   if(JSON.stringify(o1) !== JSON.stringify(o1got)) throw "testObjct1: o1 does not match.";
 
@@ -121,7 +121,7 @@ function testObject1(){
 function testObject2(){
   var o1 = {aaa: 1111, bbb: "2222", ccc: null};
   var k1 = "keykeyley";
-  putAny(k1, o1, true);
+  put(k1, o1);
   var o1get = getAny(k1);
   if(JSON.stringify(o1) != JSON.stringify(o1get)) throw new Error("o1 and o1get is not equivalent");
 }
@@ -129,19 +129,19 @@ function testObject2(){
 function testObject3(){
   var o1 = {aaa: 1111, bbb: "2222", ccc: null};
   var k1 = "keykeykey5";
-  putAny(k1, o1, true);
+  put(k1, o1);
   var o1get = getAny(k1);
   if(JSON.stringify(o1) != JSON.stringify(o1get)) throw new Error("o1 and o1get is not equivalent");
 }
 
 function testObject4(){
-  putAny("k4", [], true);
+  put("k4", []);
   var value = getAny("k4");
   if(JSON.stringify([]) !== JSON.stringify(value)) throw new Error("value is not []");
 }
 
 function testObject5(){
-  putAny("k5", "", true);
+  put("k5", "");
   var value = getAny("k5");
   if(JSON.stringify("") !== JSON.stringify(value)) throw new Error('value is not ""');
   if(typeof value !== "string") throw new Error("type of value is not string");
