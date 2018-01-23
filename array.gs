@@ -6,14 +6,22 @@ function putArray(key, array) {
   }//for
 }//putArray
 
-function getArray(key){
-  var l = cache.get("[" + key + "]");
-  if(l === null) throw "getArray: [" + key + "] not found";
-  var array = [];
-  for(var i=0; i<l; ++i) {
-    array.push(get("[" + key + "]" + i));
+/**
+ * @param {stirng} key
+ * @param {string} value, optional
+ * @param {object} values, optional
+ */
+function getArray(key, value){
+  if(value === undefined) {
+    value = cache.get("[" + key + "]");
+    if(value === null) throw "getArray: [" + key + "] not found";
   }
-  return array;
+  var length = parseInt(value);
+  var result = [];
+  for(var i=0; i < length; ++i) {
+    result.push(get("[" + key + "]" + i));
+  }
+  return result;
 }//getArray
 
 function appendArray(key, array) {

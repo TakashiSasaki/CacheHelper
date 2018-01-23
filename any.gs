@@ -31,16 +31,16 @@ function put(key, any){
 function get(key){
   var candidates = cache.getAll(["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"])
   if(candidates["$" + key + "$"]) {
-    return getString(key);
+    return getString(key, candidates["$" + key + "$"]);
   }
   if(candidates["(" + key + ")"]) {
-    return getJson(key);
+    return getJson(key, candidates["(" + key + ")"]);
   }
   if(candidates["[" + key + "]"]) {
-    return getArray(key);
+    return getArray(key, candidates["[" + key + "]"]);
   }
   if(candidates["{" + key + "}"]) {
-    return getObject(key);
+    return getObject(key, candidates["{" + key + "}"]);
   }
   throw "get: key " + key + " not found.";
 }
@@ -83,7 +83,8 @@ function testObject1(){
     3 : 333
   }
   put("testObject1" ,o0);
-  if(JSON.stringify(o0) !== JSON.stringify(get("testObject1"))) throw "testObject1: o0 does not match.";
+  var o0got = get("testObject1");
+  if(JSON.stringify(o0) !== JSON.stringify(o0got)) throw "testObject1: o0 does not match.";
   
   var o1 = {a:"aaa", b:"bbb", 1:0.111, 2:0.222};
   put("testObject1", o1);

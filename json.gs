@@ -3,6 +3,13 @@ function putJson(key, any) {
   cache.put("(" + key + ")", jsonString);
 }
 
-function getJson(key){
-  return JSON.parse(cache.get("(" + key + ")"));
+/**
+  @param {string} key
+  @param {string} value optional
+*/
+function getJson(key, value){
+  if(value === undefined) {
+    value = cache.get("(" + key + ")");
+  }
+  return JSON.parse(value);
 }

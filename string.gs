@@ -8,20 +8,23 @@ function putString(key, string) {
   }
 }
 
-function getString(key) {
-  var l = cache.get("$" + key + "$");
-  if(l === null) throw "getString: key $" + key + "$ not found.";
+function getString(key, value) {
+  if(value === undefined) {
+    value = cache.get("$" + key + "$");
+    if(length === null) throw "getString: key $" + key + "$ not found.";
+  }
+  var length = parseInt(value);
+  if(length == 0) return "";
+
   var keys = [];
-  if(l == 0) return "";
-  
-  for(var i=0; i<l; ++i) {
+  for(var i=0; i<length; ++i) {
     keys.push("$" + key + "$" + i);
   }
   
   var valueStrings = cache.getAll(keys);
   if(valueStrings === null) return null;
   var array = [];
-  for(var i=0; i<l; ++i) {
+  for(var i=0; i<length; ++i) {
     var s = valueStrings["$" + key + "$" + i];
     if(s === null) return null;
     array.push(s);
