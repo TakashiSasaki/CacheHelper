@@ -6,7 +6,7 @@ function putObject(key, object) {
   }
   cache.put("{" + key + "}", JSON.stringify(properties));
   for(var i in object) {
-    put("{" + key + "}" + i, object[i]);
+    putAny("{" + key + "}" + i, object[i]);
   }
 }
 

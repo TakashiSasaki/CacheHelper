@@ -2,7 +2,7 @@ function putArray(key, array) {
   if(!(array instanceof Array)) throw "putArray: expects array";
   cache.put("[" + key + "]", array.length);
   for(var i=0; i<array.length; ++i) {
-    put("[" + key + "]" + i, array[i]);
+    putAny("[" + key + "]" + i, array[i]);
   }//for
 }//putArray
 
@@ -19,7 +19,7 @@ function getArray(key, value){
   var length = parseInt(value);
   var result = [];
   for(var i=0; i < length; ++i) {
-    result.push(get("[" + key + "]" + i));
+    result.push(getAny("[" + key + "]" + i));
   }
   return result;
 }//getArray
@@ -31,7 +31,7 @@ function appendArray(key, array) {
   if(l === null) throw "appendArray: key [" + key + "] not found";
   cache.put("[" + key + "]", parseInt(l) + array.length);
   for(var i=0; i<array.length; ++i) {
-    put("[" + key + "]" + parseInt(l) + i, array[i]);
+    putAny("[" + key + "]" + parseInt(l) + i, array[i]);
   }//for
 }//appendArray
 
