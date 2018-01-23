@@ -7,6 +7,16 @@ function put(key, any, debug) {
   return all;
 }
 
+function getDerivedKeys(key){
+  return ["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"];
+}
+
+function appendDerivedKeys(array, key){
+  var keys = getDerivedKeys(key);
+  Array.prototype.push.apply(array, keys);
+  return array;
+}
+
 /**
   @param {Any} any object, string, number, boolean or null
   @param {string} key
