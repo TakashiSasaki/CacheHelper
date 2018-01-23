@@ -8,7 +8,7 @@ nMaxValueLength = 50000;
 function putString(key, string) {
   if(typeof key !== "string") throw "putString: expects string key.";
   if(typeof string !== "string") throw "putString: expects strinv value.";
-  var all = {};
+  var all = {"TO BE REMOVED": getDerivedKeys(key)};
   var split = splitByLength(string, nMaxValueLength);
   all["$" + key + "$"] = "" + split.length;
   for(var i=0; i<split.length; ++i) {
@@ -65,10 +65,10 @@ function testString(){
   var a = "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso";
   var nMaxValueLength_old = nMaxValueLength;
   nMaxValueLength = 10;
-  cache.putAll(putString("kkk", a));
+  removeAndPut(putString("kkk", a));
   var b = getString("kkk");
   if(a !== b) throw "a !== b";
-  cache.putAll(putString("kk1", ""));
+  removeAndPut(putString("kk1", ""));
   var c = getString("kk1");
   Logger.log(c);
   nMaxValueLength = nMaxValueLength_old;

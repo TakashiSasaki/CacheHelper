@@ -6,7 +6,7 @@
 function putArray(key, array) {
   if(typeof key !== "string") throw "putArray: expects string key.";
   if(!(array instanceof Array)) throw "putArray: expects array";
-  var all = {};
+  var all = {"TO BE REMOVED": getDerivedKeys(key)};
   all["[" + key + "]"] = "" + array.length;
   for(var i=0; i<array.length; ++i) {
     merge(all, putAny("[" + key + "]" + i, array[i]));
@@ -46,14 +46,21 @@ function appendArray(key, array) {
 }//appendArray
 
 function merge(o1, o2){
+  var remove1 = o1["TO BE REMOVED"];
+  var remove2 = o2["TO BE REMOVED"];
+  if(remove1 === undefined) remove1 = [];
+  if(remove2 === undefined) remove2 = [];
+  Array.prototype.push.apply(remove1, remove2);
   for(var i in o2) {
     o1[i] = o2[i];
   }
+  o1["TO BE REMOVED"] = remove1;
+  return o1;
 }
 
 function testArray(){
   var a = [1, 2, 3, "a", "b", "c"];
-  cache.putAll(putArray("k", a));
+  removeAndPut(putArray("k", a));
   var got = getArray("k");
   Logger.log(got);
   if(JSON.stringify(a) !== JSON.stringify(got)) throw "testArray: a != got.";

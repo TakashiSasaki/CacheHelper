@@ -10,7 +10,7 @@ function putObject(key, object) {
   for(var i in object) {
     properties.push(i);
   }
-  var all = {};
+  var all = {"TO BE REMOVED": getDerivedKeys(key)};
   all["{" + key + "}"] = JSON.stringify(properties);
   for(var i in object) {
     merge(all, putAny("{" + key + "}" + i, object[i]));
@@ -67,7 +67,7 @@ function testObject(){
     b: null,
     c: "hello"
   };
-  cache.putAll(putObject("k", o));
+  removeAndPut(putObject("k", o));
   var got = getObject("k");
   if(JSON.stringify(o) !== JSON.stringify(got)) throw "testObject: o != got.";
 }

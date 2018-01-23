@@ -1,9 +1,15 @@
+function removeAndPut(all){
+  cache.removeAll(all["TO BE REMOVED"]);
+  delete all["TO BE REMOVED"];
+  cache.putAll(all);
+}
+
 function put(key, any) {
   if(typeof key !== "string") throw "put: expects string key.";
   if(any === undefined) throw "put: undefined is given as a value";
   var all = putAny(key, any);
   if(!(all instanceof Object)) throw "put: !(all instanceof Object).";
-  cache.putAll(all);
+  removeAndPut(all);
   return all;
 }
 
@@ -23,7 +29,7 @@ function appendDerivedKeys(array, key){
   @return {void}
 */
 function putAny(key, any){  
-  cache.removeAll(["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"]);
+  //cache.removeAll(["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"]);
   if(typeof any === "string") {
     var all = putString(key, any);
     return all;

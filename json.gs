@@ -5,7 +5,7 @@
 */
 function putJson(key, any) {
   var jsonString = JSON.stringify(any);
-  var all = {};
+  var all = {"TO BE REMOVED": getDerivedKeys(key)};
   if(jsonString.length > nMaxValueLength){
     all["(" + key + ")"] = "LONG JSON STRING";
     merge(all, putString("(" + key + ")", jsonString));
@@ -42,7 +42,7 @@ function testJson(){
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   };
-  cache.putAll(putJson("k", o));
+  removeAndPut(putJson("k", o));
   var got = getJson("k");
   Logger.log(got);
   if(JSON.stringify(o) !== JSON.stringify(got)) throw "testJson: o != got.";
