@@ -60,3 +60,12 @@ function testWhatIsByteArray__() {
   if(JSON.stringify(x) !== JSON.stringify([-1,-1,-1,-1,-1,-1])) throw new Error();
 }
 
+function testPutUndefined(){
+  cache.putAll({a:undefined, b:null});
+  var a = cache.get("a");
+  Logger.log(a);
+  Logger.log(typeof a);
+  var b = cache.get("b");
+  Logger.log(b);
+  Logger.log(typeof b);
+}

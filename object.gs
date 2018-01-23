@@ -1,52 +1,75 @@
-function putObject(key, object) {
+/**
+  @param {string} key
+  @param {object} object
+  @param {boolean} debug
+  @return {object}
+*/
+function putObject(key, object, debug) {
+  if(typeof key !== "string") throw "putObject: expects string key.";
   if(!(object instanceof Object)) throw "putObject: expects an object as a value";
   var properties = [];
   for(var i in object) {
     properties.push(i);
   }
-  cache.put("{" + key + "}", JSON.stringify(properties));
+  var all = {};
+  all["{" + key + "}"] = JSON.stringify(properties);
   for(var i in object) {
-    putAny("{" + key + "}" + i, object[i]);
-  }
-}
+    merge(all, putAny("{" + key + "}" + i, object[i]));
+  }  
+  if(debug) cache.putAll(all);
+  return all;
+}//putObject
 
 /**
   @param {string} key
   @param {value} value optional
 */
-function getObject(key, keysJsonString) {
-  if(keysJsonString === undefined) {
-    var keysJsonString = cache.get("{" + key + "}");
-    if(keysJsonString === null) throw "getObject: key {" + key + "} not found.";
+function getObject(key, values) {
+  if(typeof key !== "string") throw "getObject: expects string key.";
+  if(values === undefined) {values = {};}
+  if(values["{" + key + "}"] === undefined) {
+    values["{" + key + "}"] =  cache.get("{" + key + "}");
+    if(values["{" + key + "}"] === null) throw "getObject: key {" + key + "} not found.";
   }
-  var properties = JSON.parse(keysJsonString);
+  var properties = JSON.parse(values["{" + key + "}"]);
   if(!(properties instanceof Array)) throw "getObject: no array in {" + key + "}.";
-  var candidates = [];
+  var keys = [];
   for(var i=0; i<properties.length; ++i) {
-    candidates.push("${" + key + "}" + properties[i] + "$");
-    candidates.push("({" + key + "}" + properties[i] + ")");
-    candidates.push("{{" + key + "}" + properties[i] + "}");
-    candidates.push("[{" + key + "}" + properties[i] + "]");
+    keys.push("${" + key + "}" + properties[i] + "$");
+    keys.push("({" + key + "}" + properties[i] + ")");
+    keys.push("{{" + key + "}" + properties[i] + "}");
+    keys.push("[{" + key + "}" + properties[i] + "]");
   }
-  var values = cache.getAll(candidates);
+  merge(values, cache.getAll(keys));
   var result = {};
   for(var i=0; i<properties.length; ++i) {
     if(typeof values["${" + key + "}" + properties[i] + "$"] === "string") {
-      result[properties[i]] = getString("{" + key + "}" + properties[i]);
+      result[properties[i]] = getString("{" + key + "}" + properties[i], values);
       continue;
     }
     if(typeof values["({" + key + "}" + properties[i] + ")"] === "string") {
-      result[properties[i]] = getJson("{" + key + "}" + properties[i]);
+      result[properties[i]] = getJson("{" + key + "}" + properties[i], values);
       continue;
     }
     if(typeof values["{{" + key + "}" + properties[i] + "}"] === "string") {
-      result[properties[i]] = getObject("{" + key + "}" + properties[i]);
+      result[properties[i]] = getObject("{" + key + "}" + properties[i], values);
       continue;
     }
     if(typeof values["[{" + key + "}" + properties[i] + "]"] === "string") {
-      result[properties[i]] = getArray("{" + key + "}" + properties[i]);
+      result[properties[i]] = getArray("{" + key + "}" + properties[i], values);
       continue;
     }
   }
   return result;
+}//getObject
+
+function testObject(){
+  var o = {
+    a: 1,
+    b: null,
+    c: "hello"
+  };
+  putObject("k", o, true);
+  var got = getObject("k");
+  if(JSON.stringify(o) !== JSON.stringify(got)) throw "testObject: o != got.";
 }

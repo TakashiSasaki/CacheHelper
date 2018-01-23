@@ -1,28 +1,37 @@
-function putArray(key, array) {
+/**
+  @param {string} key
+  @param {Array} array
+  @param {boolean} debug
+  @return {object}
+*/
+function putArray(key, array, debug) {
+  if(typeof key !== "string") throw "putArray: expects string key.";
   if(!(array instanceof Array)) throw "putArray: expects array";
   var all = {};
   all["[" + key + "]"] = "" + array.length;
-  //cache.put("[" + key + "]", array.length);
-  cache.putAll(all);
   for(var i=0; i<array.length; ++i) {
-    putAny("[" + key + "]" + i, array[i]);
+    merge(all, putAny("[" + key + "]" + i, array[i]));
   }//for
+  if(debug) cache.putAll(all);
+  return all;
 }//putArray
 
 /**
  * @param {stirng} key
- * @param {string} value, optional
  * @param {object} values, optional
+ * @return {object}
  */
-function getArray(key, value){
-  if(value === undefined) {
-    value = cache.get("[" + key + "]");
-    if(value === null) throw "getArray: [" + key + "] not found";
+function getArray(key, values){
+  if(typeof key !== "string") throw "getArray: expects string key.";
+  if(values === undefined) {values = {};}
+  if(values["[" + key + "]"] === undefined) {
+    values["[" + key + "]"] = cache.get("[" + key + "]");
+    if(values["[" + key + "]"] === null) throw "getArray: [" + key + "] not found";
   }
-  var length = parseInt(value);
+  var length = parseInt(values["[" + key + "]"]);
   var result = [];
   for(var i=0; i < length; ++i) {
-    result.push(getAny("[" + key + "]" + i));
+    result.push(getAny("[" + key + "]" + i, values));
   }
   return result;
 }//getArray
@@ -38,3 +47,16 @@ function appendArray(key, array) {
   }//for
 }//appendArray
 
+function merge(o1, o2){
+  for(var i in o2) {
+    o1[i] = o2[i];
+  }
+}
+
+function testArray(){
+  var a = [1, 2, 3, "a", "b", "c"];
+  putArray("k", a, true);
+  var got = getArray("k");
+  Logger.log(got);
+  if(JSON.stringify(a) !== JSON.stringify(got)) throw "testArray: a != got.";
+}
