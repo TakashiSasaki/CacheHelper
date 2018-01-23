@@ -1,10 +1,9 @@
 /**
   @param {string} key
   @param {object} object
-  @param {boolean} debug
   @return {object}
 */
-function putObject(key, object, debug) {
+function putObject(key, object) {
   if(typeof key !== "string") throw "putObject: expects string key.";
   if(!(object instanceof Object)) throw "putObject: expects an object as a value";
   var properties = [];
@@ -16,7 +15,6 @@ function putObject(key, object, debug) {
   for(var i in object) {
     merge(all, putAny("{" + key + "}" + i, object[i]));
   }  
-  if(debug) cache.putAll(all);
   return all;
 }//putObject
 

@@ -1,10 +1,9 @@
 /**
   @param {string} key
   @param {Array} array
-  @param {boolean} debug
   @return {object}
 */
-function putArray(key, array, debug) {
+function putArray(key, array) {
   if(typeof key !== "string") throw "putArray: expects string key.";
   if(!(array instanceof Array)) throw "putArray: expects array";
   var all = {};
@@ -12,7 +11,6 @@ function putArray(key, array, debug) {
   for(var i=0; i<array.length; ++i) {
     merge(all, putAny("[" + key + "]" + i, array[i]));
   }//for
-  if(debug) cache.putAll(all);
   return all;
 }//putArray
 

@@ -3,10 +3,9 @@ nMaxValueLength = 50000;
 /**
   @param {string} key
   @param {string} string
-  @param {boolean} debug
   @return {object}
 */
-function putString(key, string, debug) {
+function putString(key, string) {
   if(typeof key !== "string") throw "putString: expects string key.";
   if(typeof string !== "string") throw "putString: expects strinv value.";
   var all = {};
@@ -15,7 +14,6 @@ function putString(key, string, debug) {
   for(var i=0; i<split.length; ++i) {
     all["$" + key + "$" + i] = split[i];
   }
-  cache.putAll(all);
   return all;
 }//putString
 

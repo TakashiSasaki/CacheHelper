@@ -3,7 +3,7 @@
   @param {Any} any
   @return {object}
 */
-function putJson(key, any, debug) {
+function putJson(key, any) {
   var jsonString = JSON.stringify(any);
   var all = {};
   if(jsonString.length > nMaxValueLength){
@@ -12,7 +12,6 @@ function putJson(key, any, debug) {
   } else {
     all["(" + key + ")"] = jsonString;
   }
-  if(debug) cache.putAll(all);
   return all;
 }//putJson
 

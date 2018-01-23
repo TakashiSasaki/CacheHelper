@@ -1,7 +1,7 @@
-function put(key, any, debug) {
+function put(key, any) {
   if(typeof key !== "string") throw "put: expects string key.";
   if(any === undefined) throw "put: undefined is given as a value";
-  var all = putAny(key, any, debug);
+  var all = putAny(key, any);
   if(!(all instanceof Object)) throw "put: !(all instanceof Object).";
   cache.putAll(all);
   return all;
@@ -20,25 +20,24 @@ function appendDerivedKeys(array, key){
 /**
   @param {Any} any object, string, number, boolean or null
   @param {string} key
-  @param {boolean} debug
   @return {void}
 */
-function putAny(key, any, debug){  
+function putAny(key, any){  
   cache.removeAll(["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"]);
   if(typeof any === "string") {
-    var all = putString(key, any, debug);
+    var all = putString(key, any);
     return all;
   }
   if(any === null || typeof any === "boolean" || typeof any === "number") {
-    var all = putJson(key,any, debug);
+    var all = putJson(key,any);
     return all;
   }
   if(any instanceof Array) {
-    var all = putArray(key, any, debug);
+    var all = putArray(key, any);
     return all;
   }
   if(any instanceof Object) {
-    var all = putObject(key, any, debug);
+    var all = putObject(key, any);
     return all;
   }
   throw "put: unexpected type of value.";
