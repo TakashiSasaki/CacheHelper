@@ -45,6 +45,7 @@ function testSplitByLength(){
 
 function testGetString(){
   var a = "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso";
+  var nMaxValueLength_old = nMaxValueLength;
   nMaxValueLength = 10;
   putString("kkk", a);
   var b = getString("kkk");
@@ -52,4 +53,6 @@ function testGetString(){
   putString("kk1", "");
   var c = getString("kk1");
   Logger.log(c);
+  nMaxValueLength = nMaxValueLength_old;
 }
+
