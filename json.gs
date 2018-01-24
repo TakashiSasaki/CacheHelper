@@ -48,3 +48,8 @@ function testJson(){
   if(JSON.stringify(o) !== JSON.stringify(got)) throw "testJson: o != got.";
   nMaxValueLength = nMaxValueLength_old;
 }
+
+if(exports === undefined) exports = {};
+exports.putJson = putJson;
+exports.getJson = getJson;
+exports.testJson = testJson;

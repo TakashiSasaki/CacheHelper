@@ -21,7 +21,7 @@ function putAny(key, any){
     var all = putObject(key, any);
     return all;
   }
-  throw "put: unexpected type of value.";
+  throw "putAny: unexpected type of value.";
 }
 
 /**
@@ -44,13 +44,16 @@ function getAny(key, values){
   if(values["{" + key + "}"]) {
     return getObject(key, values);
   }
-  throw "get: key " + key + " not found.";
+  throw "getAny: key " + key + " not found.";
 }
 
-function testNull(){
-  put("k", null);
+function testAnyNull(){
+  Logger.log("testAnyNull: begin");
+  var all = putAny("k", null);
+  removeAndPut(all); 
   var got = getAny("k");
-  if(got !== null) throw "testNull: null is expected.";
+  if(got !== null) throw "testAnyNull: null is expected.";
+  Logger.log("testAnyNull: end");
 }
 
 function testEmptyString(){
@@ -128,3 +131,6 @@ function testObject5(){
   if(typeof value !== "string") throw new Error("type of value is not string");
   if(value.length !== 0) throw new Error("length of value is not zero");
 }
+
+if(exports === undefined) exports = {};
+exports.testAnyNull = testAnyNull;
