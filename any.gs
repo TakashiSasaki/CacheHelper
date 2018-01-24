@@ -56,26 +56,36 @@ function testAnyNull(){
   Logger.log("testAnyNull: end");
 }
 
-function testEmptyString(){
-  put("emptyString", "");
-  var got = getAny("emptyString");
-  if(got !== "") throw "testEmptyString: empty string is expected.";
-  if(got.length !== 0) throw "testEmptyString: length should be 0.";
+function testAnyEmptyString(){
+  Logger.log("testAnyEmptyString: beign");
+  var all = putAny("testAnyEmptyString", "");
+  removeAndPut(all);
+  var got = getAny("testAnyEmptyString");
+  if(got !== "") throw "testAnyEmptyString: empty string is expected.";
+  if(got.length !== 0) throw "testAnyEmptyString: length should be 0.";
+  Logger.log("testAnyEmptyString: end");
 }
 
-function testBoolean(){
-  put("putBoolean", true);
-  var got = getAny("putBoolean");
-  if(got !== true) throw "testBoolean: true is expected.";
-  put("putBoolean", false);
-  var got = getAny("putBoolean");
-  if(got !== false) throw "testBoolean: false is expected.";
+function testAnyBoolean(){
+  Logger.log("testAnyBoolean: begin");
+  var all = putAny("testAnyBoolean", true);
+  removeAndPut(all);
+  var got = getAny("testAnyBoolean");
+  if(got !== true) throw "testAnyBoolean: true is expected.";
+  var all = putAny("testAnyBoolean", false);
+  removeAndPut(all);
+  var got = getAny("testAnyBoolean");
+  if(got !== false) throw "testAnyBoolean: false is expected.";
+  Logger.log("testAnyBoolean: end");
 }
 
-function testNumber(){
-  put("testNumber", 1.234E6);
-  var got = getAny("testNumber");
-  if(got !== 1.234E6) throw "testNumber: 1.234E6 is expected.";
+function testAnyNumber(){
+  Logger.log("testAnyNumber: begin");
+  var all = putAny("testAnyNumber", 1.234E6);
+  removeAndPut(all);
+  var got = getAny("testAnyNumber");
+  if(got !== 1.234E6) throw "testAnyNumber: 1.234E6 is expected.";
+  Logger.log("testAnyNumber: end");
 }
 
 function testObject1(){
@@ -134,3 +144,7 @@ function testObject5(){
 
 if(exports === undefined) exports = {};
 exports.testAnyNull = testAnyNull;
+exports.testAnyEmptyString = testAnyEmptyString;
+exports.testAnyBoolean = testAnyBoolean;
+exports.testAnyNumber = testAnyNumber;
+

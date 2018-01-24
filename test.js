@@ -2,16 +2,22 @@ if(global.Logger === undefined) global.Logger = console;
 LocalCache = require("./emulate.gs").LocalCache;
 global.cache = new LocalCache();
 
-getDerivedKeys  = require("./misc.gs").getDerivedKeys;
-removeAndPut    = require("./misc.gs").removeAndPut;
-merge           = require("./array.gs").merge;
-putJson         = require("./json.gs").putJson;
-getJson         = require("./json.gs").getJson;
-testString      = require("./string.gs").testString;
-testAnyNull     = require("./any.gs").testAnyNull;
+getDerivedKeys     = require("./misc.gs").getDerivedKeys;
+removeAndPut       = require("./misc.gs").removeAndPut;
+merge              = require("./array.gs").merge;
+putJson            = require("./json.gs").putJson;
+getJson            = require("./json.gs").getJson;
+putString          = require("./string.gs").putString;
+getString          = require("./string.gs").getString;
+testString         = require("./string.gs").testString;
+testAnyNull        = require("./any.gs").testAnyNull;
+testAnyEmptyString = require("./any.gs").testAnyEmptyString;
+testAnyBoolean     = require("./any.gs").testAnyBoolean;
+testAnyNumber      = require("./any.gs").testAnyNumber
 
 testString();
 testAnyNull();
+testAnyEmptyString();
 
 console.log("putCount       = " + cache.putCount);
 console.log("getCount       = " + cache.getCount);

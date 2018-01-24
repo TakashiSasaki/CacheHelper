@@ -77,5 +77,7 @@ function testString(){
 }
 
 if(exports === undefined) exports = {};
+exports.putString  = putString;
+exports.getString  = getString;
 exports.testString = testString;
 
