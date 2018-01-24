@@ -18,6 +18,7 @@ testAnyNumber      = require("./any.gs").testAnyNumber
 testString();
 testAnyNull();
 testAnyEmptyString();
+testAnyBoolean();
 
 console.log("putCount       = " + cache.putCount);
 console.log("getCount       = " + cache.getCount);
