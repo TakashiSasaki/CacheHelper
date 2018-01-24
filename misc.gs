@@ -24,6 +24,8 @@ function put(key, any) {
   if(any === undefined) throw "put: undefined is given as a value";
   var all = putAny(key, any);
   if(!(all instanceof Object)) throw "put: !(all instanceof Object).";
+  var keys = Object.keys(all);
+  all["#" + key + "#"] = JSON.stringify(keys);
   removeAndPut(all, key);
   return all;
 }
