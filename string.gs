@@ -71,10 +71,11 @@ function testString(){
   if(a !== b) throw "a !== b";
   removeAndPut(putString("kk1", ""));
   var c = getString("kk1");
-  Logger.log(c);
+  if(JSON.stringify("") !== JSON.stringify(c)) throw "testString: c != \"\".";
   nMaxValueLength = nMaxValueLength_old;
   Logger.log("testString :end");
 }
 
 if(exports === undefined) exports = {};
 exports.testString = testString;
+
