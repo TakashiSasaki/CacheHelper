@@ -1,4 +1,4 @@
-if(global === undefined) global = this;
+if(typeof global === "undefined") global = this;
 if(global.cache === undefined) global.cache = CacheService.getScriptCache();
 
 /**
