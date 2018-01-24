@@ -19,6 +19,7 @@ testString();
 testAnyNull();
 testAnyEmptyString();
 testAnyBoolean();
+testAnyNumber();
 
 console.log("putCount       = " + cache.putCount);
 console.log("getCount       = " + cache.getCount);
