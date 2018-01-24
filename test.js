@@ -12,6 +12,7 @@ getString          = require("./string.gs").getString;
 testString1        = require("./string.gs").testString1;
 testString2        = require("./string.gs").testString2;
 putAny             = require("./any.gs").putAny;
+getAny             = require("./any.gs").getAny;
 testAnyNull        = require("./any.gs").testAnyNull;
 testAnyEmptyString = require("./any.gs").testAnyEmptyString;
 testAnyBoolean     = require("./any.gs").testAnyBoolean;
@@ -20,6 +21,8 @@ testObject         = require("./object.gs").testObject;
 testObject1        = require("./object.gs").testObject1;
 testObject2        = require("./object.gs").testObject2;
 testObject3        = require("./object.gs").testObject3;
+testArray1         = require("./array.gs").testArray1;
+testArray2         = require("./array.gs").testArray2;
 
 testString1();
 testString2();
@@ -31,6 +34,8 @@ testObject();
 testObject1();
 testObject2();
 testObject3();
+testArray1();
+testArray2();
 
 console.log("putCount       = " + cache.putCount);
 console.log("getCount       = " + cache.getCount);
