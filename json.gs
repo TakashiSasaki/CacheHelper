@@ -34,6 +34,7 @@ function getJson(key, values){
 }//getJson
 
 function testJson(){
+  Logger.log("testJson: begin");
   var nMaxValueLength_old = nMaxValueLength;
   nMaxValueLength = 10;
   var o = {
@@ -47,9 +48,10 @@ function testJson(){
   Logger.log(got);
   if(JSON.stringify(o) !== JSON.stringify(got)) throw "testJson: o != got.";
   nMaxValueLength = nMaxValueLength_old;
+  Logger.log("testJson: end");
 }
 
 if(exports === undefined) exports = {};
-exports.putJson = putJson;
-exports.getJson = getJson;
+exports.putJson  = putJson;
+exports.getJson  = getJson;
 exports.testJson = testJson;

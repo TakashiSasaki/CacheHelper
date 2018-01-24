@@ -7,6 +7,7 @@ removeAndPut       = require("./misc.gs").removeAndPut;
 merge              = require("./array.gs").merge;
 putJson            = require("./json.gs").putJson;
 getJson            = require("./json.gs").getJson;
+testJson           = require("./json.gs").testJson;
 putString          = require("./string.gs").putString;
 getString          = require("./string.gs").getString;
 testString1        = require("./string.gs").testString1;
@@ -36,6 +37,7 @@ testObject2();
 testObject3();
 testArray1();
 testArray2();
+testJson();
 
 console.log("putCount       = " + cache.putCount);
 console.log("getCount       = " + cache.getCount);
