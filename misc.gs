@@ -29,9 +29,14 @@ function put(key, any) {
 }
 
 function get(key) {
-  var keys = JSON.parse(cache.get("#" + key + "#"));
-  var values = cache.getAll(keys);
-  return getAny(key, values);
+  var jsonString =  cache.get("#" + key + "#");
+  if(jsonString === null) {
+    return getAny(key);
+  } else { 
+    var keys = JSON.parse(jsonString);
+    var values = cache.getAll(keys);
+    return getAny(key, values);
+  } 
 }
 
 function getDerivedKeys(key){
@@ -44,6 +49,21 @@ function appendDerivedKeys(array, key){
   return array;
 }
 
+function test1(){
+  Logger.log("test1: begin");
+  var o = {
+    a : 1,
+    b: null,
+    c: false,
+    d: [ "hello", 1.23, null]
+  }
+  put("test1", o);
+  if(JSON.stringify(o) !== JSON.stringify(get("test1"))) throw "test1: o != get(\"test1\").";
+  Logger.log("test1: end");
+}
+
+
 if(exports === undefined) exports = {};
 exports.getDerivedKeys = getDerivedKeys;
 exports.removeAndPut = removeAndPut;
+exports.test1 = test1;

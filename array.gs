@@ -76,6 +76,8 @@ function testArray2(){
 }
 
 if(exports === undefined) exports = {};
+exports.getArray   = getArray;
+exports.putArray   = putArray;
 exports.testArray1 = testArray1;
 exports.testArray2 = testArray2;
 exports.merge      = merge;

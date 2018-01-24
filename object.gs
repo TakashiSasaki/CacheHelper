@@ -121,6 +121,8 @@ function testObject3(){
 }
 
 if(exports === undefined) exports = {};
+exports.putObject   = putObject;
+exports.getObject   = getObject;
 exports.testObject  = testObject;
 exports.testObject1 = testObject1;
 exports.testObject2 = testObject2;
