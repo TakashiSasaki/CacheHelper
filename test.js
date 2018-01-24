@@ -9,6 +9,12 @@ merge           = require("./array.gs").merge;
 
 testString();
 
+console.log("putCount       = " + cache.putCount);
+console.log("getCount       = " + cache.getCount);
+console.log("removeCount    = " + cache.removeCount);
+console.log("putAllCount    = " + cache.putAllCount);
+console.log("getAllCount    = " + cache.getAllCount);
+console.log("removeAllCount = " + cache.removeAllCount);
 
 function testAll(){
   for(var i in global) {
