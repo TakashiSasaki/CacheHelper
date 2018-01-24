@@ -1,4 +1,14 @@
-global = this;
+if(global.Logger === undefined) global.Logger = console;
+LocalCache = require("./emulate.gs").LocalCache;
+global.cache = new LocalCache();
+
+testString      = require("./string.gs").testString;
+getDerivedKeys  = require("./misc.gs").getDerivedKeys;
+removeAndPut    = require("./misc.gs").removeAndPut;
+merge           = require("./array.gs").merge;
+
+testString();
+
 
 function testAll(){
   for(var i in global) {

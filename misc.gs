@@ -1,5 +1,5 @@
-global = this;
-cache= CacheService.getScriptCache();
+if(global === undefined) global = this;
+if(global.cache === undefined) global.cache = CacheService.getScriptCache();
 
 /**
   set cache. Default is scirpt cache.
@@ -43,3 +43,7 @@ function appendDerivedKeys(array, key){
   Array.prototype.push.apply(array, keys);
   return array;
 }
+
+if(exports === undefined) exports = {};
+exports.getDerivedKeys = getDerivedKeys;
+exports.removeAndPut = removeAndPut;

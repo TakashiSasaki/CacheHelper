@@ -65,3 +65,7 @@ function testArray(){
   Logger.log(got);
   if(JSON.stringify(a) !== JSON.stringify(got)) throw "testArray: a != got.";
 }
+
+if(exports === undefined) exports = {};
+exports.merge = merge;
+
