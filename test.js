@@ -9,20 +9,28 @@ putJson            = require("./json.gs").putJson;
 getJson            = require("./json.gs").getJson;
 putString          = require("./string.gs").putString;
 getString          = require("./string.gs").getString;
-testString         = require("./string.gs").testString;
+testString1        = require("./string.gs").testString1;
+testString2        = require("./string.gs").testString2;
 putAny             = require("./any.gs").putAny;
 testAnyNull        = require("./any.gs").testAnyNull;
 testAnyEmptyString = require("./any.gs").testAnyEmptyString;
 testAnyBoolean     = require("./any.gs").testAnyBoolean;
 testAnyNumber      = require("./any.gs").testAnyNumber
 testObject         = require("./object.gs").testObject;
+testObject1        = require("./object.gs").testObject1;
+testObject2        = require("./object.gs").testObject2;
+testObject3        = require("./object.gs").testObject3;
 
-testString();
+testString1();
+testString2();
 testAnyNull();
 testAnyEmptyString();
 testAnyBoolean();
 testAnyNumber();
 testObject();
+testObject1();
+testObject2();
+testObject3();
 
 console.log("putCount       = " + cache.putCount);
 console.log("getCount       = " + cache.getCount);

@@ -61,8 +61,8 @@ function testSplitByLength(){
   Logger.log(splitByLength("", 4));
 }
 
-function testString(){
-  Logger.log("testString: begin");
+function testString1(){
+  Logger.log("testString1: begin");
   var a = "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso";
   var nMaxValueLength_old = nMaxValueLength;
   nMaxValueLength = 10;
@@ -73,11 +73,21 @@ function testString(){
   var c = getString("kk1");
   if(JSON.stringify("") !== JSON.stringify(c)) throw "testString: c != \"\".";
   nMaxValueLength = nMaxValueLength_old;
-  Logger.log("testString :end");
+  Logger.log("testString1: end");
+}
+
+function testString2(){
+  Logger.log("testString2: begin");
+  removeAndPut(putString("k5", ""));
+  var value = getString("k5");
+  if(JSON.stringify("") !== JSON.stringify(value)) throw new Error('value is not ""');
+  if(typeof value !== "string") throw new Error("type of value is not string");
+  if(value.length !== 0) throw new Error("length of value is not zero");
+  Logger.log("testString2: end");
 }
 
 if(exports === undefined) exports = {};
 exports.putString  = putString;
 exports.getString  = getString;
-exports.testString = testString;
-
+exports.testString1 = testString1;
+exports.testString2 = testString2;

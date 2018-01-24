@@ -58,7 +58,7 @@ function merge(o1, o2){
   return o1;
 }
 
-function testArray(){
+function testArray1(){
   var a = [1, 2, 3, "a", "b", "c"];
   removeAndPut(putArray("k", a));
   var got = getArray("k");
@@ -66,6 +66,16 @@ function testArray(){
   if(JSON.stringify(a) !== JSON.stringify(got)) throw "testArray: a != got.";
 }
 
+function testArray2(){
+  Logger.log("testObject4: begin");
+  removeAndPut(putObject("k4", []));
+  var value = getObject("k4");
+  if(JSON.stringify([]) !== JSON.stringify(value)) throw new Error("value is not []");
+  Logger.log("testObject4: end");
+}
+
 if(exports === undefined) exports = {};
-exports.merge = merge;
+exports.testArray1 = testArray1;
+exports.testArray2 = testArray2;
+exports.merge      = merge;
 
