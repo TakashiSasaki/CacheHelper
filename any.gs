@@ -88,7 +88,7 @@ function testAnyNumber(){
   Logger.log("testAnyNumber: end");
 }
 
-if(exports === undefined) exports = {};
+if(typeof exports === "undefined") exports = {};
 exports.putAny             = putAny;
 exports.getAny             = getAny;
 exports.testAnyNull        = testAnyNull;
