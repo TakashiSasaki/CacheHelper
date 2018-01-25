@@ -39,11 +39,11 @@ function get(key) {
   getCount += 1;
   var jsonString =  cache.get("#" + key + "#");
   if(jsonString === null) {
-    console.log("get: #" + key + "# not found");
+    Logger.log("get: #" + key + "# not found");
     return getAny(key);
   } else { 
     var keys = JSON.parse(jsonString);
-    console.log("get: hint found. " + keys);
+    Logger.log("get: hint found. " + keys);
     var values = cache.getAll(keys);
     return getAny(key, values);
   } 
@@ -93,7 +93,6 @@ function prefetchAny(values, keys) {
   if(!(keys instanceof Array)) throw "prefetchAny: keys should be an array.";
   var bNeedToGet = false;
   for(var i in keys) {
-    //if(typeof values[keys[i]] === "undefined") bNeedToGet = true;
     if(typeof values["$" + keys[i] + "$"] === "undefined" &&
         typeof values["(" + keys[i] + ")"] === "undefined" &&
         typeof values["{" + keys[i] + "}"] === "undefined" &&
@@ -111,13 +110,8 @@ function prefetchAny(values, keys) {
     keysToGet.push("{" + keys[j] + "}");
     keysToGet.push("(" + keys[j] + ")");
   }
-  console.log("prefetchAny: keysToGet = " + keysToGet);
+  Logger.log("prefetchAny: keysToGet = " + keysToGet);
   return prefetch(values, keysToGet);
-  //var fetched = cache.getAll(keysToGet);
-  //for(var k in fetched) {
-  //  values[k] = fetched[k];
-  //}
-  //return values;
 }//prefetchAny
 
 
