@@ -67,7 +67,7 @@ function testJson(){
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   };
-  removeAndPut(putJson("k", o));
+  commit(putJson("k", o));
   var got = getJson("k");
   Logger.log(got);
   if(JSON.stringify(o) !== JSON.stringify(got)) throw "testJson: o != got.";

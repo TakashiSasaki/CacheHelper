@@ -80,7 +80,7 @@ function showArrayCount(){
 function testArray1(){
   Logger.log("testArray1: begin");
   var a = [1, 2, 3, "a", "b", "c"];
-  removeAndPut(putArray("k", a));
+  commit(putArray("k", a));
   var got = getArray("k");
   if(JSON.stringify(a) !== JSON.stringify(got)) throw "testArray1: a != got.";
   Logger.log("testArray1: end");
@@ -88,7 +88,7 @@ function testArray1(){
 
 function testArray2(){
   Logger.log("testArray2: begin");
-  removeAndPut(putArray("k4", []));
+  commit(putArray("k4", []));
   var value = getArray("k4");
   if(JSON.stringify([]) !== JSON.stringify(value)) throw new Error("testArray2: value is not []");
   Logger.log("testArray2: end");

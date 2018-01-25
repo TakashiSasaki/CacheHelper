@@ -65,7 +65,7 @@ function showAnyCount(){
 function testAnyNull(){
   Logger.log("testAnyNull: begin");
   var all = putAny("k", null);
-  removeAndPut(all); 
+  commit(all); 
   var got = getAny("k");
   if(got !== null) throw "testAnyNull: null is expected.";
   Logger.log("testAnyNull: end");
@@ -74,7 +74,7 @@ function testAnyNull(){
 function testAnyEmptyString(){
   Logger.log("testAnyEmptyString: beign");
   var all = putAny("testAnyEmptyString", "");
-  removeAndPut(all);
+  commit(all);
   var got = getAny("testAnyEmptyString");
   if(got !== "") throw "testAnyEmptyString: empty string is expected.";
   if(got.length !== 0) throw "testAnyEmptyString: length should be 0.";
@@ -84,11 +84,11 @@ function testAnyEmptyString(){
 function testAnyBoolean(){
   Logger.log("testAnyBoolean: begin");
   var all = putAny("testAnyBoolean", true);
-  removeAndPut(all);
+  commit(all);
   var got = getAny("testAnyBoolean");
   if(got !== true) throw "testAnyBoolean: true is expected.";
   var all = putAny("testAnyBoolean", false);
-  removeAndPut(all);
+  commit(all);
   var got = getAny("testAnyBoolean");
   if(got !== false) throw "testAnyBoolean: false is expected.";
   Logger.log("testAnyBoolean: end");
@@ -97,7 +97,7 @@ function testAnyBoolean(){
 function testAnyNumber(){
   Logger.log("testAnyNumber: begin");
   var all = putAny("testAnyNumber", 1.234E6);
-  removeAndPut(all);
+  commit(all);
   var got = getAny("testAnyNumber");
   if(got !== 1.234E6) throw "testAnyNumber: 1.234E6 is expected.";
   Logger.log("testAnyNumber: end");

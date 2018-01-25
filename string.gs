@@ -73,10 +73,10 @@ function testString1(){
   var a = "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso";
   var nMaxValueLength_old = nMaxValueLength;
   nMaxValueLength = 10;
-  removeAndPut(putString("kkk", a));
+  commit(putString("kkk", a));
   var b = getString("kkk");
   if(a !== b) throw "a !== b";
-  removeAndPut(putString("kk1", ""));
+  commit(putString("kk1", ""));
   var c = getString("kk1");
   if(JSON.stringify("") !== JSON.stringify(c)) throw "testString: c != \"\".";
   nMaxValueLength = nMaxValueLength_old;
@@ -87,7 +87,7 @@ function testString1(){
 
 function testString2(){
   Logger.log("testString2: begin");
-  removeAndPut(putString("k5", ""));
+  commit(putString("k5", ""));
   var value = getString("k5");
   if(JSON.stringify("") !== JSON.stringify(value)) throw new Error('value is not ""');
   if(typeof value !== "string") throw new Error("type of value is not string");

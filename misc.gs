@@ -13,7 +13,7 @@ function setCache(cache) {
   global.cache = cache;
 }
 
-function removeAndPut(all, key){
+function commit(all, key){
   cache.removeAll(all["TO BE REMOVED"]);
   delete all["TO BE REMOVED"];
   if(typeof key === "string") {
@@ -30,7 +30,7 @@ function put(key, any) {
   if(!(all instanceof Object)) throw "put: !(all instanceof Object).";
   var keys = Object.keys(all);
   all["#" + key + "#"] = JSON.stringify(keys);
-  removeAndPut(all, key);
+  commit(all, key);
   return all;
 }
 
@@ -73,7 +73,7 @@ function test1(){
 
 if(exports === undefined) exports = {};
 exports.getDerivedKeys = getDerivedKeys;
-exports.removeAndPut   = removeAndPut;
+exports.commit         = commit;
 exports.putCount       = putCount;
 exports.getCount       = getCount;
 exports.test1          = test1;
