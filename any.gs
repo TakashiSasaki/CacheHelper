@@ -1,10 +1,12 @@
+putAnyCount = 0;
+getAnyCount = 0;
 /**
   @param {Any} any object, string, number, boolean or null
   @param {string} key
   @return {void}
 */
 function putAny(key, any){  
-  //cache.removeAll(["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"]);
+  putAnyCount += 1;
   if(typeof any === "string") {
     var all = putString(key, any);
     return all;
@@ -30,6 +32,7 @@ function putAny(key, any){
   @returns {Any}
 */
 function getAny(key, values){
+  getAnyCount += 1;
   if(values === undefined) values={};
   merge(values, cache.getAll(["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"]));
   if(values["$" + key + "$"]) {

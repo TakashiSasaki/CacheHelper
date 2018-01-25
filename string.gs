@@ -1,13 +1,17 @@
 nMaxValueLength = 50000;
+putStringCount = 0;
+getStringCount = 0;
 
 /**
   @param {string} key
   @param {string} string
   @return {object}
 */
+
 function putString(key, string) {
   if(typeof key !== "string") throw "putString: expects string key.";
   if(typeof string !== "string") throw "putString: expects strinv value.";
+  putStringCount += 1;
   var all = {"TO BE REMOVED": getDerivedKeys(key)};
   var split = splitByLength(string, nMaxValueLength);
   all["$" + key + "$"] = "" + split.length;
@@ -24,6 +28,7 @@ function putString(key, string) {
 */
 function getString(key, values) {
   if(typeof key !== "string") throw "getString: expects string key.";
+  getStringCount += 1;
   if(values === undefined) values = {};
   if(values["$" + key + "$"] === undefined) {
     values["$" + key + "$"] = cache.get("$" + key + "$");

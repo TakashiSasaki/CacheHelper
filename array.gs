@@ -1,3 +1,6 @@
+putArrayCount = 0;
+getArrayCount = 0;
+
 /**
   @param {string} key
   @param {Array} array
@@ -6,6 +9,7 @@
 function putArray(key, array) {
   if(typeof key !== "string") throw "putArray: expects string key.";
   if(!(array instanceof Array)) throw "putArray: expects array";
+  putArrayCount += 1;
   var all = {"TO BE REMOVED": getDerivedKeys(key)};
   all["[" + key + "]"] = "" + array.length;
   for(var i=0; i<array.length; ++i) {
@@ -21,6 +25,7 @@ function putArray(key, array) {
  */
 function getArray(key, values){
   if(typeof key !== "string") throw "getArray: expects string key.";
+  getArrayCount += 1;
   if(values === undefined) {values = {};}
   if(values["[" + key + "]"] === undefined) {
     values["[" + key + "]"] = cache.get("[" + key + "]");

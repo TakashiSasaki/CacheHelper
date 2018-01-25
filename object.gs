@@ -1,3 +1,6 @@
+putObjectCount = 0;
+getObjectCount = 0;
+
 /**
   @param {string} key
   @param {object} object
@@ -6,6 +9,7 @@
 function putObject(key, object) {
   if(typeof key !== "string") throw "putObject: expects string key.";
   if(!(object instanceof Object)) throw "putObject: expects an object as a value";
+  putObjectCount += 1;
   var properties = [];
   for(var i in object) {
     properties.push(i);
@@ -24,6 +28,7 @@ function putObject(key, object) {
 */
 function getObject(key, values) {
   if(typeof key !== "string") throw "getObject: expects string key.";
+  getObjectCount += 1;
   if(values === undefined) {values = {};}
   if(values["{" + key + "}"] === undefined) {
     values["{" + key + "}"] =  cache.get("{" + key + "}");

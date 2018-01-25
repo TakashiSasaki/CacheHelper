@@ -1,9 +1,13 @@
+putJsonCount = 0;
+getJsonCount = 0;
+
 /**
   @param {string} key
   @param {Any} any
   @return {object}
 */
 function putJson(key, any) {
+  putJsonCount += 1;
   var jsonString = JSON.stringify(any);
   var all = {"TO BE REMOVED": getDerivedKeys(key)};
   if(jsonString.length > nMaxValueLength){
@@ -21,6 +25,7 @@ function putJson(key, any) {
   @return {Array}
 */
 function getJson(key, values){
+  getJsonCount += 1;
   if(values === undefined) values = {};
   if(values["(" + key + ")"] === undefined) {
     merge(values, cache.getAll([ "(" + key + ")", "$(" + key + ")$" ]));
