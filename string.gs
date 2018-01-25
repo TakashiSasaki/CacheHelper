@@ -78,6 +78,8 @@ function testString1(){
   var c = getString("kk1");
   if(JSON.stringify("") !== JSON.stringify(c)) throw "testString: c != \"\".";
   nMaxValueLength = nMaxValueLength_old;
+  Logger.log("testString1: putStringCount = " + putStringCount);
+  Logger.log("testString1: getStringCount = " + getStringCount);
   Logger.log("testString1: end");
 }
 

@@ -1,5 +1,7 @@
 putJsonCount = 0;
 getJsonCount = 0;
+getJsonPrefetchMissedCount = 0;
+getJsonLongStringCount = 0;
 
 /**
   @param {string} key
@@ -28,9 +30,11 @@ function getJson(key, values){
   getJsonCount += 1;
   if(values === undefined) values = {};
   if(values["(" + key + ")"] === undefined) {
+    getJsonPrefetchMissedCount += 1;
     merge(values, cache.getAll([ "(" + key + ")", "$(" + key + ")$" ]));
   }
   if(values["(" + key + ")"] === "LONG JSON STRING") {
+    getJsonLongStringCount += 1;
     var jsonString = getString("(" + key + ")", values);
     return JSON.parse(jsonString);
   } else {
@@ -60,3 +64,4 @@ if(exports === undefined) exports = {};
 exports.putJson  = putJson;
 exports.getJson  = getJson;
 exports.testJson = testJson;
+exports.getJsonPrefetchMissedCount = getJsonPrefetchMissedCount;

@@ -9,6 +9,7 @@ merge              = require("./array.gs").merge;
 putJson            = require("./json.gs").putJson;
 getJson            = require("./json.gs").getJson;
 testJson           = require("./json.gs").testJson;
+getJsonPrefetchMissedCount =  require("./json.gs").getJsonPrefetchMissedCount;
 putString          = require("./string.gs").putString;
 getString          = require("./string.gs").getString;
 testString1        = require("./string.gs").testString1;
@@ -43,14 +44,11 @@ testObject3();
 testArray1();
 testArray2();
 testJson();
+cache.resetCount();
 test1();
 
-console.log("putCount       = " + cache.putCount);
-console.log("getCount       = " + cache.getCount);
-console.log("removeCount    = " + cache.removeCount);
-console.log("putAllCount    = " + cache.putAllCount);
-console.log("getAllCount    = " + cache.getAllCount);
-console.log("removeAllCount = " + cache.removeAllCount);
+cache.showCount();
+console.log("getJsonPrefetchMissedCount = " + getJsonPrefetchMissedCount);
 
 function testAll(){
   for(var i in global) {

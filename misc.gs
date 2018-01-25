@@ -1,3 +1,6 @@
+putCount = 0;
+getCount = 0;
+
 if(typeof global === "undefined") global = this;
 if(global.cache === undefined) global.cache = CacheService.getScriptCache();
 
@@ -22,6 +25,7 @@ function removeAndPut(all, key){
 function put(key, any) {
   if(typeof key !== "string") throw "put: expects string key.";
   if(any === undefined) throw "put: undefined is given as a value";
+  putCount += 1;
   var all = putAny(key, any);
   if(!(all instanceof Object)) throw "put: !(all instanceof Object).";
   var keys = Object.keys(all);
@@ -31,6 +35,7 @@ function put(key, any) {
 }
 
 function get(key) {
+  getCount += 1;
   var jsonString =  cache.get("#" + key + "#");
   if(jsonString === null) {
     return getAny(key);

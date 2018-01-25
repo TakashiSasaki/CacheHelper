@@ -54,6 +54,25 @@ function LocalCache() {
     }
     this.removeCount = removeCount;
   }
+
+  this.resetCount = function(){
+    this.getCount = 0;
+    this.getAllCount = 0;
+    this.putCount = 0;
+    this.putAllCount = 0;
+    this.removeCount = 0;
+    this.removeAllCount = 0;
+  }
+
+  this.showCount = function(){
+    console.log("LocalCache.putCount       = " + cache.putCount);
+    console.log("LocalCache.getCount       = " + cache.getCount);
+    console.log("LocalCache.removeCount    = " + cache.removeCount);
+    console.log("LocalCache.putAllCount    = " + cache.putAllCount);
+    console.log("LocalCache.getAllCount    = " + cache.getAllCount);
+    console.log("LocalCache.removeAllCount = " + cache.removeAllCount);
+  }
+
 }//LocalCache
 
 if(exports === undefined) exports = {};
