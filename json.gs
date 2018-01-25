@@ -10,10 +10,10 @@ getJsonLongStringCount = 0;
 function putJson(key, any) {
   putJsonCount += 1;
   var jsonString = JSON.stringify(any);
-  var all = {"TO BE REMOVED": getDerivedKeys(key)};
+  var all = {"TO BE REMOVED": getDerivedKeys_(key)};
   if(jsonString.length > nMaxValueLength){
     all["(" + key + ")"] = "LONG JSON STRING";
-    merge(all, putString("(" + key + ")", jsonString));
+    merge_(all, putString("(" + key + ")", jsonString));
   } else {
     all["(" + key + ")"] = jsonString;
   }
@@ -27,7 +27,7 @@ function putJson(key, any) {
 */
 function getJson(key, values){
   getJsonCount += 1;
-  values = prefetchAny(values, [key]);
+  values = prefetchAny_(values, [key]);
   if(values["(" + key + ")"] === "LONG JSON STRING") {
     getJsonLongStringCount += 1;
     var jsonString = getString("(" + key + ")", values);
@@ -37,20 +37,20 @@ function getJson(key, values){
   }
 }//getJson
 
-function resetJsonCount(){
+function resetJsonCount_(){
   putJsonCount = 0;
   getJsonCount = 0;
   getJsonLongStringCount = 0;
 }
 
-function showJsonCount(){
+function showJsonCount_(){
   Logger.log("putJsonCount = " + putJsonCount);
   Logger.log("getJsonCount = " + getJsonCount);
   Logger.log("getJsonLongStringCount = " + getJsonLongStringCount);
 }
 
 
-function testJson(){
+function testJson_(){
   Logger.log("testJson: begin");
   var nMaxValueLength_old = nMaxValueLength;
   nMaxValueLength = 10;
@@ -60,7 +60,7 @@ function testJson(){
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   };
-  commit(putJson("k", o));
+  commit_(putJson("k", o));
   var got = getJson("k");
   Logger.log(got);
   if(JSON.stringify(o) !== JSON.stringify(got)) throw "testJson: o != got.";
@@ -71,7 +71,7 @@ function testJson(){
 if(exports === undefined) exports = {};
 exports.putJson  = putJson;
 exports.getJson  = getJson;
-exports.testJson = testJson;
-exports.resetJsonCount = resetJsonCount;
-exports.showJsonCount = showJsonCount;
+exports.testJson = testJson_;
+exports.resetJsonCount = resetJsonCount_;
+exports.showJsonCount = showJsonCount_;
 

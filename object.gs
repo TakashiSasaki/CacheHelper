@@ -14,10 +14,10 @@ function putObject(key, object) {
   for(var i in object) {
     properties.push(i);
   }
-  var all = {"TO BE REMOVED": getDerivedKeys(key)};
+  var all = {"TO BE REMOVED": getDerivedKeys_(key)};
   all["{" + key + "}"] = JSON.stringify(properties);
   for(var i in object) {
-    merge(all, putAny("{" + key + "}" + i, object[i]));
+    merge_(all, putAny("{" + key + "}" + i, object[i]));
   }  
   return all;
 }//putObject
@@ -30,7 +30,7 @@ function getObject(key, values) {
   if(typeof key !== "string") throw "getObject: expects string key.";
   getObjectCount += 1;
   if(!(values instanceof Object)) {values = {};}
-  values = prefetchAny(values, [key]);
+  values = prefetchAny_(values, [key]);
   if(typeof values["{" + key + "}"] === "undefined") throw "getObject: key {" + key + "} not found.";
   var properties = JSON.parse(values["{" + key + "}"]);
   if(!(properties instanceof Array)) throw "getObject: no array in {" + key + "}.";
@@ -38,7 +38,7 @@ function getObject(key, values) {
   for(var i=0; i<properties.length; ++i) {
     keys.push("{" + key + "}" + properties[i]);
   }
-  prefetchAny(values, keys);
+  values = prefetchAny_(values, keys);
   var result = {};
   for(var i=0; i<properties.length; ++i) {
     if(typeof values["${" + key + "}" + properties[i] + "$"] === "string") {
@@ -62,21 +62,21 @@ function getObject(key, values) {
   return result;
 }//getObject
 
-function testObject(){
-  Logger.log("testObject: begin");
+function testObject_(){
+  Logger.log("testObject_: begin");
   var o = {
     a: 1,
     b: null,
     c: "hello"
   };
-  commit(putObject("k", o));
+  commit_(putObject("k", o));
   var got = getObject("k");
-  if(JSON.stringify(o) !== JSON.stringify(got)) throw "testObject: o != got.";
-  Logger.log("testObject: end");
+  if(JSON.stringify(o) !== JSON.stringify(got)) throw "testObject_: o != got.";
+  Logger.log("testObject_: end");
 }
 
-function testObject1(){
-  Logger.log("testObject1: begin");
+function testObject1_(){
+  Logger.log("testObject1_: begin");
   var o0 = {
     aaa : 1,
     bbb : "こんにちは",
@@ -85,60 +85,60 @@ function testObject1(){
     2 : 222,
     3 : 333
   }
-  commit(putObject("testObject1" ,o0));
-  var o0got = getObject("testObject1");
-  if(JSON.stringify(o0) !== JSON.stringify(o0got)) throw "testObject1: o0 does not match.";
+  commit_(putObject("testObject1_" ,o0));
+  var o0got = getObject("testObject1_");
+  if(JSON.stringify(o0) !== JSON.stringify(o0got)) throw "testObject1_: o0 does not match.";
   
   var o1 = {a:"aaa", b:"bbb", 1:0.111, 2:0.222};
-  commit(putObject("testObject1", o1));
-  var o1got = getObject("testObject1");
+  commit_(putObject("testObject1_", o1));
+  var o1got = getObject("testObject1_");
   if(JSON.stringify(o1) !== JSON.stringify(o1got)) throw "testObjct1: o1 does not match.";
 
   var o2 = {a:null, b:false}; // b is ignored when it converted to JSON representation.
-  commit(putObject("testObject1", o2));
-  var o2got = getObject("testObject1");  
-  if(JSON.stringify(o2) !== JSON.stringify(o2got)) throw "testObject1: o2 does not match.";
-  Logger.log("testObject1: end");
+  commit_(putObject("testObject1_", o2));
+  var o2got = getObject("testObject1_");  
+  if(JSON.stringify(o2) !== JSON.stringify(o2got)) throw "testObject1_: o2 does not match.";
+  Logger.log("testObject1_: end");
 }
 
-function resetObjectCount(){
+function resetObjectCount_(){
   putObjectCount = 0;
   getObjectCount = 0;
 }
 
-function showObjectCount(){
+function showObjectCount_(){
   Logger.log("putObjectCount = " + putObjectCount);
   Logger.log("getObjectCount = " + getObjectCount);
 }
 
 
-function testObject2(){
-  Logger.log("testObject2: begin");
+function testObject2_(){
+  Logger.log("testObject2_: begin");
   var o1 = {aaa: 1111, bbb: "2222", ccc: null};
   var k1 = "keykeyley";
-  commit(putObject(k1, o1));
+  commit_(putObject(k1, o1));
   var o1get = getObject(k1);
   if(JSON.stringify(o1) != JSON.stringify(o1get)) throw new Error("o1 and o1get is not equivalent");
-  Logger.log("testObject2: end");
+  Logger.log("testObject2_: end");
 }
 
-function testObject3(){
-  Logger.log("testObject3: begin");
+function testObject3_(){
+  Logger.log("testObject3_: begin");
   var o1 = {aaa: 1111, bbb: "2222", ccc: null};
   var k1 = "keykeykey5";
-  commit(putObject(k1, o1));
+  commit_(putObject(k1, o1));
   var o1get = getObject(k1);
   if(JSON.stringify(o1) != JSON.stringify(o1get)) throw new Error("o1 and o1get is not equivalent");
-  Logger.log("testObject3: end");
+  Logger.log("testObject3_: end");
 }
 
 if(exports === undefined) exports = {};
 exports.putObject   = putObject;
 exports.getObject   = getObject;
-exports.resetObjectCount = resetObjectCount;
-exports.showObjectCount = showObjectCount;
-exports.testObject  = testObject;
-exports.testObject1 = testObject1;
-exports.testObject2 = testObject2;
-exports.testObject3 = testObject3;
+exports.resetObjectCount = resetObjectCount_;
+exports.showObjectCount = showObjectCount_;
+exports.testObject  = testObject_;
+exports.testObject1 = testObject1_;
+exports.testObject2 = testObject2_;
+exports.testObject3 = testObject3_;
 

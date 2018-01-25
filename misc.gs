@@ -14,7 +14,7 @@ function setCache(cache) {
   global.cache = cache;
 }
 
-function commit(all, key){
+function commit_(all, key){
   cache.removeAll(all["TO BE REMOVED"]);
   delete all["TO BE REMOVED"];
   if(typeof key === "string") {
@@ -31,7 +31,7 @@ function put(key, any) {
   if(!(all instanceof Object)) throw "put: !(all instanceof Object).";
   var keys = Object.keys(all);
   all["#" + key + "#"] = JSON.stringify(keys);
-  commit(all, key);
+  commit_(all, key);
   return all;
 }
 
@@ -49,17 +49,11 @@ function get(key) {
   } 
 }
 
-function getDerivedKeys(key){
+function getDerivedKeys_(key){
   return ["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}", "#" + key + "#"];
 }
 
-function appendDerivedKeys(array, key){
-  var keys = getDerivedKeys(key);
-  Array.prototype.push.apply(array, keys);
-  return array;
-}
-
-function merge(o1, o2){
+function merge_(o1, o2){
   var remove1 = o1["TO BE REMOVED"];
   var remove2 = o2["TO BE REMOVED"];
   if(remove1 === undefined) remove1 = [];
@@ -72,9 +66,9 @@ function merge(o1, o2){
   return o1;
 }
 
-function prefetch(values, keys) {
+function prefetch_(values, keys) {
   if(typeof values === "undefined") values = {};
-  if(!(keys instanceof Array)) throw "prefetch: keys should be an array.";
+  if(!(keys instanceof Array)) throw "prefetch_: keys should be an array.";
   for(var i in keys) {
     if(typeof values[keys[i]] === "undefined") {
       prefetchCount += 1;
@@ -86,11 +80,11 @@ function prefetch(values, keys) {
     }
   }
   return values;
-}//prefetch
+}//prefetch_
 
-function prefetchAny(values, keys) {
+function prefetchAny_(values, keys) {
   if(typeof values === "undefined") values = {};
-  if(!(keys instanceof Array)) throw "prefetchAny: keys should be an array.";
+  if(!(keys instanceof Array)) throw "prefetchAny_: keys should be an array.";
   var bNeedToGet = false;
   for(var i in keys) {
     if(typeof values["$" + keys[i] + "$"] === "undefined" &&
@@ -101,7 +95,7 @@ function prefetchAny(values, keys) {
   if(bNeedToGet == false) return values;
   var keysToGet = [];
   for(var j in keys) {
-    if(typeof keys[j] !== "string") throw "prefetchAny: key should be a strign.";
+    if(typeof keys[j] !== "string") throw "prefetchAny_: key should be a strign.";
     keysToGet.push(keys[j]);
     keysToGet.push("$" + keys[j] + "$");
     keysToGet.push("$" + keys[j] + "$0");
@@ -110,33 +104,33 @@ function prefetchAny(values, keys) {
     keysToGet.push("{" + keys[j] + "}");
     keysToGet.push("(" + keys[j] + ")");
   }
-  Logger.log("prefetchAny: keysToGet = " + keysToGet);
-  return prefetch(values, keysToGet);
-}//prefetchAny
+  Logger.log("prefetchAny_: keysToGet = " + keysToGet);
+  return prefetch_(values, keysToGet);
+}//prefetchAny_
 
 
-function test1(){
-  Logger.log("test1: begin");
+function test1_(){
+  Logger.log("test1_: begin");
   var o = {
     a : 1,
     b: null,
     c: false,
     d: [ "hello", 1.23, null]
   }
-  var all = put("test1", o);
+  var all = put("test1_", o);
   Logger.log(all);
-  if(JSON.stringify(o) !== JSON.stringify(get("test1"))) throw "test1: o != get(\"test1\").";
-  Logger.log("test1: end");
+  if(JSON.stringify(o) !== JSON.stringify(get("test1_"))) throw "test1_: o != get(\"test1_\").";
+  Logger.log("test1_: end");
 }
 
 
 if(exports === undefined) exports = {};
-exports.getDerivedKeys = getDerivedKeys;
-exports.commit         = commit;
+exports.getDerivedKeys_= getDerivedKeys_;
+exports.commit_        = commit_;
 exports.putCount       = putCount;
 exports.getCount       = getCount;
 exports.prefetchCount  = prefetchCount;
-exports.test1          = test1;
-exports.merge          = merge;
-exports.prefetch       = prefetch;
-exports.prefetchAny    = prefetchAny;
+exports.test1          = test1_;
+exports.merge_         = merge_;
+exports.prefetch_      = prefetch_;
+exports.prefetchAny_   = prefetchAny_;

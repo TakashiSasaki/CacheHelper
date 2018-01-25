@@ -34,8 +34,8 @@ function putAny(key, any){
 */
 function getAny(key, values){
   getAnyCount += 1;
-  if(values === undefined) values={};
-  prefetchAny(values, [key]);
+  //if(values === undefined) values={};
+  values = prefetchAny_(values, [key]);
   if(values["$" + key + "$"]) {
     return getString(key, values);
   }
@@ -51,53 +51,53 @@ function getAny(key, values){
   throw "getAny: key " + key + " not found.";
 }
 
-function resetAnyCount(){
+function resetAnyCount_(){
   putAnyCount = 0;
   getAnyCount = 0;
 }
 
-function showAnyCount(){
+function showAnyCount_(){
   Logger.log("putAnyCount = " + putAnyCount);
   Logger.log("getAnyCount = " + getAnyCount);
 }
 
 
-function testAnyNull(){
+function testAnyNull_(){
   Logger.log("testAnyNull: begin");
   var all = putAny("k", null);
-  commit(all); 
+  commit_(all); 
   var got = getAny("k");
   if(got !== null) throw "testAnyNull: null is expected.";
   Logger.log("testAnyNull: end");
 }
 
-function testAnyEmptyString(){
+function testAnyEmptyString_(){
   Logger.log("testAnyEmptyString: beign");
   var all = putAny("testAnyEmptyString", "");
-  commit(all);
+  commit_(all);
   var got = getAny("testAnyEmptyString");
   if(got !== "") throw "testAnyEmptyString: empty string is expected.";
   if(got.length !== 0) throw "testAnyEmptyString: length should be 0.";
   Logger.log("testAnyEmptyString: end");
 }
 
-function testAnyBoolean(){
+function testAnyBoolean_(){
   Logger.log("testAnyBoolean: begin");
   var all = putAny("testAnyBoolean", true);
-  commit(all);
+  commit_(all);
   var got = getAny("testAnyBoolean");
   if(got !== true) throw "testAnyBoolean: true is expected.";
   var all = putAny("testAnyBoolean", false);
-  commit(all);
+  commit_(all);
   var got = getAny("testAnyBoolean");
   if(got !== false) throw "testAnyBoolean: false is expected.";
   Logger.log("testAnyBoolean: end");
 }
 
-function testAnyNumber(){
+function testAnyNumber_(){
   Logger.log("testAnyNumber: begin");
   var all = putAny("testAnyNumber", 1.234E6);
-  commit(all);
+  commit_(all);
   var got = getAny("testAnyNumber");
   if(got !== 1.234E6) throw "testAnyNumber: 1.234E6 is expected.";
   Logger.log("testAnyNumber: end");
@@ -106,10 +106,10 @@ function testAnyNumber(){
 if(typeof exports === "undefined") exports = {};
 exports.putAny             = putAny;
 exports.getAny             = getAny;
-exports.testAnyNull        = testAnyNull;
-exports.testAnyEmptyString = testAnyEmptyString;
-exports.testAnyBoolean     = testAnyBoolean;
-exports.testAnyNumber      = testAnyNumber;
-exports.showAnyCount       = showAnyCount;
-exports.resetAnyCount      = resetAnyCount;
+exports.testAnyNull        = testAnyNull_;
+exports.testAnyEmptyString = testAnyEmptyString_;
+exports.testAnyBoolean     = testAnyBoolean_;
+exports.testAnyNumber      = testAnyNumber_;
+exports.showAnyCount       = showAnyCount_;
+exports.resetAnyCount      = resetAnyCount_;
 
