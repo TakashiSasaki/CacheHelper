@@ -31,21 +31,25 @@ function getObject(key, values) {
   if(typeof key !== "string") throw "getObject: expects string key.";
   getObjectCount += 1;
   if(!(values instanceof Object)) {values = {};}
-  if(values["{" + key + "}"] === undefined) {
-    getObjectPrefetchMissedCount += 1;
-    prefetch(values, ["{" + key + "}"]);
-    if(values["{" + key + "}"] === null) throw "getObject: key {" + key + "} not found.";
-  }
+  prefetchAny(values, [key]);
+  //if(values["{" + key + "}"] === undefined) {
+  //  getObjectPrefetchMissedCount += 1;
+  //  prefetch(values, ["{" + key + "}"]);
+  //  if(values["{" + key + "}"] === null) throw "getObject: key {" + key + "} not found.";
+  //}
+  if(typeof values["{" + key + "}"] === "undefined") throw "getObject: key {" + key + "} not found.";
   var properties = JSON.parse(values["{" + key + "}"]);
   if(!(properties instanceof Array)) throw "getObject: no array in {" + key + "}.";
   var keys = [];
   for(var i=0; i<properties.length; ++i) {
-    keys.push("${" + key + "}" + properties[i] + "$");
-    keys.push("({" + key + "}" + properties[i] + ")");
-    keys.push("{{" + key + "}" + properties[i] + "}");
-    keys.push("[{" + key + "}" + properties[i] + "]");
+    keys.push("{" + key + "}" + properties[i]);
+    //keys.push("${" + key + "}" + properties[i] + "$");
+    //keys.push("({" + key + "}" + properties[i] + ")");
+    //keys.push("{{" + key + "}" + properties[i] + "}");
+    //keys.push("[{" + key + "}" + properties[i] + "]");
   }
-  prefetch(values, keys);
+  //prefetch(values, keys);
+  prefetchAny(values, keys);
   //merge(values, cache.getAll(keys));
   var result = {};
   for(var i=0; i<properties.length; ++i) {
@@ -65,6 +69,7 @@ function getObject(key, values) {
       result[properties[i]] = getArray("{" + key + "}" + properties[i], values);
       continue;
     }
+    throw "getObject: any type of value is not found for {" + key  + "}" + properties[i];
   }
   return result;
 }//getObject

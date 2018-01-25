@@ -77,7 +77,35 @@ function prefetch(values, keys){
     values[i] = fetched[i];
   }
   return values;
-}
+}//prefetch
+
+function prefetchAny(values, keys) {
+  if(!(values instanceof Object)) throw "prefetchAny: values should be an object.";
+  if(!(keys instanceof Array)) throw "prefetchAny: keys should be an array.";
+  var bNeedToGet = false;
+  for(var i in keys) {
+    if(typeof values[keys[i]] === "undefined") bNeedToGet = true;
+    if(typeof values["$" + keys[i] + "$"] === "undefined" &&
+        typeof values["(" + keys[i] + ")"] === "undefined" &&
+        typeof values["{" + keys[i] + "}"] === "undefined" &&
+        typeof values["[" + keys[i] + "]"] === "undefined") bNeedToGet = true;
+  }
+  if(bNeedToGet == false) return values;
+  var keysToGet = [];
+  for(var j in keys) {
+    keysToGet.push(keys[j]);
+    keysToGet.push("$" + keys[j] + "$");
+    keysToGet.push("[" + keys[j] + "]");
+    keysToGet.push("{" + keys[j] + "}");
+    keysToGet.push("(" + keys[j] + ")");
+  }
+  var fetched = cache.getAll(keysToGet);
+  for(var k in fetched) {
+    values[k] = fetched[k];
+  }
+  return values;
+}//prefetchAny
+
 
 function test1(){
   Logger.log("test1: begin");
@@ -101,4 +129,5 @@ exports.putCount       = putCount;
 exports.getCount       = getCount;
 exports.test1          = test1;
 exports.merge          = merge;
-exports.prefetch       = prefetch;
+//exports.prefetch       = prefetch;
+exports.prefetchAny    = prefetchAny;

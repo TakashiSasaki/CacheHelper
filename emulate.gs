@@ -8,6 +8,7 @@ function LocalCache() {
   this.removeAllCount = 0;
   
   this.get = function(key) {
+    if(typeof key !== "string") throw "LocalCache.get: key should be string.";
     this.getCount += 1;
     var value = this.cache[key];
     if(value === undefined) return null;
@@ -15,6 +16,8 @@ function LocalCache() {
   }
   
   this.put = function(key, value) {
+    if(typeof key !== "string") throw "LocalCache.put: key should be string.";
+    if(typeof value === "undefined") throw "LocalCache.put: value is undefined.";
     this.putCount += 1;
     this.cache[key] = value;
   }
@@ -25,7 +28,9 @@ function LocalCache() {
     var result = {};
     for(var i in keys) {
       var key = keys[i];
-      result[key] = this.get(key);
+      var value = this.get(key);
+      if(value === null) continue;
+      result[key] = value;
     }
     this.getCount = getCount;
     return result;
