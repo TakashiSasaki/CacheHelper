@@ -60,6 +60,8 @@ testJson();
 resetStringCount();
 resetArrayCount();
 resetObjectCount();
+resetJsonCount();
+resetAnyCount();
 cache.resetCount();
 test1();
 
@@ -67,6 +69,8 @@ cache.showCount();
 showStringCount();
 showArrayCount();
 showObjectCount();
+showJsonCount();
+showAnyCount();
 
 function testAll(){
   for(var i in global) {

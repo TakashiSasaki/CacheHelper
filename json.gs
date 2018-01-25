@@ -42,6 +42,21 @@ function getJson(key, values){
   }
 }//getJson
 
+function resetJsonCount(){
+  putJsonCount = 0;
+  getJsonCount = 0;
+  getJsonPrefetchMissedCount = 0;
+  getJsonLongStringCount = 0;
+}
+
+function showJsonCount(){
+  Logger.log("putJsonCount = " + putJsonCount);
+  Logger.log("getJsonCount = " + getJsonCount);
+  Logger.log("getJsonPrefetchMissedCount = " + getJsonPrefetchMissedCount);
+  Logger.log("getJsonLongStringCount = " + getJsonLongStringCount);
+}
+
+
 function testJson(){
   Logger.log("testJson: begin");
   var nMaxValueLength_old = nMaxValueLength;
@@ -64,4 +79,6 @@ if(exports === undefined) exports = {};
 exports.putJson  = putJson;
 exports.getJson  = getJson;
 exports.testJson = testJson;
-exports.getJsonPrefetchMissedCount = getJsonPrefetchMissedCount;
+exports.resetJsonCount = resetJsonCount;
+exports.showJsonCount = showJsonCount;
+

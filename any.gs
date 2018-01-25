@@ -1,5 +1,6 @@
 putAnyCount = 0;
 getAnyCount = 0;
+
 /**
   @param {Any} any object, string, number, boolean or null
   @param {string} key
@@ -50,6 +51,17 @@ function getAny(key, values){
   throw "getAny: key " + key + " not found.";
 }
 
+function resetAnyCount(){
+  putAnyCount = 0;
+  getAnyCount = 0;
+}
+
+function showAnyCount(){
+  Logger.log("putAnyCount = " + putAnyCount);
+  Logger.log("getAnyCount = " + getAnyCount);
+}
+
+
 function testAnyNull(){
   Logger.log("testAnyNull: begin");
   var all = putAny("k", null);
@@ -98,4 +110,6 @@ exports.testAnyNull        = testAnyNull;
 exports.testAnyEmptyString = testAnyEmptyString;
 exports.testAnyBoolean     = testAnyBoolean;
 exports.testAnyNumber      = testAnyNumber;
+exports.showAnyCount       = showAnyCount;
+exports.resetAnyCount      = resetAnyCount;
 
