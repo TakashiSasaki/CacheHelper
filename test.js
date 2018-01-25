@@ -1,5 +1,5 @@
 if(global.Logger === undefined) global.Logger = console;
-LocalCache = require("./emulate.gs").LocalCache;
+LocalCache = require("./emulate.js").LocalCache;
 global.cache = new LocalCache();
 
 
