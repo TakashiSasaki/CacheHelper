@@ -72,5 +72,7 @@ function test1(){
 
 if(exports === undefined) exports = {};
 exports.getDerivedKeys = getDerivedKeys;
-exports.removeAndPut = removeAndPut;
-exports.test1 = test1;
+exports.removeAndPut   = removeAndPut;
+exports.putCount       = putCount;
+exports.getCount       = getCount;
+exports.test1          = test1;
