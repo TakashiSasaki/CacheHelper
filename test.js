@@ -12,6 +12,8 @@ testJson           = require("./json.gs").testJson;
 getJsonPrefetchMissedCount =  require("./json.gs").getJsonPrefetchMissedCount;
 putString          = require("./string.gs").putString;
 getString          = require("./string.gs").getString;
+resetStringCount   = require("./string.gs").resetStringCount;
+showStringCount    = require("./string.gs").showStringCount;
 testString1        = require("./string.gs").testString1;
 testString2        = require("./string.gs").testString2;
 putAny             = require("./any.gs").putAny;
@@ -44,10 +46,13 @@ testObject3();
 testArray1();
 testArray2();
 testJson();
+
+resetStringCount();
 cache.resetCount();
 test1();
 
 cache.showCount();
+showStringCount();
 console.log("getJsonPrefetchMissedCount = " + getJsonPrefetchMissedCount);
 
 function testAll(){
