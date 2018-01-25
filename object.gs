@@ -33,7 +33,7 @@ function getObject(key, values) {
   if(!(values instanceof Object)) {values = {};}
   if(values["{" + key + "}"] === undefined) {
     getObjectPrefetchMissedCount += 1;
-    values["{" + key + "}"] =  cache.get("{" + key + "}");
+    prefetch(values, ["{" + key + "}"]);
     if(values["{" + key + "}"] === null) throw "getObject: key {" + key + "} not found.";
   }
   var properties = JSON.parse(values["{" + key + "}"]);
