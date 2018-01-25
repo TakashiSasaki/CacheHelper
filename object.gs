@@ -1,5 +1,6 @@
 putObjectCount = 0;
 getObjectCount = 0;
+getObjectPrefetchMissedCount = 0;
 
 /**
   @param {string} key
@@ -31,6 +32,7 @@ function getObject(key, values) {
   getObjectCount += 1;
   if(values === undefined) {values = {};}
   if(values["{" + key + "}"] === undefined) {
+    getObjectPrefetchMissedCount += 1;
     values["{" + key + "}"] =  cache.get("{" + key + "}");
     if(values["{" + key + "}"] === null) throw "getObject: key {" + key + "} not found.";
   }
@@ -105,6 +107,19 @@ function testObject1(){
   Logger.log("testObject1: end");
 }
 
+function resetObjectCount(){
+  putObjectCount = 0;
+  getObjectCount = 0;
+  getObjectPrefetchMissedCount = 0;
+}
+
+function showObjectCount(){
+  Logger.log("putObjectCount = " + putObjectCount);
+  Logger.log("getObjectCount = " + getObjectCount);
+  Logger.log("getObjectPrefetchMissedCount = " + getObjectPrefetchMissedCount);
+}
+
+
 function testObject2(){
   Logger.log("testObject2: begin");
   var o1 = {aaa: 1111, bbb: "2222", ccc: null};
@@ -128,6 +143,8 @@ function testObject3(){
 if(exports === undefined) exports = {};
 exports.putObject   = putObject;
 exports.getObject   = getObject;
+exports.resetObjectCount = resetObjectCount;
+exports.showObjectCount = showObjectCount;
 exports.testObject  = testObject;
 exports.testObject1 = testObject1;
 exports.testObject2 = testObject2;
