@@ -28,11 +28,12 @@ function putJson(key, any) {
 */
 function getJson(key, values){
   getJsonCount += 1;
-  if(values === undefined) values = {};
-  if(values["(" + key + ")"] === undefined) {
-    getJsonPrefetchMissedCount += 1;
-    prefetchAny(values, [key]);
-  }
+  values = prefetchAny(values, [key]);
+  //if(values === undefined) values = {};
+  //if(values["(" + key + ")"] === undefined) {
+  //  getJsonPrefetchMissedCount += 1;
+  //  prefetchAny(values, [key]);
+  //}
   if(values["(" + key + ")"] === "LONG JSON STRING") {
     getJsonLongStringCount += 1;
     var jsonString = getString("(" + key + ")", values);

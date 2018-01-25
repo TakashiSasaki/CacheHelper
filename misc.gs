@@ -70,7 +70,7 @@ function merge(o1, o2){
 }
 
 function prefetchAny(values, keys) {
-  if(!(values instanceof Object)) throw "prefetchAny: values should be an object.";
+  if(!(values instanceof Object)) values = {};
   if(!(keys instanceof Array)) throw "prefetchAny: keys should be an array.";
   var bNeedToGet = false;
   for(var i in keys) {
@@ -83,9 +83,12 @@ function prefetchAny(values, keys) {
   if(bNeedToGet == false) return values;
   var keysToGet = [];
   for(var j in keys) {
+    if(typeof keys[j] !== "string") throw "prefetchAny: key should be a strign.";
     keysToGet.push(keys[j]);
     keysToGet.push("$" + keys[j] + "$");
+    keysToGet.push("$" + keys[j] + "$0");
     keysToGet.push("[" + keys[j] + "]");
+    keysToGet.push("[" + keys[j] + "]0");
     keysToGet.push("{" + keys[j] + "}");
     keysToGet.push("(" + keys[j] + ")");
   }

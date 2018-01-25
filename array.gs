@@ -27,11 +27,13 @@ function putArray(key, array) {
 function getArray(key, values){
   if(typeof key !== "string") throw "getArray: expects string key.";
   getArrayCount += 1;
-  if(values === undefined) {values = {};}
-  if(values["[" + key + "]"] === undefined) {
-    values["[" + key + "]"] = cache.get("[" + key + "]");
-    if(values["[" + key + "]"] === null) throw "getArray: [" + key + "] not found";
-  }
+  values = prefetchAny(values, [key]);
+  //if(values === undefined) {values = {};}
+  //if(values["[" + key + "]"] === undefined) {
+  //  values["[" + key + "]"] = cache.get("[" + key + "]");
+  //  if(values["[" + key + "]"] === null) throw "getArray: [" + key + "] not found";
+  //}
+  if(typeof values["[" + key + "]"] === "undefined") throw "getArray: [" + key + "] not found";
   var length = parseInt(values["[" + key + "]"]);
   var result = [];
   for(var i=0; i < length; ++i) {
