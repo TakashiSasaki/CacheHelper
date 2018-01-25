@@ -86,7 +86,7 @@ exports.getArray   = getArray;
 exports.putArray   = putArray;
 exports.testArray1 = testArray1;
 exports.testArray2 = testArray2;
-exports.merge      = merge;
+//exports.merge      = merge;
 exports.resetArrayCount = resetArrayCount;
 exports.showArrayCount = showArrayCount;
 

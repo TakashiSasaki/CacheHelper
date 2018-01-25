@@ -69,6 +69,16 @@ function merge(o1, o2){
   return o1;
 }
 
+function prefetch(values, keys){
+  if(!(values instanceof Object)) throw "prefetch: values should be an object.";
+  if(!(keys instanceof Array)) throw "prefetch: keys should be an array.";
+  var fetched = cache.getAll(keys);
+  for(var i in fetched) {
+    values[i] = fetched[i];
+  }
+  return values;
+}
+
 function test1(){
   Logger.log("test1: begin");
   var o = {
@@ -90,3 +100,5 @@ exports.commit         = commit;
 exports.putCount       = putCount;
 exports.getCount       = getCount;
 exports.test1          = test1;
+exports.merge          = merge;
+exports.prefetch       = prefetch;

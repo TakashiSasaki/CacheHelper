@@ -45,7 +45,8 @@ function getObject(key, values) {
     keys.push("{{" + key + "}" + properties[i] + "}");
     keys.push("[{" + key + "}" + properties[i] + "]");
   }
-  merge(values, cache.getAll(keys));
+  prefetch(values, keys);
+  //merge(values, cache.getAll(keys));
   var result = {};
   for(var i=0; i<properties.length; ++i) {
     if(typeof values["${" + key + "}" + properties[i] + "$"] === "string") {
