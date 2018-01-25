@@ -30,7 +30,7 @@ function putObject(key, object) {
 function getObject(key, values) {
   if(typeof key !== "string") throw "getObject: expects string key.";
   getObjectCount += 1;
-  if(values === undefined) {values = {};}
+  if(!(values instanceof Object)) {values = {};}
   if(values["{" + key + "}"] === undefined) {
     getObjectPrefetchMissedCount += 1;
     values["{" + key + "}"] =  cache.get("{" + key + "}");
