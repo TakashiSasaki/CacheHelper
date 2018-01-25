@@ -32,8 +32,6 @@ function getJson(key, values){
   if(values["(" + key + ")"] === undefined) {
     getJsonPrefetchMissedCount += 1;
     prefetchAny(values, [key]);
-    //prefetch(values,[ "(" + key + ")", "$(" + key + ")$" ]);
-    //merge(values, cache.getAll([ "(" + key + ")", "$(" + key + ")$" ]));
   }
   if(values["(" + key + ")"] === "LONG JSON STRING") {
     getJsonLongStringCount += 1;

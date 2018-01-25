@@ -44,8 +44,6 @@ function getString(key, values) {
     keys.push("$" + key + "$" + i);
   }
   prefetchAny(values, keys);
-  //merge(values, cache.getAll(keys));
-  //if(valueStrings === null) return null;
   var result = [];
   for(var i=0; i<length; ++i) {
     var s = values["$" + key + "$" + i];

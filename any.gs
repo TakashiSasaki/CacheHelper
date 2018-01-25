@@ -35,9 +35,7 @@ function putAny(key, any){
 function getAny(key, values){
   getAnyCount += 1;
   if(values === undefined) values={};
-  //prefetch(values, ["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"]);
   prefetchAny(values, [key]);
-  //merge(values, cache.getAll(["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"]));
   if(values["$" + key + "$"]) {
     return getString(key, values);
   }
