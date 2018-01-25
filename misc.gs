@@ -39,9 +39,11 @@ function get(key) {
   getCount += 1;
   var jsonString =  cache.get("#" + key + "#");
   if(jsonString === null) {
+    console.log("get: #" + key + "# not found");
     return getAny(key);
   } else { 
     var keys = JSON.parse(jsonString);
+    console.log("get: hint found. " + keys);
     var values = cache.getAll(keys);
     return getAny(key, values);
   } 
@@ -70,12 +72,28 @@ function merge(o1, o2){
   return o1;
 }
 
+function prefetch(values, keys) {
+  if(typeof values === "undefined") values = {};
+  if(!(keys instanceof Array)) throw "prefetch: keys should be an array.";
+  for(var i in keys) {
+    if(typeof values[keys[i]] === "undefined") {
+      prefetchCount += 1;
+      var got = cache.getAll(keys);
+      for(var j in got) {
+        values[j] = got[j];
+      }
+      return values;
+    }
+  }
+  return values;
+}//prefetch
+
 function prefetchAny(values, keys) {
-  if(!(values instanceof Object)) values = {};
+  if(typeof values === "undefined") values = {};
   if(!(keys instanceof Array)) throw "prefetchAny: keys should be an array.";
   var bNeedToGet = false;
   for(var i in keys) {
-    if(typeof values[keys[i]] === "undefined") bNeedToGet = true;
+    //if(typeof values[keys[i]] === "undefined") bNeedToGet = true;
     if(typeof values["$" + keys[i] + "$"] === "undefined" &&
         typeof values["(" + keys[i] + ")"] === "undefined" &&
         typeof values["{" + keys[i] + "}"] === "undefined" &&
@@ -93,12 +111,13 @@ function prefetchAny(values, keys) {
     keysToGet.push("{" + keys[j] + "}");
     keysToGet.push("(" + keys[j] + ")");
   }
-  prefetchCount += 1;
-  var fetched = cache.getAll(keysToGet);
-  for(var k in fetched) {
-    values[k] = fetched[k];
-  }
-  return values;
+  console.log("prefetchAny: keysToGet = " + keysToGet);
+  return prefetch(values, keysToGet);
+  //var fetched = cache.getAll(keysToGet);
+  //for(var k in fetched) {
+  //  values[k] = fetched[k];
+  //}
+  //return values;
 }//prefetchAny
 
 
@@ -125,4 +144,5 @@ exports.getCount       = getCount;
 exports.prefetchCount  = prefetchCount;
 exports.test1          = test1;
 exports.merge          = merge;
+exports.prefetch       = prefetch;
 exports.prefetchAny    = prefetchAny;

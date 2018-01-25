@@ -63,7 +63,9 @@ resetObjectCount();
 resetJsonCount();
 resetAnyCount();
 cache.resetCount();
+console.log("prefetchCount = " + prefetchCount);
 test1();
+console.log("prefetchCount = " + prefetchCount);
 
 cache.showCount();
 showStringCount();

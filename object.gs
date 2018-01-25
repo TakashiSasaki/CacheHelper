@@ -30,7 +30,7 @@ function getObject(key, values) {
   if(typeof key !== "string") throw "getObject: expects string key.";
   getObjectCount += 1;
   if(!(values instanceof Object)) {values = {};}
-  prefetchAny(values, [key]);
+  values = prefetchAny(values, [key]);
   if(typeof values["{" + key + "}"] === "undefined") throw "getObject: key {" + key + "} not found.";
   var properties = JSON.parse(values["{" + key + "}"]);
   if(!(properties instanceof Array)) throw "getObject: no array in {" + key + "}.";

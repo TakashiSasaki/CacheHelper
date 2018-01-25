@@ -38,7 +38,7 @@ function getString(key, values) {
   for(var i=0; i<length; ++i) {
     keys.push("$" + key + "$" + i);
   }
-  prefetchAny(values, keys);
+  prefetch(values, keys);
   var result = [];
   for(var i=0; i<length; ++i) {
     var s = values["$" + key + "$" + i];
