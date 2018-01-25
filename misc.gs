@@ -64,7 +64,8 @@ function test1(){
     c: false,
     d: [ "hello", 1.23, null]
   }
-  put("test1", o);
+  var all = put("test1", o);
+  Logger.log(all);
   if(JSON.stringify(o) !== JSON.stringify(get("test1"))) throw "test1: o != get(\"test1\").";
   Logger.log("test1: end");
 }
