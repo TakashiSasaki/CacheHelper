@@ -1,6 +1,5 @@
 putObjectCount = 0;
 getObjectCount = 0;
-getObjectPrefetchMissedCount = 0;
 
 /**
   @param {string} key
@@ -105,13 +104,11 @@ function testObject1(){
 function resetObjectCount(){
   putObjectCount = 0;
   getObjectCount = 0;
-  getObjectPrefetchMissedCount = 0;
 }
 
 function showObjectCount(){
   Logger.log("putObjectCount = " + putObjectCount);
   Logger.log("getObjectCount = " + getObjectCount);
-  Logger.log("getObjectPrefetchMissedCount = " + getObjectPrefetchMissedCount);
 }
 
 

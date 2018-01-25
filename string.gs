@@ -1,7 +1,6 @@
 nMaxValueLength = 50000;
 putStringCount = 0;
 getStringCount = 0;
-getStringPrefetchMissedCount = 0;
 
 /**
   @param {string} key
@@ -31,12 +30,6 @@ function getString(key, values) {
   if(typeof key !== "string") throw "getString: expects string key.";
   getStringCount += 1;
   values = prefetchAny(values, [key]);
-  //if(values === undefined) values = {};
-  //if(values["$" + key + "$"] === undefined) {
-  //  getStringPrefetchMissedCount += 1;
-  //  values["$" + key + "$"] = cache.get("$" + key + "$");
-  //  if(values["$" + key + "$"] === null) throw "getString: key $" + key + "$ not found.";
-  //}
   if(typeof values["$" + key + "$"] === "undefined") throw "getString: key $" + key + "$ not found.";
   var length = parseInt(values["$" + key + "$"]);
   if(length == 0) return "";
@@ -99,13 +92,11 @@ function testString2(){
 function showStringCount(){
   Logger.log("putStringCount = " + putStringCount);
   Logger.log("getStringCount = " + getStringCount);
-  Logger.log("getStringPrefetchMissedCount = " + getStringPrefetchMissedCount);
 }
 
 function resetStringCount(){
   getStringCount = 0;
   putStringCount = 0;
-  getStringPrefetchMissedCount = 0;
 }
 
 if(exports === undefined) exports = {};

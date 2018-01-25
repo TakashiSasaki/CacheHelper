@@ -1,6 +1,5 @@
 putArrayCount = 0;
 getArrayCount = 0;
-getArrayPrefetchMissedCount = 0;
 
 /**
   @param {string} key
@@ -28,11 +27,6 @@ function getArray(key, values){
   if(typeof key !== "string") throw "getArray: expects string key.";
   getArrayCount += 1;
   values = prefetchAny(values, [key]);
-  //if(values === undefined) {values = {};}
-  //if(values["[" + key + "]"] === undefined) {
-  //  values["[" + key + "]"] = cache.get("[" + key + "]");
-  //  if(values["[" + key + "]"] === null) throw "getArray: [" + key + "] not found";
-  //}
   if(typeof values["[" + key + "]"] === "undefined") throw "getArray: [" + key + "] not found";
   var length = parseInt(values["[" + key + "]"]);
   var result = [];
@@ -56,13 +50,11 @@ function appendArray(key, array) {
 function resetArrayCount(){
   putArrayCount = 0;
   getArrayCount = 0;
-  getArrayPrefetchMissedCount = 0;
 }
 
 function showArrayCount(){
   Logger.log("putArrayCount = " + putArrayCount);
   Logger.log("getArrayCount = " + getArrayCount);
-  Logger.log("getArrayPrefetchMissedCount = " + getArrayPrefetchMissedCount);
 }
 
 

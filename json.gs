@@ -1,6 +1,5 @@
 putJsonCount = 0;
 getJsonCount = 0;
-getJsonPrefetchMissedCount = 0;
 getJsonLongStringCount = 0;
 
 /**
@@ -29,11 +28,6 @@ function putJson(key, any) {
 function getJson(key, values){
   getJsonCount += 1;
   values = prefetchAny(values, [key]);
-  //if(values === undefined) values = {};
-  //if(values["(" + key + ")"] === undefined) {
-  //  getJsonPrefetchMissedCount += 1;
-  //  prefetchAny(values, [key]);
-  //}
   if(values["(" + key + ")"] === "LONG JSON STRING") {
     getJsonLongStringCount += 1;
     var jsonString = getString("(" + key + ")", values);
@@ -46,14 +40,12 @@ function getJson(key, values){
 function resetJsonCount(){
   putJsonCount = 0;
   getJsonCount = 0;
-  getJsonPrefetchMissedCount = 0;
   getJsonLongStringCount = 0;
 }
 
 function showJsonCount(){
   Logger.log("putJsonCount = " + putJsonCount);
   Logger.log("getJsonCount = " + getJsonCount);
-  Logger.log("getJsonPrefetchMissedCount = " + getJsonPrefetchMissedCount);
   Logger.log("getJsonLongStringCount = " + getJsonLongStringCount);
 }
 
