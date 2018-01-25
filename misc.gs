@@ -1,5 +1,6 @@
 putCount = 0;
 getCount = 0;
+prefetchCount = 0;
 
 if(typeof global === "undefined") global = this;
 if(global.cache === undefined) global.cache = CacheService.getScriptCache();
@@ -92,6 +93,7 @@ function prefetchAny(values, keys) {
     keysToGet.push("{" + keys[j] + "}");
     keysToGet.push("(" + keys[j] + ")");
   }
+  prefetchCount += 1;
   var fetched = cache.getAll(keysToGet);
   for(var k in fetched) {
     values[k] = fetched[k];
@@ -120,6 +122,7 @@ exports.getDerivedKeys = getDerivedKeys;
 exports.commit         = commit;
 exports.putCount       = putCount;
 exports.getCount       = getCount;
+exports.prefetchCount  = prefetchCount;
 exports.test1          = test1;
 exports.merge          = merge;
 exports.prefetchAny    = prefetchAny;

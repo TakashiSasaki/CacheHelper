@@ -100,10 +100,10 @@ function resetStringCount(){
 }
 
 if(exports === undefined) exports = {};
-exports.putString  = putString;
-exports.getString  = getString;
-exports.testString1 = testString1;
-exports.testString2 = testString2;
-exports.showStringCount = showStringCount;
+exports.putString        = putString;
+exports.getString        = getString;
+exports.testString1      = testString1;
+exports.testString2      = testString2;
+exports.showStringCount  = showStringCount;
 exports.resetStringCount = resetStringCount;
 
