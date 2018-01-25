@@ -1,5 +1,6 @@
 putArrayCount = 0;
 getArrayCount = 0;
+getArrayPrefetchMissedCount = 0;
 
 /**
   @param {string} key
@@ -63,6 +64,19 @@ function merge(o1, o2){
   return o1;
 }
 
+function resetArrayCount(){
+  putArrayCount = 0;
+  getArrayCount = 0;
+  getArrayPrefetchMissedCount = 0;
+}
+
+function showArrayCount(){
+  Logger.log("putArrayCount = " + putArrayCount);
+  Logger.log("getArrayCount = " + getArrayCount);
+  Logger.log("getArrayPrefetchMissedCount = " + getArrayPrefetchMissedCount);
+}
+
+
 function testArray1(){
   Logger.log("testArray1: begin");
   var a = [1, 2, 3, "a", "b", "c"];
@@ -86,4 +100,7 @@ exports.putArray   = putArray;
 exports.testArray1 = testArray1;
 exports.testArray2 = testArray2;
 exports.merge      = merge;
+exports.resetArrayCount = resetArrayCount;
+exports.showArrayCount = showArrayCount;
+
 

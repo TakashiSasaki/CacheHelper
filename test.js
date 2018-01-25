@@ -58,12 +58,13 @@ testArray2();
 testJson();
 
 resetStringCount();
+resetArrayCount();
 cache.resetCount();
 test1();
 
 cache.showCount();
 showStringCount();
-console.log("getJsonPrefetchMissedCount = " + getJsonPrefetchMissedCount);
+showArrayCount();
 
 function testAll(){
   for(var i in global) {
