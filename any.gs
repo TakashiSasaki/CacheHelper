@@ -1,128 +1,115 @@
+putAnyCount = 0;
+getAnyCount = 0;
+
 /**
-  @param {Any} any object, string, number or boolean
-  @param {string} key automatically calculated
+  @param {Any} any object, string, number, boolean or null
+  @param {string} key
   @return {void}
 */
-function put(key, any){  
-  cache.removeAll(["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"])
+function putAny(key, any){  
+  putAnyCount += 1;
   if(typeof any === "string") {
-    putString(key, any);
-    return;
+    var all = putString(key, any);
+    return all;
   }
   if(any === null || typeof any === "boolean" || typeof any === "number") {
-    putJson(key,any);
-    return;
+    var all = putJson(key,any);
+    return all;
   }
   if(any instanceof Array) {
-    putArray(key, any);
-    return;
+    var all = putArray(key, any);
+    return all;
   }
   if(any instanceof Object) {
-    putObject(key, any);
-    return;
+    var all = putObject(key, any);
+    return all;
   }
-  throw "put: unexpected type of value.";
+  throw "putAny: unexpected type of value.";
 }
 
 /**
-  @param {string} keyString
+  @param {string} key
+  @param {object} values
   @returns {Any}
 */
-function get(key){
-  var candidates = cache.getAll(["$" + key + "$", "(" + key + ")", "[" + key + "]", "{" + key + "}"])
-  if(candidates["$" + key + "$"]) {
-    return getString(key);
+function getAny(key, values){
+  getAnyCount += 1;
+  //if(values === undefined) values={};
+  values = prefetchAny_(values, [key]);
+  if(values["$" + key + "$"]) {
+    return getString(key, values);
   }
-  if(candidates["(" + key + ")"]) {
-    return getJson(key);
+  if(values["(" + key + ")"]) {
+    return getJson(key, values);
   }
-  if(candidates["[" + key + "]"]) {
-    return getArray(key);
+  if(values["[" + key + "]"]) {
+    return getArray(key, values);
   }
-  if(candidates["{" + key + "}"]) {
-    return getObject(key);
+  if(values["{" + key + "}"]) {
+    return getObject(key, values);
   }
-  throw "get: key " + key + " not found.";
+  throw "getAny: key " + key + " not found.";
 }
 
-function testNull(){
-  put("k", null);
-  var got = get("k");
-  if(got !== null) throw "testNull: null is expected.";
+function resetAnyCount_(){
+  putAnyCount = 0;
+  getAnyCount = 0;
 }
 
-function testEmptyString(){
-  put("emptyString", "");
-  var got = get("emptyString");
-  if(got !== "") throw "testEmptyString: empty string is expected.";
-  if(got.length !== 0) throw "testEmptyString: length should be 0.";
+function showAnyCount_(){
+  Logger.log("putAnyCount = " + putAnyCount);
+  Logger.log("getAnyCount = " + getAnyCount);
 }
 
-function testBoolean(){
-  put("putBoolean", true);
-  var got = get("putBoolean");
-  if(got !== true) throw "testBoolean: true is expected.";
-  put("putBoolean", false);
-  var got = get("putBoolean");
-  if(got !== false) throw "testBoolean: false is expected.";
+
+function testAnyNull_(){
+  Logger.log("testAnyNull: begin");
+  var all = putAny("k", null);
+  commit_(all); 
+  var got = getAny("k");
+  if(got !== null) throw "testAnyNull: null is expected.";
+  Logger.log("testAnyNull: end");
 }
 
-function testNumber(){
-  put("testNumber", 1.234E6);
-  var got = get("testNumber");
-  if(got !== 1.234E6) throw "testNumber: 1.234E6 is expected.";
+function testAnyEmptyString_(){
+  Logger.log("testAnyEmptyString: beign");
+  var all = putAny("testAnyEmptyString", "");
+  commit_(all);
+  var got = getAny("testAnyEmptyString");
+  if(got !== "") throw "testAnyEmptyString: empty string is expected.";
+  if(got.length !== 0) throw "testAnyEmptyString: length should be 0.";
+  Logger.log("testAnyEmptyString: end");
 }
 
-function testObject1(){
-  var o0 = {
-    aaa : 1,
-    bbb : "こんにちは",
-    ccc : (new Date()).toString(),
-    1 : 111,
-    2 : 222,
-    3 : 333
-  }
-  put("testObject1" ,o0);
-  if(JSON.stringify(o0) !== JSON.stringify(get("testObject1"))) throw "testObject1: o0 does not match.";
-  
-  var o1 = {a:"aaa", b:"bbb", 1:0.111, 2:0.222};
-  put("testObject1", o1);
-  var o1got = get("testObject1");
-  if(JSON.stringify(o1) !== JSON.stringify(o1got)) throw "testObjct1: o1 does not match.";
-
-  var o2 = {a:null, b:false}; // b is ignored when it converted to JSON representation.
-  put("testObject1", o2);
-  var o2got = get("testObject1");  
-  if(JSON.stringify(o2) !== JSON.stringify(o2got)) throw "testObject1: o2 does not match.";
+function testAnyBoolean_(){
+  Logger.log("testAnyBoolean: begin");
+  var all = putAny("testAnyBoolean", true);
+  commit_(all);
+  var got = getAny("testAnyBoolean");
+  if(got !== true) throw "testAnyBoolean: true is expected.";
+  var all = putAny("testAnyBoolean", false);
+  commit_(all);
+  var got = getAny("testAnyBoolean");
+  if(got !== false) throw "testAnyBoolean: false is expected.";
+  Logger.log("testAnyBoolean: end");
 }
 
-function testObject2(){
-  var o1 = {aaa: 1111, bbb: "2222", ccc: null};
-  var k1 = "keykeyley";
-  put(k1, o1);
-  var o1get = get(k1);
-  if(JSON.stringify(o1) != JSON.stringify(o1get)) throw new Error("o1 and o1get is not equivalent");
+function testAnyNumber_(){
+  Logger.log("testAnyNumber: begin");
+  var all = putAny("testAnyNumber", 1.234E6);
+  commit_(all);
+  var got = getAny("testAnyNumber");
+  if(got !== 1.234E6) throw "testAnyNumber: 1.234E6 is expected.";
+  Logger.log("testAnyNumber: end");
 }
 
-function testObject3(){
-  setMaxLength(10);
-  var o1 = {aaa: 1111, bbb: "2222", ccc: null};
-  var k1 = "keykeykey5";
-  put(k1, o1);
-  var o1get = get(k1);
-  if(JSON.stringify(o1) != JSON.stringify(o1get)) throw new Error("o1 and o1get is not equivalent");
-}
+if(typeof exports === "undefined") exports = {};
+exports.putAny             = putAny;
+exports.getAny             = getAny;
+exports.testAnyNull        = testAnyNull_;
+exports.testAnyEmptyString = testAnyEmptyString_;
+exports.testAnyBoolean     = testAnyBoolean_;
+exports.testAnyNumber      = testAnyNumber_;
+exports.showAnyCount       = showAnyCount_;
+exports.resetAnyCount      = resetAnyCount_;
 
-function testObject4(){
-  put("k4", []);
-  var value = get("k4");
-  if(JSON.stringify([]) !== JSON.stringify(value)) throw new Error("value is not []");
-}
-
-function testObject5(){
-  put("k5", "");
-  var value = get("k5");
-  if(JSON.stringify("") !== JSON.stringify(value)) throw new Error('value is not ""');
-  if(typeof value !== "string") throw new Error("type of value is not string");
-  if(value.length !== 0) throw new Error("length of value is not zero");
-}
