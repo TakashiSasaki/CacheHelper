@@ -99,14 +99,14 @@ exports.showArrayCount = showArrayCount_;
 if(typeof process !== "undefined"){
   global.Logger           = console;
   global.cache            = new (require("./emulate.js").LocalCache)();
-  global.commit_          = require("./misc.gs").commit_;
-  global.getDerivedKeys_  = require("./misc.gs").getDerivedKeys_;
-  global.merge_           = require("./misc.gs").merge_;
-  global.prefetchAny_     = require("./misc.gs").prefetchAny_;
-  global.putAny           = require("./any.gs").putAny;
-  global.getAny           = require("./any.gs").getAny;
+  global.commit_          = require("./misc.js").commit_;
+  global.getDerivedKeys_  = require("./misc.js").getDerivedKeys_;
+  global.merge_           = require("./misc.js").merge_;
+  global.prefetchAny_     = require("./misc.js").prefetchAny_;
+  global.putAny           = require("./any.js").putAny;
+  global.getAny           = require("./any.js").getAny;
   testArray1_();
   testArray2_();
-  testArray3_();
+  testArray3();
 }
 

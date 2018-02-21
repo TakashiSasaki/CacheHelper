@@ -110,7 +110,7 @@ exports.nMaxValueLength  = nMaxValueLength;
 ;
 
 if(typeof process !== "undefined") {
-  global.prefetchAny_ = require("./misc.gs").prefetchAny_;
-  global.prefetch_    = require("./misc.gs").prefetch_;
+  global.prefetchAny_ = require("./misc.js").prefetchAny_;
+  global.prefetch_    = require("./misc.js").prefetch_;
 }
 

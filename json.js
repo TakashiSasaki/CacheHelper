@@ -76,6 +76,6 @@ exports.resetJsonCount = resetJsonCount_;
 exports.showJsonCount = showJsonCount_;
 
 if(typeof process !== "undefined") {
-  global.nMaxValueLength = require("./string.gs").nMaxValueLength;
+  global.nMaxValueLength = require("./string.js").nMaxValueLength;
 }
 

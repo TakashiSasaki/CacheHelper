@@ -4,7 +4,7 @@ test: test-array
 	node test.js
 
 test-array:
-	node array.gs
+	node array.js
 
 push:
 	clasp push

@@ -114,9 +114,9 @@ exports.showAnyCount       = showAnyCount_;
 exports.resetAnyCount      = resetAnyCount_;
 
 if(typeof process !== "undefined"){ 
-  global.putJson = require("./json.gs").putJson;
-  global.getJson = require("./json.gs").getJson;
-  global.putString = require("./string.gs").putString;
-  global.getString = require("./string.gs").getString;
-  global.getArray = require("./array.gs").getArray;
+  global.putJson = require("./json.js").putJson;
+  global.getJson = require("./json.js").getJson;
+  global.putString = require("./string.js").putString;
+  global.getString = require("./string.js").getString;
+  global.getArray = require("./array.js").getArray;
 }
