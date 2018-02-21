@@ -11,9 +11,10 @@ function putArray(key, array) {
   if(!(array instanceof Array)) throw "putArray: expects array";
   putArrayCount += 1;
   var all = {"TO BE REMOVED": getDerivedKeys_(key)};
-  all["[" + key + "]"] = "" + array.length;
+  all["[" + key + "]"] = array.length;
   for(var i=0; i<array.length; ++i) {
-    merge_(all, putAny("[" + key + "]" + i, array[i]));
+    var k = "[" + key + "]" + i;
+    merge_(all, putAny(k, array[i]));
   }//for
   return all;
 }//putArray
@@ -41,10 +42,12 @@ function appendArray(key, array) {
   if(!(array instanceof Array)) throw "appendArray: expects array value";
   var l = cache.get("[" + key + "]");
   if(l === null) throw "appendArray: key [" + key + "] not found";
-  cache.put("[" + key + "]", parseInt(l) + array.length);
+  var all = {};
+  all["[" + key + "]"] = parseInt(l) + array.length;
   for(var i=0; i<array.length; ++i) {
-    putAny("[" + key + "]" + parseInt(l) + i, array[i]);
+    merge_(all, putAny("[" + key + "]" + (parseInt(l) + i), array[i]));
   }//for
+  return all;
 }//appendArray
 
 function resetArrayCount_(){
@@ -56,7 +59,6 @@ function showArrayCount_(){
   Logger.log("putArrayCount = " + putArrayCount);
   Logger.log("getArrayCount = " + getArrayCount);
 }
-
 
 function testArray1_(){
   Logger.log("testArray1: begin");
@@ -75,6 +77,14 @@ function testArray2_(){
   Logger.log("testArray2: end");
 }
 
+function testArray3_(){
+  commit_(putArray("testArray3", [1,2,3]));
+  commit_(appendArray("testArray3", [4,5,6]));
+  var array2 = getArray("testArray3");
+  Logger.log(array2);
+}
+
+
 if(exports === undefined) exports = {};
 exports.getArray   = getArray;
 exports.putArray   = putArray;
@@ -83,4 +93,17 @@ exports.testArray2 = testArray2_;
 exports.resetArrayCount = resetArrayCount_;
 exports.showArrayCount = showArrayCount_;
 
+if(typeof process !== "undefined"){
+  global.Logger           = console;
+  global.cache            = new (require("./emulate.js").LocalCache)();
+  global.commit_          = require("./misc.gs").commit_;
+  global.getDerivedKeys_  = require("./misc.gs").getDerivedKeys_;
+  global.merge_           = require("./misc.gs").merge_;
+  global.prefetchAny_     = require("./misc.gs").prefetchAny_;
+  global.putAny           = require("./any.gs").putAny;
+  global.getAny           = require("./any.gs").getAny;
+  testArray1_();
+  testArray2_();
+  testArray3_();
+}
 

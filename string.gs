@@ -106,4 +106,11 @@ exports.testString1      = testString1_;
 exports.testString2      = testString2_;
 exports.showStringCount  = showStringCount_;
 exports.resetStringCount = resetStringCount_;
+exports.nMaxValueLength  = nMaxValueLength;
 ;
+
+if(typeof process !== "undefined") {
+  global.prefetchAny_ = require("./misc.gs").prefetchAny_;
+  global.prefetch_    = require("./misc.gs").prefetch_;
+}
+

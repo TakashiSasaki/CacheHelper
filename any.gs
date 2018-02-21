@@ -113,3 +113,10 @@ exports.testAnyNumber      = testAnyNumber_;
 exports.showAnyCount       = showAnyCount_;
 exports.resetAnyCount      = resetAnyCount_;
 
+if(typeof process !== "undefined"){ 
+  global.putJson = require("./json.gs").putJson;
+  global.getJson = require("./json.gs").getJson;
+  global.putString = require("./string.gs").putString;
+  global.getString = require("./string.gs").getString;
+  global.getArray = require("./array.gs").getArray;
+}
