@@ -11,7 +11,7 @@ function putArray(key, array) {
   if(!(array instanceof Array)) throw "putArray: expects array";
   putArrayCount += 1;
   var all = {"TO BE REMOVED": getDerivedKeys_(key)};
-  all["[" + key + "]"] = array.length;
+  all["[" + key + "]"] = "" + array.length;
   for(var i=0; i<array.length; ++i) {
     var k = "[" + key + "]" + i;
     merge_(all, putAny(k, array[i]));
@@ -43,7 +43,7 @@ function appendArray(key, array) {
   var l = cache.get("[" + key + "]");
   if(l === null) throw "appendArray: key [" + key + "] not found";
   var all = {};
-  all["[" + key + "]"] = parseInt(l) + array.length;
+  all["[" + key + "]"] = "" + (parseInt(l) + array.length);
   for(var i=0; i<array.length; ++i) {
     merge_(all, putAny("[" + key + "]" + (parseInt(l) + i), array[i]));
   }//for
@@ -77,7 +77,10 @@ function testArray2_(){
   Logger.log("testArray2: end");
 }
 
-function testArray3_(){
+if(typeof global === "undefined") global=this;
+
+function testArray3(){
+  if(typeof cache === "undefined") global.cache = CacheService.getScriptCache();
   commit_(putArray("testArray3", [1,2,3]));
   commit_(appendArray("testArray3", [4,5,6]));
   var array2 = getArray("testArray3");
