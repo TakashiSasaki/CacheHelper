@@ -13,7 +13,7 @@ function putString(key, string) {
   if(typeof string !== "string") throw "putString: expects strinv value.";
   putStringCount += 1;
   var all = {"TO BE REMOVED": getDerivedKeys_(key)};
-  var split = splitByLength_(string, nMaxValueLength);
+  var split = splitString_(string);
   all["$" + key + "$"] = "" + split.length;
   for(var i=0; i<split.length; ++i) {
     all["$" + key + "$" + i] = split[i];
@@ -48,11 +48,11 @@ function getString(key, values) {
   return result.join("");
 }//getString
 
-function splitByLength_(string, length) {
+function splitString_(string) {
   if(typeof string !== "string") throw "splitByLength_: expects string";
   var array = [];
-  for(var i=0; i<string.length; i+=length) {
-    array.push(string.substr(i, length));
+  for(var i=0; i<string.length; i+= nMaxValueLength) {
+    array.push(string.substr(i, nMaxValueLength));
   }
   return array;
 }
@@ -106,4 +106,4 @@ exports.testString1      = testString1_;
 exports.testString2      = testString2_;
 exports.showStringCount  = showStringCount_;
 exports.resetStringCount = resetStringCount_;
-
+;

@@ -3,6 +3,7 @@ LocalCache = require("./emulate.js").LocalCache;
 global.cache = new LocalCache();
 
 
+// require all depencencies
 (function(x){
   for(var i in x) {
     var m = require(x[i]);
