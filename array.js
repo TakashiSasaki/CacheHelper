@@ -52,7 +52,11 @@ function appendArray(key, array) {
   for(var i=0; i<array.length; ++i) {
     merge_(all, putAny("[" + key + "]" + (parseInt(l) + i), array[i]));
   }//for
-  return all;
+  if(typeof all["TO BE REMOVED"] !== "undefined") {
+    cache.removeAll(all["TO BE REMOVED"]);
+    delete all["TO BE REMOVED"];
+  }
+  cache.putAll(all);
 }//appendArray
 
 function resetArrayCount_(){
@@ -87,8 +91,9 @@ if(typeof global === "undefined") global=this;
 function testArray3(){
   if(typeof cache === "undefined") global.cache = CacheService.getScriptCache();
   put("testArray3", [1,2,3]);
-  put("testArray3", [4,5,6]);
+  appendArray("testArray3", [4,5,6]);
   var array2 = getArray("testArray3");
+  if(JSON.stringify(array2) !== JSON.stringify([1,2,3,4,5,6])) throw "testArray3: failed";
   Logger.log(array2);
 }
 
