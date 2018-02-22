@@ -37,6 +37,11 @@ function getArray(key, values){
   return result;
 }//getArray
 
+/**
+ * @param {string} key
+ * @param {array} array
+ * @return {object}
+*/
 function appendArray(key, array) {
   if(typeof key !== "string") throw "appendArray: expects string key";
   if(!(array instanceof Array)) throw "appendArray: expects array value";
