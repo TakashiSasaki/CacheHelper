@@ -64,8 +64,8 @@ function showAnyCount_(){
 
 function testAnyNull_(){
   Logger.log("testAnyNull: begin");
-  var all = putAny("k", null);
-  commit_(all); 
+  //var all = putAny("k", null);
+  put("k", null); 
   var got = getAny("k");
   if(got !== null) throw "testAnyNull: null is expected.";
   Logger.log("testAnyNull: end");
@@ -73,8 +73,7 @@ function testAnyNull_(){
 
 function testAnyEmptyString_(){
   Logger.log("testAnyEmptyString: beign");
-  var all = putAny("testAnyEmptyString", "");
-  commit_(all);
+  put("testAnyEmptyString", "");
   var got = getAny("testAnyEmptyString");
   if(got !== "") throw "testAnyEmptyString: empty string is expected.";
   if(got.length !== 0) throw "testAnyEmptyString: length should be 0.";
@@ -83,12 +82,10 @@ function testAnyEmptyString_(){
 
 function testAnyBoolean_(){
   Logger.log("testAnyBoolean: begin");
-  var all = putAny("testAnyBoolean", true);
-  commit_(all);
+  put("testAnyBoolean", true);
   var got = getAny("testAnyBoolean");
   if(got !== true) throw "testAnyBoolean: true is expected.";
-  var all = putAny("testAnyBoolean", false);
-  commit_(all);
+  put("testAnyBoolean", false);
   var got = getAny("testAnyBoolean");
   if(got !== false) throw "testAnyBoolean: false is expected.";
   Logger.log("testAnyBoolean: end");
@@ -96,8 +93,7 @@ function testAnyBoolean_(){
 
 function testAnyNumber_(){
   Logger.log("testAnyNumber: begin");
-  var all = putAny("testAnyNumber", 1.234E6);
-  commit_(all);
+  put("testAnyNumber", 1.234E6);
   var got = getAny("testAnyNumber");
   if(got !== 1.234E6) throw "testAnyNumber: 1.234E6 is expected.";
   Logger.log("testAnyNumber: end");
@@ -119,4 +115,5 @@ if(typeof process !== "undefined"){
   global.putString = require("./string.js").putString;
   global.getString = require("./string.js").getString;
   global.getArray = require("./array.js").getArray;
+  global.putArray = require("./array.js").putArray;
 }

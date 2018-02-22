@@ -60,8 +60,8 @@ function testJson_(){
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   };
-  commit_(putJson("k", o));
-  var got = getJson("k");
+  put("k", o);
+  var got = get("k");
   Logger.log(got);
   if(JSON.stringify(o) !== JSON.stringify(got)) throw "testJson: o != got.";
   nMaxValueLength = nMaxValueLength_old;

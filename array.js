@@ -63,7 +63,7 @@ function showArrayCount_(){
 function testArray1_(){
   Logger.log("testArray1: begin");
   var a = [1, 2, 3, "a", "b", "c"];
-  commit_(putArray("k", a));
+  put("k", a);
   var got = getArray("k");
   if(JSON.stringify(a) !== JSON.stringify(got)) throw "testArray1: a != got.";
   Logger.log("testArray1: end");
@@ -71,7 +71,7 @@ function testArray1_(){
 
 function testArray2_(){
   Logger.log("testArray2: begin");
-  commit_(putArray("k4", []));
+  put("k4", []);
   var value = getArray("k4");
   if(JSON.stringify([]) !== JSON.stringify(value)) throw new Error("testArray2: value is not []");
   Logger.log("testArray2: end");
@@ -81,8 +81,8 @@ if(typeof global === "undefined") global=this;
 
 function testArray3(){
   if(typeof cache === "undefined") global.cache = CacheService.getScriptCache();
-  commit_(putArray("testArray3", [1,2,3]));
-  commit_(appendArray("testArray3", [4,5,6]));
+  put("testArray3", [1,2,3]);
+  put("testArray3", [4,5,6]);
   var array2 = getArray("testArray3");
   Logger.log(array2);
 }
@@ -103,6 +103,7 @@ if(typeof process !== "undefined"){
   global.getDerivedKeys_  = require("./misc.js").getDerivedKeys_;
   global.merge_           = require("./misc.js").merge_;
   global.prefetchAny_     = require("./misc.js").prefetchAny_;
+  global.put              = require("./misc.js").put;
   global.putAny           = require("./any.js").putAny;
   global.getAny           = require("./any.js").getAny;
   testArray1_();

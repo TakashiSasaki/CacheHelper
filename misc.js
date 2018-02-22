@@ -14,17 +14,6 @@ function setCache(cache) {
   global.cache = cache;
 }
 
-function commit_(all/*, key*/){
-  if(typeof all["TO BE REMOVED"] !== "undefined") {
-    cache.removeAll(all["TO BE REMOVED"]);
-    delete all["TO BE REMOVED"];
-  }
-  //if(typeof key === "string") {
-  //  all["#" + key + "#"] = JSON.stringify(Object.keys(all))
-  //}
-  cache.putAll(all);
-}
-
 function put(key, any) {
   if(typeof key !== "string") throw "put: expects string key.";
   if(any === undefined) throw "put: undefined is given as a value";
@@ -33,7 +22,11 @@ function put(key, any) {
   if(!(all instanceof Object)) throw "put: !(all instanceof Object).";
   var keys = Object.keys(all);
   all["#" + key + "#"] = JSON.stringify(keys);
-  commit_(all/*, key*/);
+  if(typeof all["TO BE REMOVED"] !== "undefined") {
+    cache.removeAll(all["TO BE REMOVED"]);
+    delete all["TO BE REMOVED"];
+  }
+  cache.putAll(all);
   return all;
 }
 
@@ -127,12 +120,13 @@ function test1_(){
 
 
 if(exports === undefined) exports = {};
-exports.getDerivedKeys_= getDerivedKeys_;
-exports.commit_        = commit_;
-exports.putCount       = putCount;
-exports.getCount       = getCount;
-exports.prefetchCount  = prefetchCount;
-exports.test1          = test1_;
-exports.merge_         = merge_;
-exports.prefetch_      = prefetch_;
-exports.prefetchAny_   = prefetchAny_;
+exports.getDerivedKeys_ = getDerivedKeys_;
+exports.putCount        = putCount;
+exports.getCount        = getCount;
+exports.prefetchCount   = prefetchCount;
+exports.test1           = test1_;
+exports.merge_          = merge_;
+exports.prefetch_       = prefetch_;
+exports.prefetchAny_    = prefetchAny_;
+exports.put             = put;
+exports.get             = get;
