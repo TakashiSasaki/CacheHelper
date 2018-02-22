@@ -14,12 +14,14 @@ function setCache(cache) {
   global.cache = cache;
 }
 
-function commit_(all, key){
-  cache.removeAll(all["TO BE REMOVED"]);
-  delete all["TO BE REMOVED"];
-  if(typeof key === "string") {
-    all["#" + key + "#"] = JSON.stringify(Object.keys(all))
+function commit_(all/*, key*/){
+  if(typeof all["TO BE REMOVED"] !== "undefined") {
+    cache.removeAll(all["TO BE REMOVED"]);
+    delete all["TO BE REMOVED"];
   }
+  //if(typeof key === "string") {
+  //  all["#" + key + "#"] = JSON.stringify(Object.keys(all))
+  //}
   cache.putAll(all);
 }
 
@@ -31,7 +33,7 @@ function put(key, any) {
   if(!(all instanceof Object)) throw "put: !(all instanceof Object).";
   var keys = Object.keys(all);
   all["#" + key + "#"] = JSON.stringify(keys);
-  commit_(all, key);
+  commit_(all/*, key*/);
   return all;
 }
 
