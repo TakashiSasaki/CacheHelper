@@ -61,48 +61,6 @@ function merge_(o1, o2){
   return o1;
 }
 
-function prefetch_(values, keys) {
-  if(typeof values === "undefined") values = {};
-  if(!(keys instanceof Array)) throw "prefetch_: keys should be an array.";
-  for(var i in keys) {
-    if(typeof values[keys[i]] === "undefined") {
-      prefetchCount += 1;
-      var got = cache.getAll(keys);
-      for(var j in got) {
-        values[j] = got[j];
-      }
-      return values;
-    }
-  }
-  return values;
-}//prefetch_
-
-function prefetchAny_(values, keys) {
-  if(typeof values === "undefined") values = {};
-  if(!(keys instanceof Array)) throw "prefetchAny_: keys should be an array.";
-  var bNeedToGet = false;
-  for(var i in keys) {
-    if(typeof values["$" + keys[i] + "$"] === "undefined" &&
-        typeof values["(" + keys[i] + ")"] === "undefined" &&
-        typeof values["{" + keys[i] + "}"] === "undefined" &&
-        typeof values["[" + keys[i] + "]"] === "undefined") bNeedToGet = true;
-  }
-  if(bNeedToGet == false) return values;
-  var keysToGet = [];
-  for(var j in keys) {
-    if(typeof keys[j] !== "string") throw "prefetchAny_: key should be a strign.";
-    keysToGet.push(keys[j]);
-    keysToGet.push("$" + keys[j] + "$");
-    keysToGet.push("$" + keys[j] + "$0");
-    keysToGet.push("[" + keys[j] + "]");
-    keysToGet.push("[" + keys[j] + "]0");
-    keysToGet.push("{" + keys[j] + "}");
-    keysToGet.push("(" + keys[j] + ")");
-  }
-  Logger.log("prefetchAny_: keysToGet = " + keysToGet);
-  return prefetch_(values, keysToGet);
-}//prefetchAny_
-
 
 function test1_(){
   Logger.log("test1_: begin");

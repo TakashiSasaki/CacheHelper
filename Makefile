@@ -19,4 +19,6 @@ prepare:
 	sudo n stable ;\
 	sudo npm install -g clasp
 
+assert.js: assert.browserify.js
+	browserify -o $@ $<
 

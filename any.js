@@ -1,30 +1,26 @@
-putAnyCount = 0;
-getAnyCount = 0;
+if(console === undefined) console = Logger;
 
-/**
-  @param {Any} any object, string, number, boolean or null
-  @param {string} key
-  @return {void}
-*/
-function putAny(key, any){  
-  putAnyCount += 1;
+  /**
+    @param {Any} any object, string, number, boolean or null
+    @param {string} key
+    @return {void}
+  */
+function putAny_(key, any){  
+  if(typeof keye !== "string") throw "putAny expects string key.";
+  putAny_.count += 1;
   if(typeof any === "string") {
-    var all = putString(key, any);
-    return all;
+    this.putString(key, any);
   }
   if(any === null || typeof any === "boolean" || typeof any === "number") {
-    var all = putJson(key,any);
-    return all;
+    this.putJson(key,any);
   }
   if(any instanceof Array) {
-    var all = putArray(key, any);
-    return all;
+    this.putArray(key, any);
   }
   if(any instanceof Object) {
-    var all = putObject(key, any);
-    return all;
+    this.putObject(key, any);
   }
-  throw "putAny: unexpected type of value.";
+  throw "KeyValueStore#putAny: unexpected type of value. " + typeof any;
 }
 
 /**
@@ -32,8 +28,9 @@ function putAny(key, any){
   @param {object} values
   @returns {Any}
 */
-function getAny(key, values){
-  getAnyCount += 1;
+function getAny_(key, values){
+  if(typeof key !== "string") throw "getAny expects string key.";
+  getAny_.count += 1;
   //if(values === undefined) values={};
   values = prefetchAny_(values, [key]);
   if(values["$" + key + "$"]) {
@@ -50,17 +47,6 @@ function getAny(key, values){
   }
   throw "getAny: key " + key + " not found.";
 }
-
-function resetAnyCount_(){
-  putAnyCount = 0;
-  getAnyCount = 0;
-}
-
-function showAnyCount_(){
-  Logger.log("putAnyCount = " + putAnyCount);
-  Logger.log("getAnyCount = " + getAnyCount);
-}
-
 
 function testAnyNull_(){
   Logger.log("testAnyNull: begin");
@@ -100,14 +86,12 @@ function testAnyNumber_(){
 }
 
 if(typeof exports === "undefined") exports = {};
-exports.putAny             = putAny;
-exports.getAny             = getAny;
+exports.putAny             = putAny_;
+exports.getAny             = getAny_;
 exports.testAnyNull        = testAnyNull_;
 exports.testAnyEmptyString = testAnyEmptyString_;
 exports.testAnyBoolean     = testAnyBoolean_;
 exports.testAnyNumber      = testAnyNumber_;
-exports.showAnyCount       = showAnyCount_;
-exports.resetAnyCount      = resetAnyCount_;
 
 if(typeof process !== "undefined"){ 
   global.putJson = require("./json.js").putJson;
