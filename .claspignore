@@ -1,3 +1,6 @@
 test.js
 emulate.js
 Makefile
+assert.browserify.js
+empty.js
+

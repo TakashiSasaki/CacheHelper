@@ -19,6 +19,8 @@ prepare:
 	sudo n stable ;\
 	sudo npm install -g clasp
 
-assert.js: assert.browserify.js
-	browserify -o $@ $<
+assert.js: 
+	touch empty.js ;\
+	browserify -s assert -r assert -o $@ empty.js
+
 
