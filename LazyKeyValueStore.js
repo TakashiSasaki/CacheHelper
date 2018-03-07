@@ -1,7 +1,7 @@
 if(console === undefined) console = Logger;
 
-//class KeyValueStore
-function KeyValueStore(storage){
+//class LazyKeyValueStore
+function LazyKeyValueStore(storage){
   if(typeof CacheService !== typeof undefined){
     this.storage = CacheService.getScriptCache();
   }
@@ -27,7 +27,7 @@ function KeyValueStore(storage){
     } else if(any instanceof Object) {
       this.putObject(key, any);
     } else {
-      throw "KeyValueStore#put: unexpected type of value. " + typeof any;
+      throw "LazyKeyValueStore#put: unexpected type of value. " + typeof any;
     }
   };//put
   
@@ -106,7 +106,7 @@ function KeyValueStore(storage){
     } else if(typeof this.readBuffer["{" + key + "}"] === "string") {
       return this.getObject(key);
     } else {
-      throw "KeyValueStore#get: key " + key + " not found in readBuffer.";
+      throw "LazyKeyValueStore#get: key " + key + " not found in readBuffer.";
     }
   }//get
 
@@ -157,4 +157,4 @@ function KeyValueStore(storage){
 
   this.reset();
   return this;
-}//KeyValueStore
+}//LazyKeyValueStore
