@@ -20,7 +20,7 @@ function putAny_(key, any){
     this.putArray(key, any);
     return;
   }
-  if(any instanceof Object || any === null) {
+  if(any instanceof Object) {
     this.putObject(key, any);
     return;
   }
@@ -49,15 +49,4 @@ function getAny_(key){
     return this.getObject(key);
   }
   throw "getAny: key " + key + " not found.";
-}
-
-if(typeof exports === "undefined") exports = {};
-
-if(typeof process !== "undefined"){ 
-  this.putJson = require("./json.js").putJson;
-  global.getJson = require("./json.js").getJson;
-  global.putString = require("./string.js").putString;
-  global.getString = require("./string.js").getString;
-  global.getArray = require("./array.js").getArray;
-  global.putArray = require("./array.js").putArray;
 }

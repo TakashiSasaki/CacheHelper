@@ -26,4 +26,12 @@ function testKeyValueStore(){
   keyValueStore.put("emptyString", emptyString);
   assert.strictEqual(keyValueStore.get("emptyString"), emptyString);
  
+  var testObject1 = {
+    a: 1,
+    b: null,
+    c: "hello",
+    d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
+  };
+  keyValueStore.put("testObject1", testObject1);
+  assert.deepStrictEqual(keyValueStore.get("testObject1"), testObject1);
 }

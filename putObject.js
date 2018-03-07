@@ -11,9 +11,10 @@ function putObject_(key, object) {
   for(var i in object) {
     properties.push(i);
   }
-  this.merge({"TO BE REMOVED": getDerivedKeys_(key)});
+  this.merge({"TO BE REMOVED": modKey(key)});
   this.transaction["{" + key + "}"] = JSON.stringify(properties);
   for(var i in object) {
-    this.merge_(this.putAny("{" + key + "}" + i, object[i]));
+    //this.merge(this.putAny("{" + key + "}" + i, object[i]));
+    this.putAny("{" + key + "}" + i, object[i]);
   }  
 }//putObject_

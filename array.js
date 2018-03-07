@@ -97,27 +97,3 @@ function testArray3(){
   Logger.log(array2);
 }
 
-
-if(exports === undefined) exports = {};
-exports.getArray   = getArray;
-exports.putArray   = putArray;
-exports.testArray1 = testArray1_;
-exports.testArray2 = testArray2_;
-exports.resetArrayCount = resetArrayCount_;
-exports.showArrayCount = showArrayCount_;
-
-if(typeof process !== "undefined"){
-  global.Logger           = console;
-  global.cache            = new (require("./emulate.js").LocalCache)();
-  global.commit_          = require("./misc.js").commit_;
-  global.getDerivedKeys_  = require("./misc.js").getDerivedKeys_;
-  global.merge_           = require("./misc.js").merge_;
-  global.prefetchAny_     = require("./misc.js").prefetchAny_;
-  global.put              = require("./misc.js").put;
-  global.putAny           = require("./any.js").putAny;
-  global.getAny           = require("./any.js").getAny;
-  testArray1_();
-  testArray2_();
-  testArray3();
-}
-

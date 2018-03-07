@@ -1,44 +1,3 @@
-
-/**
-  @param {string} key
-  @param {value} value optional
-*/
-function getObject(key, values) {
-  if(typeof key !== "string") throw "getObject: expects string key.";
-  getObjectCount += 1;
-  if(!(values instanceof Object)) {values = {};}
-  values = prefetchAny_(values, [key]);
-  if(typeof values["{" + key + "}"] === "undefined") throw "getObject: key {" + key + "} not found.";
-  var properties = JSON.parse(values["{" + key + "}"]);
-  if(!(properties instanceof Array)) throw "getObject: no array in {" + key + "}.";
-  var keys = [];
-  for(var i=0; i<properties.length; ++i) {
-    keys.push("{" + key + "}" + properties[i]);
-  }
-  values = prefetchAny_(values, keys);
-  var result = {};
-  for(var i=0; i<properties.length; ++i) {
-    if(typeof values["${" + key + "}" + properties[i] + "$"] === "string") {
-      result[properties[i]] = getString("{" + key + "}" + properties[i], values);
-      continue;
-    }
-    if(typeof values["({" + key + "}" + properties[i] + ")"] === "string") {
-      result[properties[i]] = getJson("{" + key + "}" + properties[i], values);
-      continue;
-    }
-    if(typeof values["{{" + key + "}" + properties[i] + "}"] === "string") {
-      result[properties[i]] = getObject("{" + key + "}" + properties[i], values);
-      continue;
-    }
-    if(typeof values["[{" + key + "}" + properties[i] + "]"] === "string") {
-      result[properties[i]] = getArray("{" + key + "}" + properties[i], values);
-      continue;
-    }
-    throw "getObject: any type of value is not found for {" + key  + "}" + properties[i];
-  }
-  return result;
-}//getObject
-
 function testObject_(){
   Logger.log("testObject_: begin");
   var o = {
@@ -108,6 +67,3 @@ function testObject3_(){
   if(JSON.stringify(o1) != JSON.stringify(o1get)) throw new Error("o1 and o1get is not equivalent");
   Logger.log("testObject3_: end");
 }
-
-if(exports === undefined) exports = {};
-

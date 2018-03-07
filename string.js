@@ -1,7 +1,3 @@
-nMaxValueLength = 50000;
-putStringCount = 0;
-getStringCount = 0;
-
 /**
   @param {string} key
   @param {string} string
@@ -87,30 +83,5 @@ function testString2_(){
   if(typeof value !== "string") throw new Error("type of value is not string");
   if(value.length !== 0) throw new Error("length of value is not zero");
   Logger.log("testString2: end");
-}
-
-function showStringCount_(){
-  Logger.log("putStringCount = " + putStringCount);
-  Logger.log("getStringCount = " + getStringCount);
-}
-
-function resetStringCount_(){
-  getStringCount = 0;
-  putStringCount = 0;
-}
-
-if(exports === undefined) exports = {};
-exports.putString        = putString;
-exports.getString        = getString;
-exports.testString1      = testString1_;
-exports.testString2      = testString2_;
-exports.showStringCount  = showStringCount_;
-exports.resetStringCount = resetStringCount_;
-exports.nMaxValueLength  = nMaxValueLength;
-;
-
-if(typeof process !== "undefined") {
-  global.prefetchAny_ = require("./misc.js").prefetchAny_;
-  global.prefetch_    = require("./misc.js").prefetch_;
 }
 

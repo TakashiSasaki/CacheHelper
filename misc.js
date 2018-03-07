@@ -18,6 +18,3 @@ function test1_(){
   if(JSON.stringify(o) !== JSON.stringify(get("test1_"))) throw "test1_: o != get(\"test1_\").";
   Logger.log("test1_: end");
 }
-
-
-if(exports === undefined) exports = {};

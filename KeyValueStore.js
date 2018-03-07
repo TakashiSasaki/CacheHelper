@@ -10,6 +10,7 @@ function KeyValueStore(storage){
   this.getJson = getJson_;
   this.putJson = putJson_;
   this.putObject = putObject_;
+  this.getObject = getObject_;
   this.putString = putString_;
   this.getString = getString_;
   this.prefetch = prefetch_;
