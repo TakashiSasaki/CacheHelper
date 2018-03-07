@@ -1,17 +1,14 @@
 /**
   @param {string} key
-  @param {string} value optional
-  @return {Array}
+  @return {null|boolean|number}
 */
 function getJson_(key){
-  assert.strictEqual(typeof key, "string");
-  getJson_.count += 1;
-  this.prefetch([key]);
-  if(this.prefetched["(" + key + ")"] === "LONG JSON STRING") {
-    var stringified = this.getString("(" + key + ")");
-    return JSON.parse(stringified);
+  assert(typeof key === "string");
+  if(this.read("(" + key + ")") === "LONG JSON STRING") {
+    var x = JSON.parse(this.getString("(" + key + ")"));
   } else {
-    return JSON.parse(this.prefetched["(" + key + ")"]);
+    var x = JSON.parse(this.read("(" + key + ")"));
   }
+  assert(x === null || typeof x === "number" || typeof x === "boolean");
+  return x;
 }//getJson_
-

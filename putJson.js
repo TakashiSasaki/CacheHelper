@@ -4,15 +4,14 @@
   @return {object}
 */
 function putJson_(key, any) {
-  assert.strictEqual(typeof key, "string");
+  assert(typeof key === "string");
   assert(any !== undefined);
-  putJson_.count += 1;
+  this.remove(key);
   var stringified = JSON.stringify(any);
-  var all = {"TO BE REMOVED": modKey(key)};
   if(stringified.length > this.nMaxValueLength){
-    this.transaction["(" + key + ")"] = "LONG JSON STRING";
-    merge_(putString("(" + key + ")", stringified));
+    this.write("(" + key + ")", "LONG JSON STRING");
+    this.putString("(" + key + ")", stringified);
   } else {
-    this.transaction["(" + key + ")"] = stringified;
+    this.write("(" + key + ")", stringified);
   }
-}//putJson
+}//putJson_

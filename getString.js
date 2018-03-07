@@ -1,26 +1,18 @@
 /**
   @param {string} key
-  @param {object} values
   @return {string}
 */
 function getString_(key) {
   assert(typeof key === "string");
-  getString_.count += 1;
-  this.prefetch([key]);
-  if(typeof this.prefetched["$" + key + "$"] === "undefined") throw "getString: key $" + key + "$ not found.";
-  var length = parseInt(this.prefetched["$" + key + "$"]);
+  var stringified = this.read("$" + key + "$");
+  assert(typeof stringified === "string");
+  var length = parseInt(stringified);
   if(length == 0) return "";
 
-  var keys = [];
-  for(var i=0; i<length; ++i) {
-    keys.push("$" + key + "$" + i);
-  }
-  this.prefetch(keys);
   var fragments = [];
   for(var i=0; i<length; ++i) {
-    var fragment = this.prefetched["$" + key + "$" + i];
+    var fragment = this.read("$" + key + "$" + i);
     assert(typeof fragment === "string");
-    if(fragment === null) throw "getString: missing a part of string value.";
     fragments.push(fragment);
   }
   return fragments.join("");

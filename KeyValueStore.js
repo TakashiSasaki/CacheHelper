@@ -1,55 +1,153 @@
+if(console === undefined) console = Logger;
+
 //class KeyValueStore
 function KeyValueStore(storage){
   if(typeof CacheService !== typeof undefined){
     this.storage = CacheService.getScriptCache();
   }
   
-  this.merge = merge_;
-  this.getAny = getAny_;
-  this.putAny = putAny_;
+  this.getArray = getArray_;
+  this.putArray = putArray_;
   this.getJson = getJson_;
   this.putJson = putJson_;
   this.putObject = putObject_;
   this.getObject = getObject_;
   this.putString = putString_;
   this.getString = getString_;
-  this.prefetch = prefetch_;
 
   this.put = function(key, any) {
-    assert.strictEqual(typeof key, "string");
+    assert(typeof key === "string");
     assert(any !== undefined);
-    this.put.count += 1;
-    this.putAny(key, any);
-    var keys = Object.keys(this.transaction);
-    this.transaction["#" + key + "#"] = JSON.stringify(keys);
-    if(typeof this.transaction["TO BE REMOVED"] !== "undefined") {
-      this.storage.removeAll(this.transaction["TO BE REMOVED"]);
-      delete this.transaction["TO BE REMOVED"];
+    if(typeof any === "string") {
+      this.putString(key, any);
+    } else if(any === null || typeof any === "boolean" || typeof any === "number") {
+      this.putJson(key,any);
+    } else if(any instanceof Array) {
+      this.putArray(key, any);
+    } else if(any instanceof Object) {
+      this.putObject(key, any);
+    } else {
+      throw "KeyValueStore#put: unexpected type of value. " + typeof any;
     }
-    this.storage.putAll(this.transaction);
   };//put
+  
+  this.fetch = function(){
+    var keysToRead = [];
+    for(var k in this.readBuffer){
+      if(this.readBuffer[k] === undefined) {
+        keysToRead.push(k);
+        delete this.readBuffer[k];
+      }
+    }//for
+    if(keysToRead.length > 0) {
+      var x = this.storage.getAll(keysToRead);
+      assert(x instanceof Object);
+      for(var l in x) {
+        this.readBuffer[l] = x[l];
+      }//for l
+    }
+  }
+
+  this.commit = function(){
+    var keysToRemove = [];
+    for(var i in this.writeBuffer){
+      if(this.writeBuffer[i] === undefined) {
+        keysToRemove.push(i);
+        delete this.writeBuffer[i];
+        delete this.readBuffer[i];
+      }
+    }// for i
+    if(keysToRemove.length > 0) {
+      this.storage.removeAll(keysToRemove);
+    }
+    
+    this.writeBuffer["#" + key + "#"] = JSON.stringify(Object.keys(this.writeBuffer));
+    if(Object.keys(this.writeBuffer).length > 0) {
+      this.storage.putAll(this.writeBuffer);
+      for(var j in this.readBuffer){
+        this.readBuffer[j] = this.writeBuffer[j];
+      }// for j
+    }   
+  };//commit
 
   this.get = function(key) {
-    this.get.count += 1;
-    var stringified =  this.storage.get("#" + key + "#");
-    if(stringified === null) {
-      return getAny(key);
-    } else { 
-      var keys = JSON.parse(stringified);
-      this.prefetched = this.storage.getAll(keys);
-      return this.getAny(key);
+    assert(typeof key === "string");
+    if(this.readBuffer[key]             === undefined && 
+       this.readBuffer["$" + key + "$"] === undefined &&
+       this.readBuffer["[" + key + "]"] === undefined &&
+       this.readBuffer["{" + key + "}"] === undefined &&
+       this.readBuffer["(" + key + ")"] === undefined) 
+    {
+       this.readBuffer[key]             = undefined;
+       this.readBuffer["#" + key + "#"] = undefined;
+       this.readBuffer["$" + key + "$"] = undefined; 
+       this.readBuffer["$" + key + "$0"] = undefined;
+       this.readBuffer["[" + key + "]"] = undefined;
+       this.readBuffer["[" + key + "]0"] = undefined;
+       this.readBuffer["{" + key + "}"] = undefined;
+       this.readBuffer["(" + key + ")"] = undefined;
+       this.fetch();
     }//if
-  };//get
 
+    if(typeof this.readBuffer["#" + key + "#"] === "string") {
+      var parsed = JSON.parse(this.readBuffer["#" + key + "#"]);
+      for(var i in parsed) {
+        this.readBuffer[i] = undefined;
+      }//for i
+      this.fetch();
+    }
+    
+    if(typeof this.readBuffer["$" + key + "$"] === "string") {
+      return this.getString(key);
+    } else if(typeof this.readBuffer["(" + key + ")"] === "string") {
+      return this.getJson(key);
+    } else if(typeof this.readBuffer["[" + key + "]"] === "string") {
+      return this.getArray(key);
+    } else if(typeof this.readBuffer["{" + key + "}"] === "string") {
+      return this.getObject(key);
+    } else {
+      throw "KeyValueStore#get: key " + key + " not found in readBuffer.";
+    }
+  }//get
+
+  this.remove = function(keys){
+    for(var i in keys) {
+      assert(typeof keys[i] === "string");
+      this.writeBuffer[keys[i]] = undefined;
+      this.writeBuffer["$" + keys[i] + "$"] = undefined;
+      this.writeBuffer["(" + keys[i] + ")"] = undefined;
+      this.writeBuffer["[" + keys[i] + "]"] = undefined;
+      this.writeBuffer["{" + keys[i] + "}"] = undefined;
+      this.writeBuffer["#" + keys[i] + "#"] = undefined;
+      delete this.readBuffer[keys[i]];
+      delete this.readBuffer["$" + keys[i] + "$"];
+      delete this.readBuffer["(" + keys[i] + ")"];
+      delete this.readBuffer["[" + keys[i] + "]"];
+      delete this.readBuffer["{" + keys[i] + "}"];
+      delete this.readBuffer["#" + keys[i] + "#"];
+    }//for i
+  };
+
+  this.write = function(key, value){
+    assert(typeof key === "string");
+    assert(value !== undefined);
+    this.writeBuffer[key] = value;
+    this.readBuffer[key] = value;
+  };//write
+  
+  this.read = function(key) {
+    assert(typeof key === "string");
+    if(this.readBuffer[key] === undefined) {
+      this.readBuffer[key] = this.storage.get(key);
+      if(this.readBuffer[key] === null) this.readBuffer[key] = undefined;
+    }
+    return this.readBuffer[key];
+  };//read
+  
   this.reset = function(){
     this.nMaxValueLength = 50000;
-    this.transaction = {};
-    this.prefetched = {};
-    this.putAny.count = 0;
-    this.getAny.count = 0;
-    this.get.count = 0;
-    this.put.count = 0;
-    this.prefetch.count = 0;
+    this.writeBuffer = {};
+    this.readBuffer = {};
   };
   
   this.roundtripTest = function(key,value){
