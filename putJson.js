@@ -8,7 +8,7 @@ function putJson_(key, any) {
   assert(any !== undefined);
   putJson_.count += 1;
   var stringified = JSON.stringify(any);
-  var all = {"TO BE REMOVED": getDerivedKeys_(key)};
+  var all = {"TO BE REMOVED": modKey(key)};
   if(stringified.length > this.nMaxValueLength){
     this.transaction["(" + key + ")"] = "LONG JSON STRING";
     merge_(putString("(" + key + ")", stringified));

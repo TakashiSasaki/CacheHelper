@@ -8,7 +8,7 @@ function putString_(key, string) {
   assert(typeof key === "string");
   assert(typeof string === "string");
   putString_.count  += 1;
-  var all = {"TO BE REMOVED": getDerivedKeys_(key)};
+  var all = {"TO BE REMOVED": modKey(key)};
   
   var fragments = [];
   assert(typeof this.nMaxValueLength === "number" && this.nMaxValueLength > 0);
