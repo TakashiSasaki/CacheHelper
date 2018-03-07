@@ -10,9 +10,9 @@ function putString_(key, string) {
   this.remove(key);
   
   var fragments = [];
-  assert(typeof this.nMaxValueLength === "number" && this.nMaxValueLength > 0);
-  for(var i=0; i<string.length; i += this.nMaxValueLength) {
-    fragments.push(string.substr(i, this.nMaxValueLength));
+  assert(typeof this.maxValueLength === "number" && this.maxValueLength > 0);
+  for(var i=0; i<string.length; i += this.maxValueLength) {
+    fragments.push(string.substr(i, this.maxValueLength));
   }
   
   this.write("$" + key + "$", "" + fragments.length);

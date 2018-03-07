@@ -8,7 +8,7 @@ function putJson_(key, any) {
   assert(any !== undefined);
   this.remove(key);
   var stringified = JSON.stringify(any);
-  if(stringified.length > this.nMaxValueLength){
+  if(stringified.length > this.maxValueLength){
     this.write("(" + key + ")", "LONG JSON STRING");
     this.putString("(" + key + ")", stringified);
   } else {

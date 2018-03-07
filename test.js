@@ -1,6 +1,5 @@
 function testLazyKeyValueStore(){
   var lkvs = new LazyKeyValueStore();
-  lkvs.nMaxValueLength = 10;
   
   lkvs.roundtripTest("k", null); 
   lkvs.roundtripTest("emptyString", "");

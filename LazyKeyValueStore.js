@@ -1,8 +1,16 @@
-
 //class LazyKeyValueStore
-function LazyKeyValueStore(storage){
-  if(typeof CacheService !== typeof undefined){
-    this.storage = CacheService.getScriptCache();
+function LazyKeyValueStore(storage, maxValueLength){
+  if(storage === undefined) {
+    if(typeof CacheService !== typeof undefined){
+      this.storage = CacheService.getScriptCache();
+    }
+  } else {
+    this.storage = storage;
+  }
+  if(maxValueLength === undefined) {
+    this.maxValueLength = 10;
+  } else {
+    this.maxValueLength = maxValueLength;
   }
   
   this.appendArray = appendArray_;
@@ -145,7 +153,6 @@ function LazyKeyValueStore(storage){
   };//read
   
   this.reset = function(){
-    this.nMaxValueLength = 50000;
     this.writeBuffer = {};
     this.readBuffer = {};
   };
