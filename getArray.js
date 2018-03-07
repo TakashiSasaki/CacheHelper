@@ -1,11 +1,9 @@
 /**
  * @param {stirng} key
- * @param {object} values, optional
  * @return {object}
  */
 function getArray_(key){
   assert(typeof key === "string");
-  //this.prefetch([key]);
   const stringified = this.read("[" + key + "]");
   assert(typeof stringified === "string");
   var length = parseInt(stringified);

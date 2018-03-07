@@ -1,4 +1,3 @@
-if(console === undefined) console = Logger;
 
 //class LazyKeyValueStore
 function LazyKeyValueStore(storage){
@@ -6,6 +5,7 @@ function LazyKeyValueStore(storage){
     this.storage = CacheService.getScriptCache();
   }
   
+  this.appendArray = appendArray_;
   this.getArray = getArray_;
   this.putArray = putArray_;
   this.getJson = getJson_;

@@ -1,5 +1,6 @@
 /**
   @param {string} key
+  @return {object}
 */
 function getObject_(key) {
   assert(typeof key === "string");

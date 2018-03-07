@@ -1,7 +1,7 @@
 /**
   @param {string} key
   @param {Any} any
-  @return {object}
+  @return {void}
 */
 function putJson_(key, any) {
   assert(typeof key === "string");
