@@ -34,4 +34,13 @@ function testKeyValueStore(){
   };
   keyValueStore.put("testObject1", testObject1);
   assert.deepStrictEqual(keyValueStore.get("testObject1"), testObject1);
+
+  //overwriting with the same key
+  var testObject2 = {
+    a: 1,
+    b: null,
+    c: "hello"
+  };
+  keyValueStore.put("testObject1", testObject2);
+  assert.deepStrictEqual(keyValueStore.get("testObject1"), testObject2);
 }

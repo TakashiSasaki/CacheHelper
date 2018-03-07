@@ -1,15 +1,4 @@
-function testObject_(){
-  Logger.log("testObject_: begin");
-  var o = {
-    a: 1,
-    b: null,
-    c: "hello"
-  };
-  put("k", o);
-  var got = getObject("k");
-  if(JSON.stringify(o) !== JSON.stringify(got)) throw "testObject_: o != got.";
-  Logger.log("testObject_: end");
-}
+
 
 function testObject1_(){
   Logger.log("testObject1_: begin");
