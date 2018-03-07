@@ -2,6 +2,7 @@ function testLazyKeyValueStore(){
   var lkvs = new LazyKeyValueStore();
   
   lkvs.roundtripTest("k", null); 
+  lkvs.roundtripTest("k", null, true); 
   lkvs.roundtripTest("emptyString", "");
   lkvs.roundtripTest("booleanTrue", true);
   lkvs.roundtripTest("booleanFalse", false);

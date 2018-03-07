@@ -53,10 +53,10 @@ function LazyKeyValueStore(storage, maxValueLength){
       for(var l in x) {
         this.readBuffer[l] = x[l];
       }//for l
-    }
-  }
+    }//if
+  };//fetch
 
-  this.commit = function(){
+  this.commit = function(key){
     var keysToRemove = [];
     for(var i in this.writeBuffer){
       if(this.writeBuffer[i] === undefined) {
@@ -69,13 +69,15 @@ function LazyKeyValueStore(storage, maxValueLength){
       this.storage.removeAll(keysToRemove);
     }
     
-    this.writeBuffer["#" + key + "#"] = JSON.stringify(Object.keys(this.writeBuffer));
-    if(Object.keys(this.writeBuffer).length > 0) {
-      this.storage.putAll(this.writeBuffer);
-      for(var j in this.readBuffer){
-        this.readBuffer[j] = this.writeBuffer[j];
-      }// for j
-    }   
+    if(typeof key === "string") {
+      this.writeBuffer["#" + key + "#"] = JSON.stringify(Object.keys(this.writeBuffer));
+      if(Object.keys(this.writeBuffer).length > 0) {
+        this.storage.putAll(this.writeBuffer);
+        for(var j in this.readBuffer){
+          this.readBuffer[j] = this.writeBuffer[j];
+        }// for j
+      }//if
+    }//if
   };//commit
 
   this.get = function(key) {
@@ -86,14 +88,14 @@ function LazyKeyValueStore(storage, maxValueLength){
        this.readBuffer["{" + key + "}"] === undefined &&
        this.readBuffer["(" + key + ")"] === undefined) 
     {
-       this.readBuffer[key]             = undefined;
-       this.readBuffer["#" + key + "#"] = undefined;
-       this.readBuffer["$" + key + "$"] = undefined; 
+       this.readBuffer[key]              = undefined;
+       this.readBuffer["#" + key + "#"]  = undefined;
+       this.readBuffer["$" + key + "$"]  = undefined; 
        this.readBuffer["$" + key + "$0"] = undefined;
-       this.readBuffer["[" + key + "]"] = undefined;
+       this.readBuffer["[" + key + "]"]  = undefined;
        this.readBuffer["[" + key + "]0"] = undefined;
-       this.readBuffer["{" + key + "}"] = undefined;
-       this.readBuffer["(" + key + ")"] = undefined;
+       this.readBuffer["{" + key + "}"]  = undefined;
+       this.readBuffer["(" + key + ")"]  = undefined;
        this.fetch();
     }//if
 
@@ -157,8 +159,12 @@ function LazyKeyValueStore(storage, maxValueLength){
     this.readBuffer = {};
   };
   
-  this.roundtripTest = function(key,value){
+  this.roundtripTest = function(key,value,resetFlag){
     this.put(key, value);
+    if(resetFlag === true) {
+      this.commit(key);
+      this.reset();
+    }
     assert.deepStrictEqual(this.get(key), value);
   };
 
