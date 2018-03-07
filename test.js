@@ -2,45 +2,33 @@ function testKeyValueStore(){
   var keyValueStore = new KeyValueStore();
   keyValueStore.nMaxValueLength = 10;
   
-  keyValueStore.put("k", null); 
-  assert.strictEqual(keyValueStore.getAny("k"), null);
-
-  keyValueStore.put("emptyString", "");
-  assert.strictEqual(keyValueStore.getAny("emptyString"), "");
-  
-  keyValueStore.put("booleanTrue", true);
-  assert.strictEqual(keyValueStore.getAny("booleanTrue"), true);
-  
-  keyValueStore.put("booleanFalse", false);
-  assert.strictEqual(keyValueStore.getAny("booleanFalse"), false);
-  
-  keyValueStore.put("number", 1.234E6);
-  assert.strictEqual(keyValueStore.getAny("number"), 1.234E6);
-
-  var longString =  "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso";
-  keyValueStore.put("longString", longString);
-  var longString_get = keyValueStore.get("longString");
-  assert.strictEqual(longString_get, longString);
-  
-  var emptyString = "";
-  keyValueStore.put("emptyString", emptyString);
-  assert.strictEqual(keyValueStore.get("emptyString"), emptyString);
- 
-  var testObject1 = {
+  keyValueStore.roundtripTest("k", null); 
+  keyValueStore.roundtripTest("emptyString", "");
+  keyValueStore.roundtripTest("booleanTrue", true);
+  keyValueStore.roundtripTest("booleanFalse", false);
+  keyValueStore.roundtripTest("number", 1.234E6);
+  keyValueStore.roundtripTest("longString",  "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso");
+  keyValueStore.roundtripTest("emptyString", "");
+  keyValueStore.roundtripTest("testObject1", {
     a: 1,
     b: null,
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
-  };
-  keyValueStore.put("testObject1", testObject1);
-  assert.deepStrictEqual(keyValueStore.get("testObject1"), testObject1);
-
-  //overwriting with the same key
-  var testObject2 = {
+  });
+  keyValueStore.roundtripTest("testObject1", {
     a: 1,
     b: null,
     c: "hello"
-  };
-  keyValueStore.put("testObject1", testObject2);
-  assert.deepStrictEqual(keyValueStore.get("testObject1"), testObject2);
+  });
+  keyValueStore.roundtripTest("testObject3", {
+    aaa : 1,
+    bbb : "こんにちは",
+    ccc : (new Date()).toString(),
+    1 : 111,
+    2 : 222,
+    3 : 333
+  });  
+  keyValueStore.roundtripTest("testObject4", {a:"aaa", b:"bbb", 1:0.111, 2:0.222});
+  keyValueStore.roundtripTest("testObject5", {a:null, b:false});
+  keyValueStore.roundtripTest("testObject6", {aaa: 1111, bbb: "2222", ccc: null});
 }

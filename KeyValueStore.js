@@ -27,7 +27,7 @@ function KeyValueStore(storage){
       delete this.transaction["TO BE REMOVED"];
     }
     this.storage.putAll(this.transaction);
-  }//put
+  };//put
 
   this.get = function(key) {
     this.get.count += 1;
@@ -39,7 +39,7 @@ function KeyValueStore(storage){
       this.prefetched = this.storage.getAll(keys);
       return this.getAny(key);
     }//if
-  }//get
+  };//get
 
   this.reset = function(){
     this.nMaxValueLength = 50000;
@@ -50,7 +50,12 @@ function KeyValueStore(storage){
     this.get.count = 0;
     this.put.count = 0;
     this.prefetch.count = 0;
-  }
+  };
+  
+  this.roundtripTest = function(key,value){
+    this.put(key, value);
+    assert.deepStrictEqual(this.get(key), value);
+  };
 
   this.reset();
   return this;
