@@ -21,6 +21,9 @@ prepare:
 
 assert.js: 
 	touch empty.js ;\
-	browserify -s assert -r assert -o $@ empty.js
+	browserify -s assert -r assert -o $@ empty.js ;\
+	rm empty.js
+
+
 
 

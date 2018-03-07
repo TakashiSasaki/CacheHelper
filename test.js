@@ -1,61 +1,29 @@
-if(global.Logger === undefined) global.Logger = console;
-LocalCache = require("./emulate.js").LocalCache;
-global.cache = new LocalCache();
+function testKeyValueStore(){
+  var keyValueStore = new KeyValueStore();
+  keyValueStore.nMaxValueLength = 10;
+  
+  keyValueStore.put("k", null); 
+  assert.strictEqual(keyValueStore.getAny("k"), null);
 
+  keyValueStore.put("emptyString", "");
+  assert.strictEqual(keyValueStore.getAny("emptyString"), "");
+  
+  keyValueStore.put("booleanTrue", true);
+  assert.strictEqual(keyValueStore.getAny("booleanTrue"), true);
+  
+  keyValueStore.put("booleanFalse", false);
+  assert.strictEqual(keyValueStore.getAny("booleanFalse"), false);
+  
+  keyValueStore.put("number", 1.234E6);
+  assert.strictEqual(keyValueStore.getAny("number"), 1.234E6);
 
-// require all depencencies
-(function(x){
-  for(var i in x) {
-    var m = require(x[i]);
-    for(var j in m) {
-      global[j] = m[j];
-    }
-  }
-})(["./misc.js", "./array.js", "./json.js", "./string.js", "./any.js", "./object.js", "./array.js"])
-
-
-testString1();
-testString2();
-testAnyNull();
-testAnyEmptyString();
-testAnyBoolean();
-testAnyNumber();
-testObject();
-testObject1();
-testObject2();
-testObject3();
-testArray1();
-testArray2();
-testJson();
-
-resetStringCount();
-resetArrayCount();
-resetObjectCount();
-resetJsonCount();
-resetAnyCount();
-cache.resetCount();
-console.log("prefetchCount = " + prefetchCount);
-test1();
-console.log("prefetchCount = " + prefetchCount);
-
-cache.showCount();
-showStringCount();
-showArrayCount();
-showObjectCount();
-showJsonCount();
-showAnyCount();
-
-function testAll(){
-  for(var i in global) {
-    if(typeof global[i] !== "object") continue;
-    for(var j in global[i]) {
-      if(typeof global[i][j] != "function") continue;
-      if(j.match(/^testAll$/)) continue;
-      if(j.match(/__$/)) continue;
-      if(!j.match(/^test/)) continue;
-      Logger.log("testAll -> %s.%s", i, j);
-      global[i][j]();
-      Logger.log("testAll <- %s.%s", i, j);      
-    }
-  }
+  var longString =  "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso";
+  keyValueStore.put("longString", longString);
+  var longString_get = keyValueStore.get("longString");
+  assert.strictEqual(longString_get, longString);
+  
+  var emptyString = "";
+  keyValueStore.put("emptyString", emptyString);
+  assert.strictEqual(keyValueStore.get("emptyString"), emptyString);
+ 
 }

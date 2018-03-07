@@ -1,26 +1,3 @@
-putObjectCount = 0;
-getObjectCount = 0;
-
-/**
-  @param {string} key
-  @param {object} object
-  @return {object}
-*/
-function putObject(key, object) {
-  if(typeof key !== "string") throw "putObject: expects string key.";
-  if(!(object instanceof Object)) throw "putObject: expects an object as a value";
-  putObjectCount += 1;
-  var properties = [];
-  for(var i in object) {
-    properties.push(i);
-  }
-  var all = {"TO BE REMOVED": getDerivedKeys_(key)};
-  all["{" + key + "}"] = JSON.stringify(properties);
-  for(var i in object) {
-    merge_(all, putAny("{" + key + "}" + i, object[i]));
-  }  
-  return all;
-}//putObject
 
 /**
   @param {string} key
@@ -133,12 +110,4 @@ function testObject3_(){
 }
 
 if(exports === undefined) exports = {};
-exports.putObject   = putObject;
-exports.getObject   = getObject;
-exports.resetObjectCount = resetObjectCount_;
-exports.showObjectCount = showObjectCount_;
-exports.testObject  = testObject_;
-exports.testObject1 = testObject1_;
-exports.testObject2 = testObject2_;
-exports.testObject3 = testObject3_;
 

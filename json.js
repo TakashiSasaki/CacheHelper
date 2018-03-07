@@ -2,41 +2,6 @@ putJsonCount = 0;
 getJsonCount = 0;
 getJsonLongStringCount = 0;
 
-/**
-  @param {string} key
-  @param {Any} any
-  @return {object}
-*/
-function putJson(key, any) {
-  putJsonCount += 1;
-  var jsonString = JSON.stringify(any);
-  var all = {"TO BE REMOVED": getDerivedKeys_(key)};
-  if(jsonString.length > nMaxValueLength){
-    all["(" + key + ")"] = "LONG JSON STRING";
-    merge_(all, putString("(" + key + ")", jsonString));
-  } else {
-    all["(" + key + ")"] = jsonString;
-  }
-  return all;
-}//putJson
-
-/**
-  @param {string} key
-  @param {string} value optional
-  @return {Array}
-*/
-function getJson(key, values){
-  getJsonCount += 1;
-  values = prefetchAny_(values, [key]);
-  if(values["(" + key + ")"] === "LONG JSON STRING") {
-    getJsonLongStringCount += 1;
-    var jsonString = getString("(" + key + ")", values);
-    return JSON.parse(jsonString);
-  } else {
-    return JSON.parse(values["(" + key + ")"]);
-  }
-}//getJson
-
 function resetJsonCount_(){
   putJsonCount = 0;
   getJsonCount = 0;
@@ -69,8 +34,8 @@ function testJson_(){
 }
 
 if(exports === undefined) exports = {};
-exports.putJson  = putJson;
-exports.getJson  = getJson;
+exports.putJson  = putJson_;
+exports.getJson  = getJson_;
 exports.testJson = testJson_;
 exports.resetJsonCount = resetJsonCount_;
 exports.showJsonCount = showJsonCount_;

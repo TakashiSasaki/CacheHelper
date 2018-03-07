@@ -1,34 +1,20 @@
 function prefetch_(keys) {
-  //if(typeof values === "undefined") values = {};
-  if(!(keys instanceof Array)) throw "prefetch_: expects an array of string keys.";
-  for(var i in keys) {
-    if(typeof keys[i] !== "string") throw "prefetch_: expects a string key.";
-    if(this.prefetched[keys[i]] === undefined) {
-      var all = cache.getAll(keys);
-      for(var j in all) {
-        //if(got[j] === null) {
-        //  console.log("prefetch_: missing key + " + j);
-        //  continue; // for missing keys
-        //}
-        this.prefetched[j] = all[j];
-      }//for j
-    }//if
-  }//for i
-}//prefetch_
-
-function prefetchAny_(keys) {
-  if(!(keys instanceof Array)) throw "prefetchAny_: keys should be an array.";
+  assert(keys instanceof Array);
   var bNeedToGet = false;
   for(var i in keys) {
-    if(typeof values["$" + keys[i] + "$"] === "undefined" &&
-        typeof values["(" + keys[i] + ")"] === "undefined" &&
-        typeof values["{" + keys[i] + "}"] === "undefined" &&
-        typeof values["[" + keys[i] + "]"] === "undefined") bNeedToGet = true;
+    assert(typeof keys[i] === "string");
+    if(typeof this.prefetched["$" + keys[i] + "$"] === "undefined" &&
+       typeof this.prefetched["(" + keys[i] + ")"] === "undefined" &&
+       typeof this.prefetched["{" + keys[i] + "}"] === "undefined" &&
+       typeof this.prefetched["[" + keys[i] + "]"] === "undefined") {
+          bNeedToGet = true;
+          break;
+        }
   }//for i
-  if(bNeedToGet == false) return values;
+  if(bNeedToGet === false) return;
   var keysToGet = [];
   for(var j in keys) {
-    if(typeof keys[j] !== "string") throw "prefetchAny_: key should be a strign.";
+    assert(typeof keys[j] === "string");
     keysToGet.push(keys[j]);
     keysToGet.push("$" + keys[j] + "$");
     keysToGet.push("$" + keys[j] + "$0");
@@ -38,5 +24,10 @@ function prefetchAny_(keys) {
     keysToGet.push("(" + keys[j] + ")");
   }//for j
   Logger.log("prefetchAny_: keysToGet = " + keysToGet);
-  this.prefetch(keysToGet);
-}//prefetchAny_
+  
+  var all = this.storage.getAll(keysToGet);
+  for(var k in all){
+    if(all[k] === null || all[k] === undefined) continue;
+    this.prefetched[k] = all[k];
+  }//for k
+}//prefetch_
