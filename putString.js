@@ -15,8 +15,8 @@ function putString_(key, string) {
     fragments.push(string.substr(i, this.maxValueLength));
   }
   
-  this.write("$" + key + "$", "" + fragments.length);
+  this.write(S(key), ""+fragments.length);
   for(var i=0; i<fragments.length; ++i) {
-    this.write("$" + key + "$" + i, fragments[i]);
+    this.write(S(key,i), fragments[i]);
   }//for
 }//putString_

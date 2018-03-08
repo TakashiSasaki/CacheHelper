@@ -4,14 +4,14 @@
 */
 function getString_(key) {
   assert(typeof key === "string");
-  var stringified = this.read("$" + key + "$");
+  var stringified = this.read(S(key));
   assert(typeof stringified === "string");
   var length = parseInt(stringified);
   if(length == 0) return "";
 
   var fragments = [];
   for(var i=0; i<length; ++i) {
-    var fragment = this.read("$" + key + "$" + i);
+    var fragment = this.read(S(key,i));
     assert(typeof fragment === "string");
     fragments.push(fragment);
   }

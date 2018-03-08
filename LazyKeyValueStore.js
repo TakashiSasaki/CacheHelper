@@ -89,15 +89,15 @@ function LazyKeyValueStore(storage, maxValueLength){
   this.get = function(key) {
     assert(typeof key === "string");
     if(this.readBuffer[key]             === undefined && 
-       this.readBuffer["$" + key + "$"] === undefined &&
+       this.readBuffer[S(key)] === undefined &&
        this.readBuffer["[" + key + "]"] === undefined &&
        this.readBuffer["{" + key + "}"] === undefined &&
        this.readBuffer["(" + key + ")"] === undefined) 
     {
        this.readBuffer[key]              = undefined;
        this.readBuffer["#" + key + "#"]  = undefined;
-       this.readBuffer["$" + key + "$"]  = undefined; 
-       this.readBuffer["$" + key + "$0"] = undefined;
+       this.readBuffer[S(key)]  = undefined; 
+       this.readBuffer[S(key,0)] = undefined;
        this.readBuffer["[" + key + "]"]  = undefined;
        this.readBuffer["[" + key + "]0"] = undefined;
        this.readBuffer["{" + key + "}"]  = undefined;
@@ -115,7 +115,7 @@ function LazyKeyValueStore(storage, maxValueLength){
       this.fetch();
     }
     
-    if(typeof this.readBuffer["$" + key + "$"] === "string") {
+    if(typeof this.readBuffer[S(key)] === "string") {
       return this.getString(key);
     } else if(typeof this.readBuffer["(" + key + ")"] === "string") {
       return this.getJson(key);
@@ -132,13 +132,13 @@ function LazyKeyValueStore(storage, maxValueLength){
     for(var i in keys) {
       assert(typeof keys[i] === "string");
       this.writeBuffer[keys[i]] = undefined;
-      this.writeBuffer["$" + keys[i] + "$"] = undefined;
+      this.writeBuffer[S(keys[i])] = undefined;
       this.writeBuffer["(" + keys[i] + ")"] = undefined;
       this.writeBuffer["[" + keys[i] + "]"] = undefined;
       this.writeBuffer["{" + keys[i] + "}"] = undefined;
       this.writeBuffer["#" + keys[i] + "#"] = undefined;
       delete this.readBuffer[keys[i]];
-      delete this.readBuffer["$" + keys[i] + "$"];
+      delete this.readBuffer[S(keys[i])];
       delete this.readBuffer["(" + keys[i] + ")"];
       delete this.readBuffer["[" + keys[i] + "]"];
       delete this.readBuffer["{" + keys[i] + "}"];
@@ -192,3 +192,15 @@ function LazyKeyValueStore(storage, maxValueLength){
   this.reset();
   return this;
 }//LazyKeyValueStore
+
+function H(key) {  // generate hint-key
+  assert(typeof key === "string");
+  return "#" + key + "#";
+}
+
+function S(key, i) {  // generate string-key
+  assert(typeof key === "string");
+  assert(i === undefined || typeof i === "number");
+  if(i === undefined) return "$" + key + "$";
+  return "$" + key + "$" + i;
+}
