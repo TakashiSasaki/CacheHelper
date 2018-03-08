@@ -12,3 +12,7 @@ function appendArray_(key, array) {
     this.put(L(key, currentLength + i), array[i]);
   }//for i
 }//appendArray
+
+if(typeof exports === "undefined") exports = {};
+exports.appendArray_ = appendArray_;
+

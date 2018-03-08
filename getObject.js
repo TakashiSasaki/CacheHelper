@@ -18,3 +18,5 @@ function getObject_(key) {
   return object;
 }//getObject_
 
+if(typeof exports === "undefined") exports = {};
+exports.getObject_=getObject_;

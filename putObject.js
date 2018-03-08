@@ -14,3 +14,7 @@ function putObject_(key, object) {
     this.put(O(key,i), object[i]);
   }  
 }//putObject_
+
+if(typeof exports === "undefined") exports = {};
+exports.putObject_ = putObject_;
+

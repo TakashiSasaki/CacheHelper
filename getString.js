@@ -18,3 +18,7 @@ function getString_(key) {
   }
   return fragments.join("");
 }//getString_
+
+if(typeof exports === "undefined") exports = {}
+exports.getString_ = getString_;
+

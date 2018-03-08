@@ -12,3 +12,7 @@ function getJson_(key){
   assert(x === null || typeof x === "number" || typeof x === "boolean");
   return x;
 }//getJson_
+
+if(typeof exports === "undefined") exports = {};
+exports.getJson_ = getJson_;
+

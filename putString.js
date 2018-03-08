@@ -1,7 +1,7 @@
 /**
   @param {string} key
   @param {string} string
-  @return {object}
+  @return {void}
 */
 
 function putString_(key, string) {
@@ -20,3 +20,7 @@ function putString_(key, string) {
     this.write(S(key,i), fragments[i]);
   }//for
 }//putString_
+
+if(typeof exports === "undefined") exports = {};
+exports.putString_ = putString_;
+

@@ -39,5 +39,7 @@ function testHashWrapper(){
 }
 
 if(typeof process !== "undefined") {
+  var HashWrapper = require("./HashWrapper");
+  console.log("typeof HashWrapper = " + typeof HashWrapper);
   testHashWrapper();
 }

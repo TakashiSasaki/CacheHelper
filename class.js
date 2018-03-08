@@ -1,7 +1,6 @@
-//class HashWrapper
 function HashWrapper(storage, maxValueLength){
   if(storage === undefined) {
-    this.storage = new Sskv();
+    this.storage = new StringMap();
   } else {
     this.storage = storage;
   }
@@ -227,3 +226,7 @@ function J(key){
   assert(typeof key === "string");
   return "(" + key + ")";
 }
+
+if(typeof exports === "undefined") exports = {};
+exports.HashWrapper = HashWrapper;
+

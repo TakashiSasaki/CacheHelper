@@ -1,4 +1,4 @@
-function Sskv(){
+function StringMap(){
   this.o = {};
   
   this.getAll = function(keys){
@@ -38,3 +38,7 @@ function Sskv(){
     }//for i
   }//removeAll
 }
+
+if(typeof exports === "undefined") exports = {};
+exports.StringMap = StringMap;
+

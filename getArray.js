@@ -1,6 +1,6 @@
 /**
  * @param {stirng} key
- * @return {object}
+ * @return {Array}
  */
 function getArray_(key){
   assert(typeof key === "string");
@@ -14,3 +14,7 @@ function getArray_(key){
   }
   return array;
 }//getArray
+
+if(typeof exports === "undefined") exports = {};
+exports.getArray_ = getArray_;
+

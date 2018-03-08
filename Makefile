@@ -1,6 +1,6 @@
 .PHONY: test
 
-test: test-array
+test: HashWrapper.js test.js
 	node test.js
 
 test-array:
@@ -24,6 +24,10 @@ assert.js:
 	browserify -s assert -r assert -o $@ empty.js ;\
 	rm empty.js
 
+empty.js:
+	touch empty.js
 
-
+HashWrapper.js: class.js empty.js
+	browserify -s HashWrapper -o $@ -r assert -r ./class empty.js ;\
+	rm empty.js
 

@@ -13,3 +13,6 @@ function putArray_(key, array) {
   }//for
 }//putArray_
 
+if(typeof exports === "undefined") exports = {};
+exports.putArray_ = putArray_;
+

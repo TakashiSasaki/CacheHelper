@@ -15,3 +15,6 @@ function putJson_(key, any) {
     this.write(J(key), stringified);
   }
 }//putJson_
+
+if(typeof exports === "undefined") exports = {};
+exports.putJson_ = putJson_;
