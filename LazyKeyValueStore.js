@@ -1,12 +1,11 @@
 //class LazyKeyValueStore
 function LazyKeyValueStore(storage, maxValueLength){
   if(storage === undefined) {
-    if(typeof CacheService !== typeof undefined){
-      this.storage = CacheService.getScriptCache();
-    }
+    this.storage = new Sskv();
   } else {
     this.storage = storage;
   }
+  
   if(maxValueLength === undefined) {
     this.maxValueLength = 10;
   } else {
