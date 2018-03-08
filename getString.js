@@ -7,6 +7,7 @@ function getString_(key) {
   var stringified = this.read(S(key));
   assert(typeof stringified === "string");
   var length = parseInt(stringified);
+  assert(typeof length === "number" && length === Math.floor(length) && length === Math.ceil(length));
   if(length == 0) return "";
 
   var fragments = [];
