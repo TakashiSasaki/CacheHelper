@@ -72,11 +72,11 @@ function LazyKeyValueStore(storage, maxValueLength){
     }
     
     if(typeof key === "string") {
-      assert(this.writeBuffer["#" + key + "#"] === undefined);
+      assert(this.writeBuffer[H(key)] === undefined);
       const writeBufferKeys = Object.keys(this.writeBuffer);
       assert(writeBufferKeys instanceof Array);
       if(writeBufferKeys.length > 0) {
-        this.writeBuffer["#" + key + "#"] = JSON.stringify(writeBufferKeys);
+        this.writeBuffer[H(key)] = JSON.stringify(writeBufferKeys);
         this.putAllCount += 1;
         this.storage.putAll(this.writeBuffer);
         for(var j in this.writeBuffer){
@@ -95,7 +95,7 @@ function LazyKeyValueStore(storage, maxValueLength){
        this.readBuffer["(" + key + ")"] === undefined) 
     {
        this.readBuffer[key]              = undefined;
-       this.readBuffer["#" + key + "#"]  = undefined;
+       this.readBuffer[H(key)]  = undefined;
        this.readBuffer[S(key)]  = undefined; 
        this.readBuffer[S(key,0)] = undefined;
        this.readBuffer["[" + key + "]"]  = undefined;
@@ -105,8 +105,8 @@ function LazyKeyValueStore(storage, maxValueLength){
        this.fetch();
     }//if
 
-    if(typeof this.readBuffer["#" + key + "#"] === "string") {
-      var parsed = JSON.parse(this.readBuffer["#" + key + "#"]);
+    if(typeof this.readBuffer[H(key)] === "string") {
+      var parsed = JSON.parse(this.readBuffer[H(key)]);
       for(var i in parsed) {
         if(this.readBuffer[parsed[i]] === undefined) {
           this.readBuffer[parsed[i]] = undefined;
@@ -136,13 +136,13 @@ function LazyKeyValueStore(storage, maxValueLength){
       this.writeBuffer["(" + keys[i] + ")"] = undefined;
       this.writeBuffer["[" + keys[i] + "]"] = undefined;
       this.writeBuffer["{" + keys[i] + "}"] = undefined;
-      this.writeBuffer["#" + keys[i] + "#"] = undefined;
+      this.writeBuffer[H(keys[i])] = undefined;
       delete this.readBuffer[keys[i]];
       delete this.readBuffer[S(keys[i])];
       delete this.readBuffer["(" + keys[i] + ")"];
       delete this.readBuffer["[" + keys[i] + "]"];
       delete this.readBuffer["{" + keys[i] + "}"];
-      delete this.readBuffer["#" + keys[i] + "#"];
+      delete this.readBuffer[H(keys[i])];
     }//for i
   };
 
