@@ -1,25 +1,25 @@
-function testLazyKeyValueStore(){
-  var lkvs = new LazyKeyValueStore();
+function testHashWrapper(){
+  var hw = new HashWrapper();
   
-  lkvs.roundtripTest("k", null); 
-  lkvs.roundtripTest("emptyString", "");
-  lkvs.roundtripTest("booleanTrue", true);
-  lkvs.roundtripTest("booleanFalse", false);
-  lkvs.roundtripTest("number", 1.234E6);
-  lkvs.roundtripTest("shortString", "hello");
-  lkvs.roundtripTest("longString",  "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso");
-  lkvs.roundtripTest("testObject1", {
+  hw.roundtripTest("k", null); 
+  hw.roundtripTest("emptyString", "");
+  hw.roundtripTest("booleanTrue", true);
+  hw.roundtripTest("booleanFalse", false);
+  hw.roundtripTest("number", 1.234E6);
+  hw.roundtripTest("shortString", "hello");
+  hw.roundtripTest("longString",  "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso");
+  hw.roundtripTest("testObject1", {
     a: 1,
     b: null,
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   });
-  lkvs.roundtripTest("testObject1", {
+  hw.roundtripTest("testObject1", {
     a: 1,
     b: null,
     c: "hello"
   });
-  lkvs.roundtripTest("testObject3", {
+  hw.roundtripTest("testObject3", {
     aaa : 1,
     bbb : "こんにちは",
     ccc : (new Date()).toString(),
@@ -27,13 +27,17 @@ function testLazyKeyValueStore(){
     2 : 222,
     3 : 333
   });  
-  lkvs.roundtripTest("testObject4", {a:"aaa", b:"bbb", 1:0.111, 2:0.222});
-  lkvs.roundtripTest("testObject5", {a:null, b:false}, true);
-  lkvs.roundtripTest("testObject6", {aaa: 1111, bbb: "2222", ccc: null});
-  lkvs.roundtripTest("testArray1",  [1, 2, 3, "a", "b", "c"]);
-  lkvs.roundtripTest("testArray2", []);
-  lkvs.roundtripTest("testArray3", [1,2,3]);
-  lkvs.appendArray("testArray3", [4,5,6]);
-  assert.deepStrictEqual(lkvs.get("testArray3"), [1,2,3,4,5,6]);
-  lkvs.roundtripTest("testObject7", { a : 1, b: null, c: false, d: [ "hello", 1.23, null]});
+  hw.roundtripTest("testObject4", {a:"aaa", b:"bbb", 1:0.111, 2:0.222});
+  hw.roundtripTest("testObject5", {a:null, b:false}, true);
+  hw.roundtripTest("testObject6", {aaa: 1111, bbb: "2222", ccc: null});
+  hw.roundtripTest("testArray1",  [1, 2, 3, "a", "b", "c"]);
+  hw.roundtripTest("testArray2", []);
+  hw.roundtripTest("testArray3", [1,2,3]);
+  hw.appendArray("testArray3", [4,5,6]);
+  assert.deepStrictEqual(hw.get("testArray3"), [1,2,3,4,5,6]);
+  hw.roundtripTest("testObject7", { a : 1, b: null, c: false, d: [ "hello", 1.23, null]});
+}
+
+if(typeof process !== "undefined") {
+  testHashWrapper();
 }
