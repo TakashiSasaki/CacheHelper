@@ -88,20 +88,28 @@ function LazyKeyValueStore(storage, maxValueLength){
 
   this.get = function(key) {
     assert(typeof key === "string");
-    if(this.readBuffer[key]             === undefined && 
+    if(//this.readBuffer[key]    === undefined && 
        this.readBuffer[S(key)] === undefined &&
        this.readBuffer[L(key)] === undefined &&
        this.readBuffer[O(key)] === undefined &&
        this.readBuffer[J(key)] === undefined) 
     {
-       this.readBuffer[key]              = undefined;
-       this.readBuffer[H(key)]  = undefined;
-       this.readBuffer[S(key)]  = undefined; 
+       this.readBuffer[key]      = undefined;
+       this.readBuffer[H(key)]   = undefined;
+       this.readBuffer[S(key)]   = undefined; 
        this.readBuffer[S(key,0)] = undefined;
-       this.readBuffer[L(key)]  = undefined;
+       this.readBuffer[S(key,1)] = undefined;
+       this.readBuffer[S(key,2)] = undefined;
+       this.readBuffer[S(key,3)] = undefined;
+       this.readBuffer[S(key,4)] = undefined;
+       this.readBuffer[L(key)]   = undefined;
        this.readBuffer[L(key,0)] = undefined;
-       this.readBuffer[O(key)]  = undefined;
-       this.readBuffer[J(key)]  = undefined;
+       this.readBuffer[L(key,1)] = undefined;
+       this.readBuffer[L(key,2)] = undefined;
+       this.readBuffer[L(key,3)] = undefined;
+       this.readBuffer[L(key,4)] = undefined;
+       this.readBuffer[O(key)]   = undefined;
+       this.readBuffer[J(key)]   = undefined;
        this.fetch();
     }//if
 
@@ -131,13 +139,11 @@ function LazyKeyValueStore(storage, maxValueLength){
   this.remove = function(keys){
     for(var i in keys) {
       assert(typeof keys[i] === "string");
-      this.writeBuffer[keys[i]] = undefined;
       this.writeBuffer[S(keys[i])] = undefined;
       this.writeBuffer[J(keys[i])] = undefined;
       this.writeBuffer[L(keys[i])] = undefined;
       this.writeBuffer[O(keys[i])] = undefined;
       this.writeBuffer[H(keys[i])] = undefined;
-      delete this.readBuffer[keys[i]];
       delete this.readBuffer[S(keys[i])];
       delete this.readBuffer[J(keys[i])];
       delete this.readBuffer[L(keys[i])];
@@ -184,9 +190,8 @@ function LazyKeyValueStore(storage, maxValueLength){
     assert.deepStrictEqual(this.get(key), value);
     assert(this.putAllCount === 0);
     assert(this.removeAllCount === 0);
-    Logger.log("get(" + key + ") " 
-                + "getAllCount:" + (this.getAllCount)
-                + " getCount:" + (this.getCount));
+    assert(this.getAllCount <= 2);
+    assert(this.getCount === 0);
   };
   
   this.reset();

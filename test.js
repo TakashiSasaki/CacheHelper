@@ -6,7 +6,7 @@ function testLazyKeyValueStore(){
   lkvs.roundtripTest("booleanTrue", true);
   lkvs.roundtripTest("booleanFalse", false);
   lkvs.roundtripTest("number", 1.234E6);
-  lkvs.roundtripTest("shortString", "short-short-short");
+  lkvs.roundtripTest("shortString", "hello");
   lkvs.roundtripTest("longString",  "aosifjdajasiopfjdsajioasfopsiadfsajasd:alnvuipaojvdaslfhuiaojask;fcmuioa:kscdasnpiuacjaso");
   lkvs.roundtripTest("testObject1", {
     a: 1,
