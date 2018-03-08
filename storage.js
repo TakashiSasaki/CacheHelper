@@ -34,7 +34,7 @@ function StringMap(){
     for(var i in keys) {
       var key = keys[i];
       assert(typeof key === "string");
-      delete o[key];
+      delete this.o[key];
     }//for i
   }//removeAll
 }

@@ -180,16 +180,16 @@ function HashWrapper(storage, maxValueLength){
     this.reset();
     this.put(key, value);
     this.commit(key);
-    assert(this.putAllCount === 1);
-    assert(this.removeAllCount === 0);
-    assert(this.getAllCount === 0);
-    assert(this.getCount === 0);
+    assert.equal(this.putAllCount, 1);
+    assert(this.removeAllCount <=1);
+    assert.equal(this.getAllCount, 0);
+    assert.equal(this.getCount, 0);
     this.reset();
     assert.deepStrictEqual(this.get(key), value);
-    assert(this.putAllCount === 0);
-    assert(this.removeAllCount === 0);
+    assert.equal(this.putAllCount, 0);
+    assert.equal(this.removeAllCount, 0);
     assert(this.getAllCount <= 2);
-    assert(this.getCount === 0);
+    assert.equal(this.getCount, 0);
   };
   
   this.reset();

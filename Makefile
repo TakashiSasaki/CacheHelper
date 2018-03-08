@@ -1,10 +1,10 @@
-.PHONY: test
+.PHONY: test clean push pull
 
-test: HashWrapper.js test.js
-	node test.js
+test: test.js HashWrapper.js
+	node $<
 
-test-array:
-	node array.js
+clean:
+	rm -f HashWrapper.js empty.js
 
 push:
 	clasp push
@@ -27,7 +27,8 @@ assert.js:
 empty.js:
 	touch empty.js
 
-HashWrapper.js: class.js empty.js
-	browserify -s HashWrapper -o $@ -r assert -r ./class empty.js ;\
-	rm empty.js
+HashWrapper.js: getArray.js putArray.js append.js \
+	getJson.js putJson.js getObject.js putObject.js  \
+	getString.js putString.js class.js storage.js
+	cat $^ >$@
 

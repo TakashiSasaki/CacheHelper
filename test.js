@@ -39,7 +39,9 @@ function testHashWrapper(){
 }
 
 if(typeof process !== "undefined") {
-  var HashWrapper = require("./HashWrapper");
-  console.log("typeof HashWrapper = " + typeof HashWrapper);
+  assert = require("assert");
+  HashWrapper = require("./HashWrapper").HashWrapper;
   testHashWrapper();
+  console.log("testHashWrapper finished");
 }
+
