@@ -4,10 +4,10 @@
 */
 function getJson_(key){
   assert(typeof key === "string");
-  if(this.read("(" + key + ")") === "LONG JSON STRING") {
-    var x = JSON.parse(this.getString("(" + key + ")"));
+  if(this.read(J(key)) === "LONG JSON STRING") {
+    var x = JSON.parse(this.getString(J(key)));
   } else {
-    var x = JSON.parse(this.read("(" + key + ")"));
+    var x = JSON.parse(this.read(J(key)));
   }
   assert(x === null || typeof x === "number" || typeof x === "boolean");
   return x;

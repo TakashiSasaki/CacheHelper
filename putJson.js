@@ -9,9 +9,9 @@ function putJson_(key, any) {
   this.remove(key);
   var stringified = JSON.stringify(any);
   if(stringified.length > this.maxValueLength){
-    this.write("(" + key + ")", "LONG JSON STRING");
-    this.putString("(" + key + ")", stringified);
+    this.write(J(key), "LONG JSON STRING");
+    this.putString(J(key), stringified);
   } else {
-    this.write("(" + key + ")", stringified);
+    this.write(J(key), stringified);
   }
 }//putJson_

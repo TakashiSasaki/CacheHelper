@@ -92,7 +92,7 @@ function LazyKeyValueStore(storage, maxValueLength){
        this.readBuffer[S(key)] === undefined &&
        this.readBuffer[L(key)] === undefined &&
        this.readBuffer[O(key)] === undefined &&
-       this.readBuffer["(" + key + ")"] === undefined) 
+       this.readBuffer[J(key)] === undefined) 
     {
        this.readBuffer[key]              = undefined;
        this.readBuffer[H(key)]  = undefined;
@@ -101,7 +101,7 @@ function LazyKeyValueStore(storage, maxValueLength){
        this.readBuffer[L(key)]  = undefined;
        this.readBuffer[L(key,0)] = undefined;
        this.readBuffer[O(key)]  = undefined;
-       this.readBuffer["(" + key + ")"]  = undefined;
+       this.readBuffer[J(key)]  = undefined;
        this.fetch();
     }//if
 
@@ -117,7 +117,7 @@ function LazyKeyValueStore(storage, maxValueLength){
     
     if(typeof this.readBuffer[S(key)] === "string") {
       return this.getString(key);
-    } else if(typeof this.readBuffer["(" + key + ")"] === "string") {
+    } else if(typeof this.readBuffer[J(key)] === "string") {
       return this.getJson(key);
     } else if(typeof this.readBuffer[L(key)] === "string") {
       return this.getArray(key);
@@ -133,13 +133,13 @@ function LazyKeyValueStore(storage, maxValueLength){
       assert(typeof keys[i] === "string");
       this.writeBuffer[keys[i]] = undefined;
       this.writeBuffer[S(keys[i])] = undefined;
-      this.writeBuffer["(" + keys[i] + ")"] = undefined;
+      this.writeBuffer[J(keys[i])] = undefined;
       this.writeBuffer[L(keys[i])] = undefined;
       this.writeBuffer[O(keys[i])] = undefined;
       this.writeBuffer[H(keys[i])] = undefined;
       delete this.readBuffer[keys[i]];
       delete this.readBuffer[S(keys[i])];
-      delete this.readBuffer["(" + keys[i] + ")"];
+      delete this.readBuffer[J(keys[i])];
       delete this.readBuffer[L(keys[i])];
       delete this.readBuffer[O(keys[i])];
       delete this.readBuffer[H(keys[i])];
@@ -219,4 +219,7 @@ function O(key, i){
   return "{" + key + "}" + i;
 }
 
-
+function J(key){
+  assert(typeof key === "string");
+  return "(" + key + ")";
+}
