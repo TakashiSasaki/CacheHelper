@@ -48,6 +48,7 @@ function LazyKeyValueStore(storage, maxValueLength){
       }
     }//for
     if(keysToRead.length > 0) {
+      this.getAllCount += 1;
       var x = this.storage.getAll(keysToRead);
       assert(x instanceof Object);
       for(var l in x) {
@@ -66,12 +67,14 @@ function LazyKeyValueStore(storage, maxValueLength){
       }
     }// for i
     if(keysToRemove.length > 0) {
+      this.removeAllCount += 1;
       this.storage.removeAll(keysToRemove);
     }
     
     if(typeof key === "string") {
       this.writeBuffer["#" + key + "#"] = JSON.stringify(Object.keys(this.writeBuffer));
       if(Object.keys(this.writeBuffer).length > 0) {
+        this.putAllCount += 1;
         this.storage.putAll(this.writeBuffer);
         for(var j in this.readBuffer){
           this.readBuffer[j] = this.writeBuffer[j];
@@ -148,6 +151,7 @@ function LazyKeyValueStore(storage, maxValueLength){
   this.read = function(key) {
     assert(typeof key === "string");
     if(this.readBuffer[key] === undefined) {
+      this.getCount += 1;
       this.readBuffer[key] = this.storage.get(key);
       if(this.readBuffer[key] === null) this.readBuffer[key] = undefined;
     }
@@ -157,17 +161,29 @@ function LazyKeyValueStore(storage, maxValueLength){
   this.reset = function(){
     this.writeBuffer = {};
     this.readBuffer = {};
+    this.getAllCount = 0;
+    this.putAllCount = 0;
+    this.removeAllCount = 0;
+    this.getCount = 0;
   };
   
-  this.roundtripTest = function(key,value,resetFlag){
+  this.roundtripTest = function(key,value){
+    this.reset();
     this.put(key, value);
-    if(resetFlag === true) {
-      this.commit(key);
-      this.reset();
-    }
+    this.commit(key);
+    assert(this.putAllCount === 1);
+    assert(this.removeAllCount === 0);
+    assert(this.getAllCount === 0);
+    assert(this.getCount === 0);
+    this.reset();
     assert.deepStrictEqual(this.get(key), value);
+    assert(this.putAllCount === 0);
+    assert(this.removeAllCount === 0);
+    Logger.log("get(" + key + ") " 
+                + "getAllCount:" + (this.getAllCount)
+                + " getCount:" + (this.getCount));
   };
-
+  
   this.reset();
   return this;
 }//LazyKeyValueStore
