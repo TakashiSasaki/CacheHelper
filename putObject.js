@@ -8,9 +8,9 @@ function putObject_(key, object) {
   assert(typeof object === "object");
   
   this.remove(key);
-  this.write("{" + key + "}", JSON.stringify(Object.keys(object)));
+  this.write(O(key), JSON.stringify(Object.keys(object)));
   for(var i in object) {
     assert(typeof i === "string");
-    this.put("{" + key + "}" + i, object[i]);
+    this.put(O(key,i), object[i]);
   }  
 }//putObject_

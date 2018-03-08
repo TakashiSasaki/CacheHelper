@@ -91,7 +91,7 @@ function LazyKeyValueStore(storage, maxValueLength){
     if(this.readBuffer[key]             === undefined && 
        this.readBuffer[S(key)] === undefined &&
        this.readBuffer[L(key)] === undefined &&
-       this.readBuffer["{" + key + "}"] === undefined &&
+       this.readBuffer[O(key)] === undefined &&
        this.readBuffer["(" + key + ")"] === undefined) 
     {
        this.readBuffer[key]              = undefined;
@@ -100,7 +100,7 @@ function LazyKeyValueStore(storage, maxValueLength){
        this.readBuffer[S(key,0)] = undefined;
        this.readBuffer[L(key)]  = undefined;
        this.readBuffer[L(key,0)] = undefined;
-       this.readBuffer["{" + key + "}"]  = undefined;
+       this.readBuffer[O(key)]  = undefined;
        this.readBuffer["(" + key + ")"]  = undefined;
        this.fetch();
     }//if
@@ -121,7 +121,7 @@ function LazyKeyValueStore(storage, maxValueLength){
       return this.getJson(key);
     } else if(typeof this.readBuffer[L(key)] === "string") {
       return this.getArray(key);
-    } else if(typeof this.readBuffer["{" + key + "}"] === "string") {
+    } else if(typeof this.readBuffer[O(key)] === "string") {
       return this.getObject(key);
     } else {
       throw "LazyKeyValueStore#get: key " + key + " not found in readBuffer.";
@@ -135,13 +135,13 @@ function LazyKeyValueStore(storage, maxValueLength){
       this.writeBuffer[S(keys[i])] = undefined;
       this.writeBuffer["(" + keys[i] + ")"] = undefined;
       this.writeBuffer[L(keys[i])] = undefined;
-      this.writeBuffer["{" + keys[i] + "}"] = undefined;
+      this.writeBuffer[O(keys[i])] = undefined;
       this.writeBuffer[H(keys[i])] = undefined;
       delete this.readBuffer[keys[i]];
       delete this.readBuffer[S(keys[i])];
       delete this.readBuffer["(" + keys[i] + ")"];
       delete this.readBuffer[L(keys[i])];
-      delete this.readBuffer["{" + keys[i] + "}"];
+      delete this.readBuffer[O(keys[i])];
       delete this.readBuffer[H(keys[i])];
     }//for i
   };
@@ -211,3 +211,12 @@ function L(key, i){
   if(i === undefined) return "[" + key + "]";
   return "[" + key + "]" + i;
 }
+
+function O(key, i){
+  assert(typeof key === "string");
+  assert(i === undefined || typeof i === "string");
+  if(i === undefined) return "{" + key + "}";
+  return "{" + key + "}" + i;
+}
+
+
