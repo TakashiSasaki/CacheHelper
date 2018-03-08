@@ -1,5 +1,5 @@
-//class LazyKeyValueStore
-function LazyKeyValueStore(storage, maxValueLength){
+//class HashWrapper
+function HashWrapper(storage, maxValueLength){
   if(storage === undefined) {
     this.storage = new Sskv();
   } else {
@@ -34,7 +34,7 @@ function LazyKeyValueStore(storage, maxValueLength){
     } else if(any instanceof Object) {
       this.putObject(key, any);
     } else {
-      throw "LazyKeyValueStore#put: unexpected type of value. " + typeof any;
+      throw "HashWrapper#put: unexpected type of value. " + typeof any;
     }
   };//put
   
@@ -131,7 +131,7 @@ function LazyKeyValueStore(storage, maxValueLength){
     } else if(typeof this.readBuffer[O(key)] === "string") {
       return this.getObject(key);
     } else {
-      throw "LazyKeyValueStore#get: key " + key + " not found in readBuffer.";
+      throw "HashWrapper#get: key " + key + " not found in readBuffer.";
     }
   }//get
 
@@ -195,7 +195,7 @@ function LazyKeyValueStore(storage, maxValueLength){
   
   this.reset();
   return this;
-}//LazyKeyValueStore
+}//HashWrapper
 
 function H(key) {  // generate hint-key
   assert(typeof key === "string");
