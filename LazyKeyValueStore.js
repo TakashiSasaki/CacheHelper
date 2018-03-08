@@ -72,14 +72,17 @@ function LazyKeyValueStore(storage, maxValueLength){
     }
     
     if(typeof key === "string") {
-      this.writeBuffer["#" + key + "#"] = JSON.stringify(Object.keys(this.writeBuffer));
-      if(Object.keys(this.writeBuffer).length > 0) {
+      assert(this.writeBuffer["#" + key + "#"] === undefined);
+      const writeBufferKeys = Object.keys(this.writeBuffer);
+      assert(writeBufferKeys instanceof Array);
+      if(writeBufferKeys.length > 0) {
+        this.writeBuffer["#" + key + "#"] = JSON.stringify(writeBufferKeys);
         this.putAllCount += 1;
         this.storage.putAll(this.writeBuffer);
-        for(var j in this.readBuffer){
+        for(var j in this.writeBuffer){
           this.readBuffer[j] = this.writeBuffer[j];
         }// for j
-      }//if
+      }
     }//if
   };//commit
 
@@ -105,7 +108,9 @@ function LazyKeyValueStore(storage, maxValueLength){
     if(typeof this.readBuffer["#" + key + "#"] === "string") {
       var parsed = JSON.parse(this.readBuffer["#" + key + "#"]);
       for(var i in parsed) {
-        this.readBuffer[i] = undefined;
+        if(this.readBuffer[parsed[i]] === undefined) {
+          this.readBuffer[parsed[i]] = undefined;
+        }
       }//for i
       this.fetch();
     }
