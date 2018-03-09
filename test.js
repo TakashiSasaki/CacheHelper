@@ -1,10 +1,15 @@
 function testHashWrapper(){
-  if(typeof CacheService !== "undefined") {
-    var hw = new HashWrapper(CacheService.getScriptCache(), 90000);
-  } else {
-    var hw = new HashWrapper();
-  }
-  
+  (function(){
+    var stringMap = new StringMap();
+    var hw1 = new HashWrapper(stringMap);
+    var hw2 = new HashWrapper(stringMap);
+    hw1.put("abc", 1);
+    hw1.commit();
+    assert.strictEqual(hw1.get("abc"), 1);
+    assert.strictEqual(hw2.get("abc"), 1);
+  })();
+
+  var hw = HashWrapper();
   hw.roundtripTest("abc", {"a": 1});
   hw.roundtripTest("k", null); 
   hw.roundtripTest("emptyString", "");

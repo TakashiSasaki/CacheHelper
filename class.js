@@ -80,18 +80,19 @@ function HashWrapper(storage, maxValueLength){
       assert(writeBufferKeys instanceof Array);
       if(writeBufferKeys.length > 0) {
         this.writeBuffer[H(key)] = JSON.stringify(writeBufferKeys);
-        this.putAllCount += 1;
-        this.storage.putAll(this.writeBuffer);
-        for(var j in this.writeBuffer){
-          this.readBuffer[j] = this.writeBuffer[j];
-        }// for j
-      }
+      }//if
     }//if
+    
+    this.putAllCount += 1;
+    this.storage.putAll(this.writeBuffer);
+    for(var j in this.writeBuffer){
+      this.readBuffer[j] = this.writeBuffer[j];
+    }// for j
   };//commit
 
   this.get = function(key) {
     assert(typeof key === "string");
-    if(//this.readBuffer[key]    === undefined && 
+    if(this.readBuffer[key]    === undefined && 
        this.readBuffer[S(key)] === undefined &&
        this.readBuffer[L(key)] === undefined &&
        this.readBuffer[O(key)] === undefined &&
@@ -126,6 +127,7 @@ function HashWrapper(storage, maxValueLength){
       this.fetch();
     }
     
+    Logger.log(this.readBuffer);
     if(typeof this.readBuffer[S(key)] === "string") {
       return this.getString(key);
     } else if(typeof this.readBuffer[J(key)] === "string") {

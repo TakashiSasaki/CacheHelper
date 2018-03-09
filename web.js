@@ -1,7 +1,12 @@
 function doGet(e) {
   var hw = new HashWrapper();
   hw.put("abcabc", {"hello":123.456});
+  hw.commit();
   assert.deepStrictEqual(hw.get("abcabc"), {"hello":123.456}); 
+  var hw2 = new HashWrapper();
+  hw2.put("defdef", {"hello2":456.789});
+  assert.deepStrictEqual(hw2.get("abcabc"), {"hello":123.456});
+  assert.deepStrictEqual(hw2.get("defdef"), {"hello2":456.789}); 
   var htmlTemplate = HtmlService.createTemplateFromFile("index");
   htmlTemplate.js = getJsdoit("js");
   htmlTemplate.css = getJsdoit("css");
@@ -32,5 +37,7 @@ function get(keyString){
 function put(keyString, value){
   var hw = new HashWrapper();
   assert.strictEqual(typeof keyString, "string");
-  return hw.put(keyString, value);
+  hw.put(keyString, value);
+  hw.commit();
+  assert.deepStrictEqual(hw.get(keyString), value);
 }
