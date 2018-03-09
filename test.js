@@ -1,6 +1,11 @@
 function testHashWrapper(){
-  var hw = new HashWrapper();
+  if(typeof CacheService !== "undefined") {
+    var hw = new HashWrapper(CacheService.getScriptCache(), 90000);
+  } else {
+    var hw = new HashWrapper();
+  }
   
+  hw.roundtripTest("abc", {"a": 1});
   hw.roundtripTest("k", null); 
   hw.roundtripTest("emptyString", "");
   hw.roundtripTest("booleanTrue", true);
@@ -44,4 +49,3 @@ if(typeof process !== "undefined") {
   testHashWrapper();
   console.log("testHashWrapper finished");
 }
-

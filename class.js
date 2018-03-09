@@ -1,6 +1,11 @@
 function HashWrapper(storage, maxValueLength){
   if(storage === undefined) {
-    this.storage = new StringMap();
+    if(typeof CacheService === "undefined") {
+      this.storage = new StringMap();
+    } else { 
+      this.storage = CacheService.getScriptCache();
+      maxValueLength = 100000;
+    }
   } else {
     this.storage = storage;
   }
