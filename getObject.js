@@ -17,6 +17,8 @@ function getObject_(key) {
     assert(object[properties[i]] !== undefined);
   }
   
+  assert.strictEqual(Object.keys(object).length, properties.length);
+  
   return object;
 }//getObject_
 

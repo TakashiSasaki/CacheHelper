@@ -22,4 +22,3 @@ function getString_(key) {
 
 if(typeof exports === "undefined") exports = {}
 exports.getString_ = getString_;
-

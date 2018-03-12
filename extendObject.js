@@ -1,4 +1,32 @@
-function extendObject_(key, object, overwrite){
+function extendObject_(key, property, value){
+  assert.strictEqual(arguments.length, 3);
+  assert.strictEqual(typeof key, "string");
+  assert.strictEqual(typeof property, "string");
+  assert(value !== undefined);
+  var properties = JSON.parse(this.read(O(key)));
+  assert(properties instanceof Array);
+  if(properties.indexOf(property) >=0) throw "extendObject: key=" + key + " already has property=" + property;
+  this.put(O(key,property), value);
+  properties.push(property);
+  this.write(O(key), JSON.stringify(properties));
+}
+
+function updateObject_(key, property, value){
+  assert.strictEqual(arguments.length, 3);
+  assert.strictEqual(typeof key, "string");
+  assert.strictEqual(typeof property, "string");
+  assert(value !== undefined);
+  var properties = JSON.parse(this.read(O(key)));
+  assert(properties instanceof Array);
+  //if(properties.indexOf(property) >=0) throw "extendObject: key=" + key + " already has property=" + property;
+  this.put(O(key,property), value);
+  if(properties.indexOf(property) < 0) {
+    properties.push(property);
+  }
+  this.write(O(key), JSON.stringify(properties));
+}
+
+function extendObject_aaaa(key, object, overwrite){
   assert(arguments.length<=3);
   assert(object !== null);
   assert(!(object instanceof Array));
@@ -27,10 +55,6 @@ function extendObject_(key, object, overwrite){
   this.readBuffer[O(key)] = JSON.stringify(keys);
   this.writeBuffer[O(key)] = JSON.stringify(keys)
 }//appendObject_
-
-function updateObject_(key, object) {
-  this.extendObject(key, object, true);
-}
 
 if(typeof exports === "undefined") exports = {};
 exports.extendObject_ = extendObject_;
