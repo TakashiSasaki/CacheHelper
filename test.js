@@ -58,6 +58,7 @@ function testHashWrapper(){
 
 if(typeof process !== "undefined") {
   assert = require("assert");
+  require("./myassert");
   //assert = require("power-assert");
   var modules = [
     "H", "S", "J", "O", "L",

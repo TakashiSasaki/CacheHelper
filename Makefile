@@ -20,10 +20,8 @@ prepare:
 	sudo npm install -g npm ;\
 	sudo npm install -g clasp
 
-assert.js: 
-	touch empty.js ;\
-	browserify -s assert -r assert -o $@ empty.js ;\
-	rm empty.js
+assert.js: myassert.js
+	browserify -s assert -r assert -o $@ myassert.js 
 
 empty.js:
 	touch empty.js

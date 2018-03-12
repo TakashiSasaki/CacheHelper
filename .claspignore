@@ -3,3 +3,4 @@ Makefile
 assert.browserify.js
 empty.js
 
+myassert.js
