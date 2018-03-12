@@ -6,6 +6,7 @@
 function putObject_(key, object) {
   assert(typeof key === "string");
   assert(typeof object === "object");
+  assert(object instanceof Object);
   
   this.remove(key);
   this.write(O(key), JSON.stringify(Object.keys(object)));

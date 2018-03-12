@@ -48,8 +48,8 @@ function testHashWrapper(){
   hw.roundtripTest("testObject7", { a : 1, b: null, c: false, d: [ "hello", 1.23, null]});
   hw.reset();
   hw.put("abcde", {a:1, b:2});
-  hw.appendObject("abcde", {c:3});
-  logger.log(hw.get("abcde"));
+  hw.extendObject("abcde", {c:3});
+  assert.deepStrictEqual(hw.get("abcde"), {a:1, b:2, c:3});
 }
 
 if(typeof process !== "undefined") {
