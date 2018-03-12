@@ -17,6 +17,7 @@ prepare:
 	sudo apt-get upgrade -y; \
 	sudo npm update -g ;\
 	sudo n stable ;\
+	sudo npm install -g npm ;\
 	sudo npm install -g clasp
 
 assert.js: 
