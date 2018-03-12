@@ -3,7 +3,7 @@
   @return {string}
 */
 function getString_(key) {
-  assert.strictEqual(arguments.length,1);
+  assert.lengthOf(arguments, 1);
   assert.isString(key);
   var stringified = this.read(S(key));
   assert.isString(stringified);

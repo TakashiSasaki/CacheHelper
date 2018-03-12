@@ -3,7 +3,7 @@
  * @param {array} array
 */
 function appendArray_(key, array) {
-  assert.strictEqual(arguments.length,2);
+  assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isArray(array);
   var currentLength = parseInt(this.read(L(key)));

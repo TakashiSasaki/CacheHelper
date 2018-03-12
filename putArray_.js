@@ -4,7 +4,7 @@
   @return {void}
 */
 function putArray_(key, array) {
-  assert.strictEqual(arguments.length, 2);
+  assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isArray(array);
   this.remove(key);

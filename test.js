@@ -65,9 +65,9 @@ if(typeof process !== "undefined") {
     "HashWrapper",
     "StringMap", 
     "xObject",
+    "xJson",
     "setProperty_",
     "getArray_", "putArray_", "appendArray_",
-    "getJson_", "putJson_",
     "putString_", "getString_",
   ];
   for(let i in modules) {

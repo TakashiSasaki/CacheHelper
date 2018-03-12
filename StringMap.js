@@ -1,5 +1,5 @@
 function StringMap(){
-  assert.strictEqual(arguments.length,0);
+  assert.lengthOf(arguments, 0);
   this.o = {};
   
   this.getAll = function(keys){
@@ -26,7 +26,7 @@ function StringMap(){
   }//get
   
   this.putAll = function(object){
-    assert(object !== null && typeof object === "object");
+    assert.isObject(object);
     for(var i in object){
       this.o[i] = object[i];
       assert.isString(this.o[i]);

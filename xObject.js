@@ -1,5 +1,5 @@
 function getObject_(key) {
-  assert.strictEqual(arguments.length, 1);
+  assert.lengthOf(arguments, 1);
   assert.isString(key);
 
   var stringified = this.read(O(key));
@@ -19,7 +19,7 @@ function getObject_(key) {
 }//getObject_
 
 function putObject_(key, object) {
-  assert.strictEqual(arguments.length, 2);
+  assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isObject(object);
   
@@ -34,10 +34,10 @@ function putObject_(key, object) {
 }//putObject_
 
 function isObject_(key){
-  assert.strictEqual(arguments.length, 1);
+  assert.lengthOf(arguments, 1);
   assert.isString(key);
   if(!this.exist(O(key))) {
-    assert.strictEqual(this.readBuffer[O(key)], "undefined");
+    assert.isUndefined(this.readBuffer[O(key)]);
     return false;
   }//if
   assert(!this.exist(S(key)));
@@ -48,7 +48,7 @@ function isObject_(key){
 }//isObject_
 
 function appendObject_(key, object){
-  assert.strictEqual(arguments.length, 2);
+  assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isObject(object);
   

@@ -33,6 +33,15 @@ assert.isNotUndefined = function(actual) {
   }
 }
 
+assert.lengthOf = function(collection, expectedLength) {
+  if(collection.length === expectedLength) return;
+  assert.fail("The length of " + collection + " is not " + expectedLength +".");
+}
 
+assert.isInteger = function(x){
+  if(typeof x !== "number") assert.fail("" + x + " is not an integer number.");
+  if(x !== Math.floor(x)) assert.fail("" + x + " is not an integer number.");
+  if(x !== Math.ceil(x)) assert.fail("" + x + " is not an integer number.");
+}
 
 

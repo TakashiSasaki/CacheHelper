@@ -1,10 +1,10 @@
 function setProperty_(key, property, value){
-  assert.strictEqual(arguments.length, 3);
-  assert.strictEqual(typeof key, "string");
-  assert.strictEqual(typeof property, "string");
-  assert(value !== undefined);
+  assert.lengthOf(arguments, 3);
+  assert.isString(key);
+  assert.isString(property);
+  assert.isNotUndefined(value);
   var properties = JSON.parse(this.read(O(key)));
-  assert(properties instanceof Array);
+  assert.isArray(properties);
   this.put(O(key,property), value);
   if(properties.indexOf(property) < 0) {
     properties.push(property);

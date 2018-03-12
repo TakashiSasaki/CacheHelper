@@ -30,13 +30,13 @@ function getJsdoit(kind){
 
 function get(keyString){
   var hw = new HashWrapper();
-  assert.strictEqual(typeof keyString, "string");
+  assert.isString(keyString);
   return hw.get(keyString);
 }
 
 function put(keyString, value){
   var hw = new HashWrapper();
-  assert.strictEqual(typeof keyString, "string");
+  assert.isString(keyString);
   hw.put(keyString, value);
   hw.commit();
   assert.deepStrictEqual(hw.get(keyString), value);

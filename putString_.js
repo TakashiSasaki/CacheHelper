@@ -4,7 +4,7 @@
   @return {void}
 */
 function putString_(key, string) {
-  assert.strictEqual(arguments.length,2);
+  assert.lengthOf(arguments,2);
   assert.isString(key);
   assert.isString(string);
   this.remove(key);

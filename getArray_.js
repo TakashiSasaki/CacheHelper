@@ -3,7 +3,7 @@
  * @return {Array}
  */
 function getArray_(key){
-  assert.strictEqual(arguments.length, 1);
+  assert.lengthOf(arguments, 1);
   assert.isString(key);
   const stringified = this.read(L(key));
   assert.isString(stringified);

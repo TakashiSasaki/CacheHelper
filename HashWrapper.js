@@ -149,7 +149,7 @@ function HashWrapper(storage, maxValueLength){
   }//get
 
   this.remove = function(keys){
-    assert.strictEqual(arguments.length, 1);
+    assert.lengthOf(arguments, 1);
     for(var i in keys) {
       assert.isString(keys[i]);
       this.writeBuffer[S(keys[i])] = undefined;
@@ -173,7 +173,7 @@ function HashWrapper(storage, maxValueLength){
   };//write
   
   this.read = function(key) {
-    assert.strictEqual(arguments.length, 1);
+    assert.lengthOf(arguments, 1);
     assert.isString(key);
     if(this.readBuffer[key] === undefined) {
       this.getCount += 1;
