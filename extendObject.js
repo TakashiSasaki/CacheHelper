@@ -14,9 +14,11 @@ function extendObject_(key, object, overwrite){
     assert(typeof i === "string");
     if(this.readBuffer[O(key,i)] === undefined){
       keys.push(i);
+      this.remove([O(key,i)]);
       this.put(O(key, i), object[i]);
     } else {
       if(overwrite === true) {
+        this.remove([O(key,i)]);
         this.put(O(key, i), object[i]);
       }
     }
