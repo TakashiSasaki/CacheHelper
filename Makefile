@@ -28,7 +28,7 @@ assert.js:
 empty.js:
 	touch empty.js
 
-HashWrapper.js: getArray.js putArray.js appendArray.js extendObject.js \
+HashWrapper.js: getArray.js putArray.js appendArray.js appendObject.js setProperty.js\
 	getJson.js putJson.js getObject.js putObject.js \
 	getString.js putString.js class.js storage.js
 	cat $^ >$@

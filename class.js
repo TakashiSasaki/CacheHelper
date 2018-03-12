@@ -21,8 +21,8 @@ function HashWrapper(storage, maxValueLength){
   }
   
   this.appendArray = appendArray_;
-  this.extendObject = extendObject_;
-  this.updateObject = updateObject_;
+  this.appendObject = appendObject_;
+  this.setProperty = setProperty_;
   this.getArray = getArray_;
   this.putArray = putArray_;
   this.getJson = getJson_;
