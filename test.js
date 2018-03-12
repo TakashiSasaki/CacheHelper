@@ -61,7 +61,7 @@ if(typeof process !== "undefined") {
   require("./myassert");
   //assert = require("power-assert");
   var modules = [
-    "H", "S", "J", "O", "L",
+    "JOLSH",
     "HashWrapper",
     "StringMap", 
     "appendObject_", "getObject_", "putObject_", "isObject_", "setProperty_",
