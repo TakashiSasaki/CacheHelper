@@ -64,13 +64,13 @@ if(typeof process !== "undefined") {
     "JOLSH",
     "HashWrapper",
     "StringMap", 
-    "appendObject_", "getObject_", "putObject_", "isObject_", "setProperty_",
+    "xObject",
+    "setProperty_",
     "getArray_", "putArray_", "appendArray_",
     "getJson_", "putJson_",
     "putString_", "getString_",
   ];
   for(let i in modules) {
-    //global[modules[m]] = require("./" + modules[m])[modules[m]];
     let module = require("./" + modules[i]);
     for(let j in module) {
       if(typeof module[j] === "function") {
