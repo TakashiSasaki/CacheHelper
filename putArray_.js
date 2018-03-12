@@ -5,8 +5,8 @@
 */
 function putArray_(key, array) {
   assert.strictEqual(arguments.length, 2);
-  assert(typeof key === "string");
-  assert(array instanceof Array);
+  assert.isString(key);
+  assert.isArray(array);
   this.remove(key);
   this.write(L(key), "" + array.length);
   for(var i=0; i<array.length; ++i) {

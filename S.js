@@ -1,5 +1,5 @@
-function S(key, i) {  // generate string-key
-  assert(typeof key === "string");
+function S(key, i) {  
+  assert.isString(key);
   assert(i === undefined || typeof i === "number");
   if(i === undefined) return "$" + key + "$";
   return "$" + key + "$" + i;

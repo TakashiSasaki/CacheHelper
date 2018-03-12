@@ -5,8 +5,8 @@
 */
 function putString_(key, string) {
   assert.strictEqual(arguments.length,2);
-  assert(typeof key === "string");
-  assert(typeof string === "string");
+  assert.isString(key);
+  assert.isString(string);
   this.remove(key);
   
   var fragments = [];

@@ -5,8 +5,8 @@
 */
 function putJson_(key, any) {
   assert.strictEqual(arguments.length, 2);
-  assert(typeof key === "string");
-  assert(any !== undefined);
+  assert.isString(key);
+  assert.isNotUndefined(any);
   this.remove(key);
   var stringified = JSON.stringify(any);
   if(stringified.length > this.maxValueLength){

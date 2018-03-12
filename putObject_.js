@@ -5,17 +5,16 @@
 */
 function putObject_(key, object) {
   assert.strictEqual(arguments.length, 2);
-  assert(typeof key === "string");
-  assert(typeof object === "object");
-  assert(object instanceof Object);
+  assert.isString(key);
+  assert.isObject(object);
   
   this.remove(key);
   this.write(O(key), JSON.stringify(Object.keys(object)));
   for(var i in object) {
-    assert(typeof i === "string");
+    assert.isString(i);
     this.put(O(key,i), object[i]);
   }  
-  assert.strictEqual(typeof this.readBuffer[O(key)],"string");
+  assert.isString(this.readBuffer[O(key)]);
   assert(this.isObject(key));
 }//putObject_
 

@@ -3,10 +3,10 @@ function StringMap(){
   this.o = {};
   
   this.getAll = function(keys){
-    assert(keys instanceof Array);
+    assert.isArray(keys);
     var all = {};
     for(var i in keys) {
-      assert.strictEqual(typeof keys[i], "string");
+      assert.isString(keys[i]);
       all[keys[i]] = this.o[keys[i]];
       if(all[i] === undefined) all[i] = null;
       assert(all[i] === null || typeof all[i] === "string");
@@ -15,12 +15,12 @@ function StringMap(){
   }//getAll
   
   this.get = function(key){
-    assert.strictEqual(typeof key,"string");
+    assert.isString(key);
     var v = this.o[key];
     if(v === undefined) {
       v = null;
     } else {
-      assert.strictEqual(typeof v, "string");
+      assert.isString(v);
     }//if
     return v;
   }//get
@@ -29,15 +29,15 @@ function StringMap(){
     assert(object !== null && typeof object === "object");
     for(var i in object){
       this.o[i] = object[i];
-      assert(typeof this.o[i] === "string");
+      assert.isString(this.o[i]);
     }//for i
   }//putAll
   
   this.removeAll = function(keys){
-    assert(keys instanceof Array);
+    assert.isArray(keys);
     for(var i in keys) {
       var key = keys[i];
-      assert(typeof key === "string");
+      assert.isString(key);
       delete this.o[key];
     }//for i
   }//removeAll

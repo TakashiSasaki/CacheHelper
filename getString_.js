@@ -4,9 +4,9 @@
 */
 function getString_(key) {
   assert.strictEqual(arguments.length,1);
-  assert(typeof key === "string");
+  assert.isString(key);
   var stringified = this.read(S(key));
-  assert(typeof stringified === "string");
+  assert.isString(stringified);
   var length = parseInt(stringified);
   assert(typeof length === "number" && length === Math.floor(length) && length === Math.ceil(length));
   if(length == 0) return "";
@@ -14,7 +14,7 @@ function getString_(key) {
   var fragments = [];
   for(var i=0; i<length; ++i) {
     var fragment = this.read(S(key,i));
-    assert(typeof fragment === "string");
+    assert.isString(fragment);
     fragments.push(fragment);
   }
   return fragments.join("");

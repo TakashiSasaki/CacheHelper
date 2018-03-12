@@ -1,5 +1,5 @@
 function J(key){
-  assert(typeof key === "string");
+  assert.isString(key);
   return "(" + key + ")";
 }
 

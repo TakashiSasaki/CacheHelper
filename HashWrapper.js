@@ -2,6 +2,41 @@ if(typeof Logger === "undefined") {
   Logger = console;
 }
 
+assert.isInstanceOf = function(actual, expect) {
+  if(actual instanceof expect) return;
+  assert.fail(actual.constructor.name. expect.constructor.name, "", "instanceof");
+}
+
+assert.isString = function(actual) {
+  if(typeof actual === "string") return;
+  assert.fail("" + actual + "is not a string.");
+}
+
+assert.isArray = function(actual){
+  if(actual instanceof Array) return;
+  assert.fail("" + actual + " is not an array.");
+}
+
+assert.isObject = function(actual) {
+  if(actual === null) assert.fail("" + actual + " is null.");
+  if(actual instanceof Array) assert.fail("" + actual + " is an array.");
+  if(actual instanceof Object) return;
+  assert.fail("" + actual + " is not an object.");
+}
+
+assert.isUndefined = function(actual) {
+  if(typeof actual === "undefined") return;
+  assert.fail("" + actual + " is not undefined.");
+}
+
+assert.isNotUndefined = function(actual) {
+  if(typeof actual === "undefined") {
+    assert.fail("" + actual + " is undefined.");
+  }
+}
+
+
+
 function HashWrapper(storage, maxValueLength){
   if(storage === undefined) {
     if(typeof CacheService === "undefined") {
@@ -34,8 +69,8 @@ function HashWrapper(storage, maxValueLength){
   this.getString = getString_;
 
   this.put = function(key, any) {
-    assert(typeof key === "string");
-    assert(any !== undefined);
+    assert.isString(key);
+    assert.isNotUndefined(any);
     if(typeof any === "string") {
       this.putString(key, any);
     } else if(any === null || typeof any === "boolean" || typeof any === "number") {
@@ -82,9 +117,9 @@ function HashWrapper(storage, maxValueLength){
     }
     
     if(typeof key === "string") {
-      assert(this.writeBuffer[H(key)] === undefined);
+      assert.isUndefined(this.writeBuffer[H(key)]);
       const writeBufferKeys = Object.keys(this.writeBuffer);
-      assert(writeBufferKeys instanceof Array);
+      assert.isArray(writeBufferKeys);
       if(writeBufferKeys.length > 0) {
         this.writeBuffer[H(key)] = JSON.stringify(writeBufferKeys);
       }//if
@@ -98,7 +133,7 @@ function HashWrapper(storage, maxValueLength){
   };//commit
 
   this.get = function(key) {
-    assert(typeof key === "string");
+    assert.isString(key);
     if(this.readBuffer[key]    === undefined && 
        this.readBuffer[S(key)] === undefined &&
        this.readBuffer[L(key)] === undefined &&
@@ -149,8 +184,9 @@ function HashWrapper(storage, maxValueLength){
   }//get
 
   this.remove = function(keys){
+    assert.strictEqual(arguments.length, 1);
     for(var i in keys) {
-      assert(typeof keys[i] === "string");
+      assert.isString(keys[i]);
       this.writeBuffer[S(keys[i])] = undefined;
       this.writeBuffer[J(keys[i])] = undefined;
       this.writeBuffer[L(keys[i])] = undefined;
@@ -165,15 +201,15 @@ function HashWrapper(storage, maxValueLength){
   };
 
   this.write = function(key, value){
-    assert.strictEqual(typeof key, "string");
-    assert(value !== undefined);
+    assert.isString(key);
+    assert.isNotUndefined(value);
     this.writeBuffer[key] = value;
     this.readBuffer[key] = value;
   };//write
   
   this.read = function(key) {
     assert.strictEqual(arguments.length, 1);
-    assert.strictEqual(typeof key, "string");
+    assert.isString(key);
     if(this.readBuffer[key] === undefined) {
       this.getCount += 1;
       this.readBuffer[key] = this.storage.get(key);
@@ -183,7 +219,7 @@ function HashWrapper(storage, maxValueLength){
   };//read
 
   this.exist = function(key) {
-    assert.strictEqual(typeof key, "string");
+    assert.isString(key);
     return typeof this.readBuffer[key] === "string";
   };// exist
   

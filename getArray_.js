@@ -4,9 +4,9 @@
  */
 function getArray_(key){
   assert.strictEqual(arguments.length, 1);
-  assert(typeof key === "string");
+  assert.isString(key);
   const stringified = this.read(L(key));
-  assert(typeof stringified === "string");
+  assert.isString(stringified);
   var length = parseInt(stringified);
   assert(typeof length === "number");
   var array = [];

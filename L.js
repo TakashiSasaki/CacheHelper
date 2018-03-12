@@ -1,5 +1,5 @@
 function L(key, i){
-  assert(typeof key === "string");
+  assert.isString(key);
   assert(i === undefined || typeof i === "number");
   if(i === undefined) return "[" + key + "]";
   return "[" + key + "]" + i;
