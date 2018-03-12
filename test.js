@@ -66,9 +66,9 @@ if(typeof process !== "undefined") {
     "StringMap", 
     "xObject",
     "xJson",
+    "xString", 
     "setProperty_",
     "getArray_", "putArray_", "appendArray_",
-    "putString_", "getString_",
   ];
   for(let i in modules) {
     let module = require("./" + modules[i]);
