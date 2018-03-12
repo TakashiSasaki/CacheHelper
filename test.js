@@ -46,11 +46,16 @@ function testHashWrapper(){
   hw.appendArray("testArray3", [4,5,6]);
   assert.deepStrictEqual(hw.get("testArray3"), [1,2,3,4,5,6]);
   hw.roundtripTest("testObject7", { a : 1, b: null, c: false, d: [ "hello", 1.23, null]});
+  hw.reset();
+  hw.put("abcde", {a:1, b:2});
+  hw.appendObject("abcde", {c:3});
+  logger.log(hw.get("abcde"));
 }
 
 if(typeof process !== "undefined") {
   assert = require("assert");
   HashWrapper = require("./HashWrapper").HashWrapper;
+  StringMap = require("./HashWrapper").StringMap;
   testHashWrapper();
   console.log("testHashWrapper finished");
 }

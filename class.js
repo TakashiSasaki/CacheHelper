@@ -1,3 +1,7 @@
+if(typeof Logger === "undefined") {
+  Logger = console;
+}
+
 function HashWrapper(storage, maxValueLength){
   if(storage === undefined) {
     if(typeof CacheService === "undefined") {
@@ -17,6 +21,7 @@ function HashWrapper(storage, maxValueLength){
   }
   
   this.appendArray = appendArray_;
+  this.appendObject = appendObject_;
   this.getArray = getArray_;
   this.putArray = putArray_;
   this.getJson = getJson_;

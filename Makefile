@@ -28,8 +28,8 @@ assert.js:
 empty.js:
 	touch empty.js
 
-HashWrapper.js: getArray.js putArray.js append.js \
-	getJson.js putJson.js getObject.js putObject.js  \
+HashWrapper.js: getArray.js putArray.js appendArray.js appendObject.js \
+	getJson.js putJson.js getObject.js putObject.js \
 	getString.js putString.js class.js storage.js
 	cat $^ >$@
 
