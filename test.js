@@ -69,8 +69,16 @@ if(typeof process !== "undefined") {
     "getJson_", "putJson_",
     "putString_", "getString_",
   ];
-  for (m in modules) {
-    global[modules[m]] = require("./" + modules[m])[modules[m]];
+  for(let i in modules) {
+    //global[modules[m]] = require("./" + modules[m])[modules[m]];
+    let module = require("./" + modules[i]);
+    for(let j in module) {
+      if(typeof module[j] === "function") {
+        console.log(j);
+        console.log(module[j]);
+        global[j] = module[j];
+      }
+    }
   }
   testHashWrapper();
   console.log("testHashWrapper finished");

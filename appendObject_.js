@@ -10,3 +10,6 @@ function appendObject_(key, object){
   
   this.write(O(key), JSON.stringify(properties));
 }//appendObject_
+
+if(typeof exports === "undefined") exports = {};
+exports.appendObject_ = appendObject_;
