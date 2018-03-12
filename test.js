@@ -10,7 +10,8 @@ function testHashWrapper(){
   })();
 
   var hw = HashWrapper();
-  hw.roundtripTest("abc", {"a": 1});
+  hw.reset();
+  hw.roundtripTest("abc", {"a": 23});
   hw.roundtripTest("k", null); 
   hw.roundtripTest("emptyString", "");
   hw.roundtripTest("booleanTrue", true);
@@ -57,8 +58,19 @@ function testHashWrapper(){
 
 if(typeof process !== "undefined") {
   assert = require("assert");
-  HashWrapper = require("./HashWrapper").HashWrapper;
-  StringMap = require("./HashWrapper").StringMap;
+  //assert = require("power-assert");
+  var modules = [
+    "H", "S", "J", "O", "L",
+    "HashWrapper",
+    "StringMap", 
+    "appendObject_", "getObject_", "putObject_", "isObject_", "setProperty_",
+    "getArray_", "putArray_", "appendArray_",
+    "getJson_", "putJson_",
+    "putString_", "getString_",
+  ];
+  for (m in modules) {
+    global[modules[m]] = require("./" + modules[m])[modules[m]];
+  }
   testHashWrapper();
   console.log("testHashWrapper finished");
 }

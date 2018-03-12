@@ -23,4 +23,4 @@ function getObject_(key) {
 }//getObject_
 
 if(typeof exports === "undefined") exports = {};
-exports.getObject_=getObject_;
+exports.getObject_  = getObject_;

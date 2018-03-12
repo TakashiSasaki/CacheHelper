@@ -29,6 +29,7 @@ function HashWrapper(storage, maxValueLength){
   this.putJson = putJson_;
   this.putObject = putObject_;
   this.getObject = getObject_;
+  this.isObject = isObject_;
   this.putString = putString_;
   this.getString = getString_;
 
@@ -164,15 +165,15 @@ function HashWrapper(storage, maxValueLength){
   };
 
   this.write = function(key, value){
-    assert(typeof key === "string");
+    assert.strictEqual(typeof key, "string");
     assert(value !== undefined);
     this.writeBuffer[key] = value;
     this.readBuffer[key] = value;
   };//write
   
   this.read = function(key) {
-    assert(arguments.length === 1);
-    assert(typeof key === "string");
+    assert.strictEqual(arguments.length, 1);
+    assert.strictEqual(typeof key, "string");
     if(this.readBuffer[key] === undefined) {
       this.getCount += 1;
       this.readBuffer[key] = this.storage.get(key);
@@ -180,6 +181,11 @@ function HashWrapper(storage, maxValueLength){
     }
     return this.readBuffer[key];
   };//read
+
+  this.exist = function(key) {
+    assert.strictEqual(typeof key, "string");
+    return typeof this.readBuffer[key] === "string";
+  };// exist
   
   this.reset = function(){
     this.writeBuffer = {};
@@ -210,37 +216,5 @@ function HashWrapper(storage, maxValueLength){
   return this;
 }//HashWrapper
 
-function H(key) {  // generate hint-key
-  assert(typeof key === "string");
-  return "#" + key + "#";
-}
-
-function S(key, i) {  // generate string-key
-  assert(typeof key === "string");
-  assert(i === undefined || typeof i === "number");
-  if(i === undefined) return "$" + key + "$";
-  return "$" + key + "$" + i;
-}
-
-function L(key, i){
-  assert(typeof key === "string");
-  assert(i === undefined || typeof i === "number");
-  if(i === undefined) return "[" + key + "]";
-  return "[" + key + "]" + i;
-}
-
-function O(key, i){
-  assert(typeof key === "string");
-  assert(i === undefined || typeof i === "string");
-  if(i === undefined) return "{" + key + "}";
-  return "{" + key + "}" + i;
-}
-
-function J(key){
-  assert(typeof key === "string");
-  return "(" + key + ")";
-}
-
 if(typeof exports === "undefined") exports = {};
 exports.HashWrapper = HashWrapper;
-

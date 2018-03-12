@@ -13,4 +13,5 @@ function setProperty_(key, property, value){
 }//setProeprty_
 
 if(typeof exports === "undefined") exports = {};
-exports.setProperty = setProperty_;
+exports.setProperty_ = setProperty_;
+
