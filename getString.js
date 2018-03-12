@@ -3,6 +3,7 @@
   @return {string}
 */
 function getString_(key) {
+  assert.strictEqual(arguments.length,1);
   assert(typeof key === "string");
   var stringified = this.read(S(key));
   assert(typeof stringified === "string");

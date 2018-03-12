@@ -1,4 +1,5 @@
 function extendObject_(key, object, overwrite){
+  assert(arguments.length<=3);
   assert(object !== null);
   assert(!(object instanceof Array));
   assert(object instanceof Object);

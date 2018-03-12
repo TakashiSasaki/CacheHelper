@@ -3,9 +3,10 @@
   @return {object}
 */
 function getObject_(key) {
+  assert.strictEqual(arguments.length,1);
   assert(typeof key === "string");
 
-  var stringified = this.read(O(key), true);
+  var stringified = this.read(O(key));
   var properties = JSON.parse(stringified);
   assert(properties instanceof Array);
 
@@ -13,8 +14,9 @@ function getObject_(key) {
   for(var i=0; i<properties.length; ++i) {
     assert(typeof properties[i] === "string");
     object[properties[i]] = this.get(O(key,properties[i]));
+    assert(object[properties[i]] !== undefined);
   }
-
+  
   return object;
 }//getObject_
 

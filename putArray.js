@@ -4,6 +4,7 @@
   @return {void}
 */
 function putArray_(key, array) {
+  assert.strictEqual(arguments.length, 2);
   assert(typeof key === "string");
   assert(array instanceof Array);
   this.remove(key);

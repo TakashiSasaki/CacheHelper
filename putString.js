@@ -3,8 +3,8 @@
   @param {string} string
   @return {void}
 */
-
 function putString_(key, string) {
+  assert.strictEqual(arguments.length,2);
   assert(typeof key === "string");
   assert(typeof string === "string");
   this.remove(key);

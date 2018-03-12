@@ -4,6 +4,7 @@
   @return {void}
 */
 function putObject_(key, object) {
+  assert.strictEqual(arguments.length, 2);
   assert(typeof key === "string");
   assert(typeof object === "object");
   assert(object instanceof Object);

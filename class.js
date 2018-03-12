@@ -170,6 +170,7 @@ function HashWrapper(storage, maxValueLength){
   };//write
   
   this.read = function(key) {
+    assert(arguments.length === 1);
     assert(typeof key === "string");
     if(this.readBuffer[key] === undefined) {
       this.getCount += 1;

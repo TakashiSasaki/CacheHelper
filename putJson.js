@@ -4,6 +4,7 @@
   @return {void}
 */
 function putJson_(key, any) {
+  assert.strictEqual(arguments.length, 2);
   assert(typeof key === "string");
   assert(any !== undefined);
   this.remove(key);

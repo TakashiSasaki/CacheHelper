@@ -1,4 +1,5 @@
 function StringMap(){
+  assert.strictEqual(arguments.length,0);
   this.o = {};
   
   this.getAll = function(keys){
