@@ -49,4 +49,5 @@ assert.isPositiveInteger = function(x) {
   if(x <= 0) assert.fail("" + x + " is not a positive integer.");
 }
 
-
+if(typeof exports === "undefined") exports = {};
+exports.assert = assert;

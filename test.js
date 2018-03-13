@@ -61,9 +61,7 @@ function testHashWrapper_(storage){
 
 //for Node.js
 if(typeof process !== "undefined") {
-  assert = require("assert");
-  require("./myassert");
-  //assert = require("power-assert");
+  assert = require("./myassert").assert;
   var modules = [
     "JOLSH",
     "HashWrapper",
