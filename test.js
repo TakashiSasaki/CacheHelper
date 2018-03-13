@@ -58,6 +58,7 @@ function testHashWrapper_(storage){
   assert.deepStrictEqual(hw.get("abcde"), {a:1, b:"hello", c:3, d:[5,6,7]});
 }
 
+//for Node.js
 if(typeof process !== "undefined") {
   assert = require("assert");
   require("./myassert");
@@ -87,10 +88,8 @@ if(typeof process !== "undefined") {
   console.log("testHashWrapper finished");
 }
 
-function testStringMap(){
+//for Google Apps Script
+function test(){ 
   testHashWrapper_(new StringMap());
-}
-
-function testCache(){
   testHashWrapper_(CacheService.getScriptCache());
 }
