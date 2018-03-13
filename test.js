@@ -1,4 +1,7 @@
 function testHashWrapper_(storage){
+  assert.isNotUndefined(storage);
+  assert.lengthOf(arguments, 1);
+
   (function(){
     var stringMap = new StringMap();
     var hw1 = new HashWrapper(stringMap);
@@ -8,8 +11,6 @@ function testHashWrapper_(storage){
     assert.strictEqual(hw1.get("abc"), 1);
     assert.strictEqual(hw2.get("abc"), 1);
   })();
-
-  assert.isNotUndefined(storage);
 
   var hw = HashWrapper(storage);
   hw.reset();
@@ -78,13 +79,11 @@ if(typeof process !== "undefined") {
     var module = require("./" + modules[i]);
     for(var j in module) {
       if(typeof module[j] === "function") {
-        console.log(j);
-        console.log(module[j]);
         global[j] = module[j];
       }
     }
   }
-  testStringMap(new StringMap());
+  testHashWrapper_(new StringMap());
   console.log("testHashWrapper finished");
 }
 

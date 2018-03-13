@@ -1,7 +1,3 @@
-if(typeof Logger === "undefined") {
-  Logger = console;
-}
-
 function HashWrapper(storage, maxValueLength){
   if(storage === undefined) {
     if(typeof CacheService === "undefined") {
@@ -134,7 +130,6 @@ function HashWrapper(storage, maxValueLength){
       this.fetch();
     }
     
-    Logger.log(this.readBuffer);
     if(typeof this.readBuffer[S(key)] === "string") {
       return this.getString(key);
     } else if(typeof this.readBuffer[J(key)] === "string") {
