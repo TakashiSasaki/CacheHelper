@@ -37,5 +37,3 @@ function getString_(key) {
 if(typeof exports === "undefined") exports = {}
 exports.putString_ = putString_;
 exports.getString_ = getString_;
-
-
