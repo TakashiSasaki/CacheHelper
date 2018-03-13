@@ -44,4 +44,9 @@ assert.isInteger = function(x){
   if(x !== Math.ceil(x)) assert.fail("" + x + " is not an integer number.");
 }
 
+assert.isPositiveInteger = function(x) {
+  assert.isInteger(x);
+  if(x <= 0) assert.fail("" + x + " is not a positive integer.");
+}
+
 
