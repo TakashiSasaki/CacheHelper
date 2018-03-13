@@ -71,9 +71,9 @@ if(typeof process !== "undefined") {
     "setProperty_",
     "appendArray_",
   ];
-  for(let i in modules) {
-    let module = require("./" + modules[i]);
-    for(let j in module) {
+  for(var i in modules) {
+    var module = require("./" + modules[i]);
+    for(var j in module) {
       if(typeof module[j] === "function") {
         console.log(j);
         console.log(module[j]);

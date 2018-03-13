@@ -6,7 +6,7 @@ test:  test.js
 clean:
 	rm -f HashWrapper.js empty.js
 
-push:
+push: assert.js
 	clasp push
 
 pull:
