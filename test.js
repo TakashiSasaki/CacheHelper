@@ -1,4 +1,4 @@
-function testHashWrapper(){
+function testHashWrapper_(storage){
   (function(){
     var stringMap = new StringMap();
     var hw1 = new HashWrapper(stringMap);
@@ -9,7 +9,9 @@ function testHashWrapper(){
     assert.strictEqual(hw2.get("abc"), 1);
   })();
 
-  var hw = HashWrapper();
+  assert.isNotUndefined(storage);
+
+  var hw = HashWrapper(storage);
   hw.reset();
   hw.roundtripTest("abc", {"a": 23});
   hw.roundtripTest("k", null); 
@@ -81,6 +83,14 @@ if(typeof process !== "undefined") {
       }
     }
   }
-  testHashWrapper();
+  testStringMap(new StringMap());
   console.log("testHashWrapper finished");
+}
+
+function testStringMap(){
+  testHashWrapper_(new StringMap());
+}
+
+function testCache(){
+  testHashWrapper_(CacheService.getScriptCache());
 }
