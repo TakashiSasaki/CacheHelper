@@ -1,4 +1,4 @@
-.PHONY: test clean push pull
+.PHONY: test clean push pull publish
 
 test:  test.js
 	node $<
@@ -11,6 +11,9 @@ push: assert.js
 
 pull:
 	clasp pull
+
+publish:
+	npm publish
 
 prepare:
 	sudo apt-get update; \
