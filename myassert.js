@@ -44,4 +44,15 @@ assert.isInteger = function(x){
   if(x !== Math.ceil(x)) assert.fail("" + x + " is not an integer number.");
 }
 
+assert.hasProperty = function(o, p){
+  if(Object.keys(o).indexOf(p) < 0) assert.fail("Object " + o + " does not have property " + p + ".");
+}
+
+assert.isFunction = function(f) {
+  if(typeof f === "function") return;
+  assert.fail("" + f +" is not a function.");
+}
+
+if(typeof exports === "undefined") exports={};
+exports.assert = assert;
 
