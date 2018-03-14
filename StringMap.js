@@ -45,4 +45,3 @@ function StringMap(){
 
 if(typeof exports === "undefined") exports = {};
 exports.StringMap = StringMap;
-

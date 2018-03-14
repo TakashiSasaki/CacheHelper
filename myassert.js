@@ -53,6 +53,10 @@ assert.isFunction = function(f) {
   assert.fail("" + f +" is not a function.");
 }
 
-if(typeof exports === "undefined") exports={};
-exports.assert = assert;
+assert.isPositiveInteger = function(x) {
+  assert.isInteger(x);
+  if(x <= 0) assert.fail("" + x + " is not a positive integer.");
+}
 
+if(typeof exports === "undefined") exports = {};
+exports.assert = assert;

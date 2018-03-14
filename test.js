@@ -1,4 +1,7 @@
-function testHashWrapper(){
+function testHashWrapper_(storage){
+  assert.isNotUndefined(storage);
+  assert.lengthOf(arguments, 1);
+
   (function(){
     var stringMap = new StringMap();
     var hw1 = new HashWrapper(stringMap);
@@ -9,7 +12,7 @@ function testHashWrapper(){
     assert.strictEqual(hw2.get("abc"), 1);
   })();
 
-  var hw = HashWrapper();
+  var hw = HashWrapper(storage);
   hw.reset();
   hw.roundtripTest("abc", {"a": 23});
   hw.roundtripTest("k", null); 
@@ -56,10 +59,9 @@ function testHashWrapper(){
   assert.deepStrictEqual(hw.get("abcde"), {a:1, b:"hello", c:3, d:[5,6,7]});
 }
 
+//for Node.js
 if(typeof process !== "undefined") {
-  assert = require("assert");
-  require("./myassert");
-  //assert = require("power-assert");
+  assert = require("./myassert").assert;
   var modules = [
     "JOLSH",
     "HashWrapper",
@@ -71,16 +73,20 @@ if(typeof process !== "undefined") {
     "setProperty_",
     "appendArray_",
   ];
-  for(let i in modules) {
-    let module = require("./" + modules[i]);
-    for(let j in module) {
+  for(var i in modules) {
+    var module = require("./" + modules[i]);
+    for(var j in module) {
       if(typeof module[j] === "function") {
-        console.log(j);
-        console.log(module[j]);
         global[j] = module[j];
       }
     }
   }
-  testHashWrapper();
+  testHashWrapper_(new StringMap());
   console.log("testHashWrapper finished");
+}
+
+//for Google Apps Script
+function test(){ 
+  testHashWrapper_(new StringMap());
+  testHashWrapper_(CacheService.getScriptCache());
 }

@@ -1,4 +1,4 @@
-.PHONY: test clean push pull
+.PHONY: test clean push pull publish
 
 test:  test.js
 	node $<
@@ -6,11 +6,14 @@ test:  test.js
 clean:
 	rm -f HashWrapper.js empty.js
 
-push:
+push: assert.js
 	clasp push
 
 pull:
 	clasp pull
+
+publish:
+	npm publish
 
 prepare:
 	sudo apt-get update; \

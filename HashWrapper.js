@@ -1,23 +1,13 @@
-if(typeof Logger === "undefined") {
-  Logger = console;
-}
-
 function HashWrapper(storage, maxValueLength){
-  if(storage === undefined) {
-    if(typeof CacheService === "undefined") {
+  this.storage = storage;
+  this.maxValueLength = maxValueLength;
+
+  if(typeof this.storage === "undefined") {
       this.storage = new StringMap();
-    } else { 
-      this.storage = CacheService.getScriptCache();
-      maxValueLength = 100000;
-    }
-  } else {
-    this.storage = storage;
   }
   
-  if(maxValueLength === undefined) {
-    this.maxValueLength = 10;
-  } else {
-    this.maxValueLength = maxValueLength;
+  if(typeof this.maxValueLength === "undefined") {
+    this.maxValueLength = 1000;
   }
   
   this.appendArray = appendArray_;
@@ -134,7 +124,6 @@ function HashWrapper(storage, maxValueLength){
       this.fetch();
     }
     
-    Logger.log(this.readBuffer);
     if(typeof this.readBuffer[S(key)] === "string") {
       return this.getString(key);
     } else if(typeof this.readBuffer[J(key)] === "string") {
