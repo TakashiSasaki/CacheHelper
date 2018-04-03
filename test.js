@@ -1,3 +1,5 @@
+if(typeof assert === "undefined") require("./assert");
+
 function testHashWrapper(){
   var hw = new HashWrapper();
   
@@ -39,7 +41,7 @@ function testHashWrapper(){
 }
 
 if(typeof process !== "undefined") {
-  assert = require("assert");
+  //assert = require("assert");
   HashWrapper = require("./HashWrapper").HashWrapper;
   testHashWrapper();
   console.log("testHashWrapper finished");
