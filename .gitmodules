@@ -1,0 +1,3 @@
+[submodule "MyAssert"]
+	path = MyAssert
+	url = git@github.com:TakashiSasaki/MyAssert.git
