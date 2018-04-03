@@ -3,7 +3,6 @@
   @return {null|boolean|number}
 */
 function getJson_(key){
-  //assert(typeof key === "string");
   assert.isString(key);
   if(this.read(J(key)) === "LONG JSON STRING") {
     var x = JSON.parse(this.getString(J(key)));
