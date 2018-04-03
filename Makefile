@@ -1,10 +1,15 @@
-.PHONY: test clean push pull publish
+.PHONY: test clean push pull publish MyAssert
 
-test:  test.js
+all: test
+
+test:  test.js 
 	node $<
 
+MyAssert:
+	make -C $@ 
+
 clean:
-	rm -f HashWrapper.js empty.js
+	@rm -f HashWrapper.js empty.js assert.js
 
 push: assert.js
 	clasp push
@@ -16,16 +21,11 @@ publish:
 	npm publish
 
 prepare:
-	sudo apt-get update; \
-	sudo apt-get upgrade -y; \
-	sudo npm update -g ;\
+	@sudo apt-get update; sudo apt-get upgrade -y; sudo apt-get autoremove; \
 	sudo n stable ;\
-	sudo npm install -g npm ;\
-	sudo npm install -g clasp
+	sudo npm -g install npm clasp;\
+	sudo npm -g update 
 
-assert.js: myassert.js
-	browserify -s assert -r assert -o $@ myassert.js 
-
-empty.js:
-	touch empty.js
+assert.js: MyAssert/assert.js MyAssert
+	cp $< $@
 
