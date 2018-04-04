@@ -208,3 +208,4 @@ function HashWrapper(storage, maxValueLength){
 
 if(typeof exports === "undefined") exports = {};
 exports.HashWrapper = HashWrapper;
+exports.assert = require("./myassert").assert;
