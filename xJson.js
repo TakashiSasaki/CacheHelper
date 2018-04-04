@@ -1,13 +1,10 @@
 function getJson_(key){
   assert.lengthOf(arguments, 1);
   assert.isString(key);
-  if(this.read(J(key)) === "LONG JSON STRING") {
-    var x = JSON.parse(this.getString(J(key)));
-  } else {
-    var x = JSON.parse(this.read(J(key)));
-  }
-  assert(x === null || typeof x === "number" || typeof x === "boolean");
-  return x;
+  const stringified = this.read(J(key));
+  const parsed = JSON.parse(stringified);
+  assert(parsed === null || typeof parsed === "number" || typeof parsed === "boolean");
+  return parsed;
 }//getJson_
 
 function putJson_(key, any) {
@@ -15,13 +12,9 @@ function putJson_(key, any) {
   assert.isString(key);
   assert.isNotUndefined(any);
   this.remove(key);
-  var stringified = JSON.stringify(any);
-  if(stringified.length > this.maxValueLength){
-    this.write(J(key), "LONG JSON STRING");
-    this.putString(J(key), stringified);
-  } else {
-    this.write(J(key), stringified);
-  }
+  const stringified = JSON.stringify(any);
+  if(stringified.length > this.maxValueLength) throw "putJson_: stringified result is too long.";
+  this.write(J(key), stringified);
 }//putJson_
 
 if(typeof exports === "undefined") exports = {};
