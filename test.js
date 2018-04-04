@@ -79,7 +79,7 @@ if(typeof process !== "undefined") {
     for(var j in module) {
       if(typeof module[j] === "function") {
         global[j] = module[j];
-        console.log("importing " + j);
+        console.log("importing " + j + " from " + modules[i]);
       }
     }
   }
