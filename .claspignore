@@ -1,6 +1,11 @@
-emulate.js
+.git
+.gitignore
 Makefile
+emulate.js
 assert.browserify.js
 empty.js
-
 myassert.js
+MyAssert/*
+MyAssert/.git
+MyAssert/.gitignore
+package.json

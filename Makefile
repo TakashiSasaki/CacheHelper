@@ -23,8 +23,8 @@ publish:
 prepare:
 	@sudo apt-get update; sudo apt-get upgrade -y; sudo apt-get autoremove; \
 	sudo n stable ;\
-	sudo npm -g install npm clasp;\
-	sudo npm -g update 
+	sudo npm -g update ;\
+	sudo npm -g install npm @google/clasp;
 
 assert.js: MyAssert/assert.js MyAssert
 	cp $< $@
