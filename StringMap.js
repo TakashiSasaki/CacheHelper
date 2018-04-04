@@ -1,11 +1,12 @@
 function StringMap(){
+  assert.lengthOf(arguments, 0);
   this.o = {};
   
   this.getAll = function(keys){
-    assert(keys instanceof Array);
+    assert.isArray(keys);
     var all = {};
     for(var i in keys) {
-      assert(typeof keys[i] === "string");
+      assert.isString(keys[i]);
       all[keys[i]] = this.o[keys[i]];
       if(all[i] === undefined) all[i] = null;
       assert(all[i] === null || typeof all[i] === "string");
@@ -14,26 +15,29 @@ function StringMap(){
   }//getAll
   
   this.get = function(key){
-    assert(typeof key === "string");
+    assert.isString(key);
     var v = this.o[key];
-    if(v === null) v = undefined;
-    assert(typeof v === "string");
+    if(v === undefined) {
+      v = null;
+    } else {
+      assert.isString(v);
+    }//if
     return v;
   }//get
   
   this.putAll = function(object){
-    assert(object !== null && typeof object === "object");
+    assert.isObject(object);
     for(var i in object){
       this.o[i] = object[i];
-      assert(typeof this.o[i] === "string");
-    }//for
+      assert.isString(this.o[i]);
+    }//for i
   }//putAll
   
   this.removeAll = function(keys){
-    assert(keys instanceof Array);
+    assert.isArray(keys);
     for(var i in keys) {
       var key = keys[i];
-      assert(typeof key === "string");
+      assert.isString(key);
       delete this.o[key];
     }//for i
   }//removeAll
@@ -41,4 +45,3 @@ function StringMap(){
 
 if(typeof exports === "undefined") exports = {};
 exports.StringMap = StringMap;
-
