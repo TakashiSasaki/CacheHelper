@@ -1,8 +1,22 @@
 if(typeof assert === "undefined") require("./assert");
 
-function testHashWrapper(){
-  var hw = new HashWrapper();
-  
+function testHashWrapper_(storage){
+  assert.isNotUndefined(storage);
+  assert.lengthOf(arguments, 1);
+
+  (function(){
+    var stringMap = new StringMap();
+    var hw1 = new HashWrapper(stringMap);
+    var hw2 = new HashWrapper(stringMap);
+    hw1.put("abc", 1);
+    hw1.commit();
+    assert.strictEqual(hw1.get("abc"), 1);
+    assert.strictEqual(hw2.get("abc"), 1);
+  })();
+
+  var hw = HashWrapper(storage);
+  hw.reset();
+  hw.roundtripTest("abc", {"a": 23});
   hw.roundtripTest("k", null); 
   hw.roundtripTest("emptyString", "");
   hw.roundtripTest("booleanTrue", true);
@@ -38,12 +52,44 @@ function testHashWrapper(){
   hw.appendArray("testArray3", [4,5,6]);
   assert.deepStrictEqual(hw.get("testArray3"), [1,2,3,4,5,6]);
   hw.roundtripTest("testObject7", { a : 1, b: null, c: false, d: [ "hello", 1.23, null]});
+  hw.reset();
+  hw.put("abcde", {a:1, b:2});
+  hw.setProperty("abcde", "c", 3);
+  assert.deepStrictEqual(hw.get("abcde"), {a:1, b:2, c:3});
+  hw.setProperty("abcde", "b", "hello");
+  hw.setProperty("abcde", "d", [5,6,7]);
+  assert.deepStrictEqual(hw.get("abcde"), {a:1, b:"hello", c:3, d:[5,6,7]});
 }
 
+//for Node.js
 if(typeof process !== "undefined") {
-  //assert = require("assert");
-  HashWrapper = require("./HashWrapper").HashWrapper;
-  testHashWrapper();
+  assert = require("./myassert").assert;
+  var modules = [
+    "JOLSH",
+    "HashWrapper",
+    "StringMap", 
+    "xObject",
+    "xJson",
+    "xString", 
+    "xArray",
+    "setProperty_",
+    "appendArray_",
+  ];
+  for(var i in modules) {
+    var module = require("./" + modules[i]);
+    for(var j in module) {
+      if(typeof module[j] === "function") {
+        global[j] = module[j];
+        console.log("importing " + j);
+      }
+    }
+  }
+  testHashWrapper_(new StringMap());
   console.log("testHashWrapper finished");
 }
 
+//for Google Apps Script
+function test(){ 
+  testHashWrapper_(new StringMap());
+  testHashWrapper_(CacheService.getScriptCache());
+}

@@ -1,0 +1,20 @@
+{
+  "name": "hashwrapper",
+  "version": "0.1.2",
+  "description": "",
+  "main": "HashWrapper.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TakashiSasaki/HashWrapper.git"
+  },
+  "author": "Takashi SASAKI",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TakashiSasaki/HashWrapper/issues"
+  },
+  "homepage": "https://github.com/TakashiSasaki/HashWrapper#readme",
+  "dependencies": ["assert"]
+}
