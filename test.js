@@ -1,4 +1,4 @@
-if(typeof assert === "undefined") require("./assert");
+require("./assert");
 
 function testHashWrapper_(storage){
   assert.isNotUndefined(storage);
