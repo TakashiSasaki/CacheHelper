@@ -1,3 +1,5 @@
+if(typeof assert === "undefined") require("./assert");
+
 function testHashWrapper_(storage){
   assert.isNotUndefined(storage);
   assert.lengthOf(arguments, 1);
@@ -61,7 +63,6 @@ function testHashWrapper_(storage){
 
 //for Node.js
 if(typeof process !== "undefined") {
-  assert = require("./myassert").assert;
   var modules = [
     "JOLSH",
     "HashWrapper",
@@ -78,6 +79,7 @@ if(typeof process !== "undefined") {
     for(var j in module) {
       if(typeof module[j] === "function") {
         global[j] = module[j];
+        console.log("importing " + j + " from " + modules[i]);
       }
     }
   }
