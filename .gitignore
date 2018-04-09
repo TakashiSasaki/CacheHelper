@@ -7,3 +7,6 @@ assert.js
 .putJson.js.swp
 .xJson.js.swp
 .HashWrapper.js.swp
+.GasCache.js.swp
+.SimpleCache.js.swp
+.test.js.swo

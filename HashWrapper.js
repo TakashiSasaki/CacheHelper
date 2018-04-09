@@ -1,14 +1,9 @@
-function HashWrapper(storage, maxValueLength){
-  this.storage = storage;
-  this.maxValueLength = maxValueLength;
+function HashWrapper(cache, maxValueLength){
+  assert.isNotUndefined(cache);
+  assert.isPositiveInteger(maxValueLength);
 
-  if(typeof this.storage === "undefined") {
-      this.storage = new SimpleCache();
-  }
-  
-  if(typeof this.maxValueLength === "undefined") {
-    this.maxValueLength = 1000;
-  }
+  this.cache = cache;
+  this.maxValueLength = maxValueLength;
   
   this.appendArray = appendArray_;
   this.appendObject = appendObject_;
@@ -49,7 +44,7 @@ function HashWrapper(storage, maxValueLength){
     }//for
     if(keysToRead.length > 0) {
       this.getAllCount += 1;
-      var x = this.storage.getAll(keysToRead);
+      var x = this.cache.getAll(keysToRead);
       assert(x instanceof Object);
       for(var l in x) {
         this.readBuffer[l] = x[l];
@@ -68,7 +63,7 @@ function HashWrapper(storage, maxValueLength){
     }// for i
     if(keysToRemove.length > 0) {
       this.removeAllCount += 1;
-      this.storage.removeAll(keysToRemove);
+      this.cache.removeAll(keysToRemove);
     }
     
     if(typeof key === "string") {
@@ -81,7 +76,7 @@ function HashWrapper(storage, maxValueLength){
     }//if
     
     this.putAllCount += 1;
-    this.storage.putAll(this.writeBuffer);
+    this.cache.putAll(this.writeBuffer);
     for(var j in this.writeBuffer){
       this.readBuffer[j] = this.writeBuffer[j];
     }// for j
@@ -166,7 +161,7 @@ function HashWrapper(storage, maxValueLength){
     assert.isString(key);
     if(this.readBuffer[key] === undefined) {
       this.getCount += 1;
-      this.readBuffer[key] = this.storage.get(key);
+      this.readBuffer[key] = this.cache.get(key);
       if(this.readBuffer[key] === null) this.readBuffer[key] = undefined;
     }
     return this.readBuffer[key];

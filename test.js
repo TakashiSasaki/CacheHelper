@@ -1,20 +1,20 @@
 require("myassert");
 
-function testHashWrapper_(storage){
-  assert.isNotUndefined(storage);
+function testHashWrapper_(cache){
+  assert.isNotUndefined(cache);
   assert.lengthOf(arguments, 1);
 
   (function(){
     var simpleCache = new SimpleCache();
-    var hw1 = new HashWrapper(simpleCache);
-    var hw2 = new HashWrapper(simpleCache);
+    var hw1 = new HashWrapper(simpleCache, 1000);
+    var hw2 = new HashWrapper(simpleCache, 1000);
     hw1.put("abc", 1);
     hw1.commit();
     assert.strictEqual(hw1.get("abc"), 1);
     assert.strictEqual(hw2.get("abc"), 1);
   })();
 
-  var hw = HashWrapper(storage);
+  var hw = new HashWrapper(cache, 1000);
   hw.reset();
   hw.roundtripTest("abc", {"a": 23});
   hw.roundtripTest("k", null); 
@@ -81,9 +81,10 @@ if(typeof process !== "undefined") {
         global[j] = module[j];
         console.log("importing " + j + " from " + modules[i]);
       }
-    }
-  }
-  testHashWrapper_(new SimpleCache());
+    }//for j
+  }//for i
+  const simpleCache = new SimpleCache();
+  testHashWrapper_(simpleCache);
   console.log("testHashWrapper finished");
 }
 
@@ -91,5 +92,5 @@ if(typeof process !== "undefined") {
 function test(){ 
   testHashWrapper_(new SimpleCache());
   testHashWrapper_(CacheService.getScriptCache());
-}
+}//test()
 
