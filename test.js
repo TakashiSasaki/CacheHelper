@@ -1,4 +1,4 @@
-require("./assert");
+require("myassert");
 
 function testHashWrapper_(storage){
   assert.isNotUndefined(storage);

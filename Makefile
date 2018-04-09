@@ -1,9 +1,11 @@
 .PHONY: test clean push pull publish MyAssert
 
+NODE=NODE_PATH=$(NODE_PATH):MyAssert node
+
 all: test
 
 test:  test.js 
-	node $<
+	$(NODE) $<
 
 MyAssert:
 	make -C $@ 
