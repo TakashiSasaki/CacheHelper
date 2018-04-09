@@ -31,10 +31,6 @@ prepare:
 	sudo npm -g update ;\
 	sudo npm -g install npm @google/clasp;
 
-myassert.js: MyAssert/myassert.js MyAssert
-	cp $< $@
-
 myassert-browserified.js: MyAssert/myassert-browserified.js MyAssert
 	cp $< $@
-
 

@@ -1,7 +1,8 @@
 function testSimpleCache(){
   const assert = require("myassert");
-  const HashWrapper = require("HashWrapper").HashWrapper;
-  const simpleCache = new SimpleCache();
+  if(typeof HashWrapper === "undefined") HashWrapper = require("HashWrapper").HashWrapper;
+  if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache").SimpleCache;
+  var simpleCache = new SimpleCache();
   const hw1 = new HashWrapper(simpleCache, 1000);
   const hw2 = new HashWrapper(simpleCache, 1000);
   hw1.put("abc", 1);

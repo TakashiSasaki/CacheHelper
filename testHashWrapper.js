@@ -1,6 +1,7 @@
 function testHashWrapper_(cache){
 	var assert = require("myassert");
-  var HashWrapper = require("HashWrapper").HashWrapper;
+  if(typeof HashWrapper === "undefined") HashWrapper = require("HashWrapper").HashWrapper;
+  if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache").SimpleCache;
 
   assert.isNotUndefined(cache);
   assert.lengthOf(arguments, 1);
@@ -54,8 +55,8 @@ function testHashWrapper_(cache){
 
 //for Node.js
 if(typeof process !== "undefined") {
-  const SimpleCache = require("SimpleCache").SimpleCache;
-  const simpleCache = new SimpleCache();
+  if(typeof SimpleCache === "undefined") var SimpleCache = require("SimpleCache").SimpleCache;
+  var simpleCache = new SimpleCache();
   testHashWrapper_(simpleCache);
   console.log("testHashWrapper finished");
 }

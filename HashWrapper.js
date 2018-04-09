@@ -1,8 +1,6 @@
 if(typeof process !== "undefined") {
   var modules = [
     "JOLSH",
-    "HashWrapper",
-    "SimpleCache", 
     "xObject",
     "xJson",
     "xString", 
