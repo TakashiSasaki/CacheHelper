@@ -1,4 +1,5 @@
 function HashWrapper(cache, maxValueLength){
+	var assert = require("myassert");
   assert.isNotUndefined(cache);
   assert.isPositiveInteger(maxValueLength);
 
@@ -203,4 +204,4 @@ function HashWrapper(cache, maxValueLength){
 
 if(typeof exports === "undefined") exports = {};
 exports.HashWrapper = HashWrapper;
-exports.assert = require("myassert");
+//exports.assert = require("myassert");

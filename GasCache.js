@@ -1,6 +1,6 @@
-var assert = require("myassert");
 
 function GasCache(cache, expirationInSeconds){
+	var assert = require("myassert");
   assert.isInstanceOf(cache, "Cache");
   assert.isInteger(expirationInSeconds);
 
@@ -29,6 +29,7 @@ function GasCache(cache, expirationInSeconds){
 }//GasCache
 
 function UserCache(expirationInSeconds) {
+	var assert = require("myassert");
   assert.isPositiveInteger(expirationInSeconds);
   var cache = CacheService.getUserCache();
   assert.isInstanceOf(cache, "Cache");
@@ -38,6 +39,7 @@ function UserCache(expirationInSeconds) {
 
 
 function ScriptCache(expirationInSeconds) {
+	var assert = require("myassert");
   assert.isPositiveInteger(expirationInSeconds);
   var cache = CacheService.getScriptCache();
   assert.isInstanceOf(cache, "Cache");

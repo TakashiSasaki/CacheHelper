@@ -13,7 +13,7 @@ MyAssert:
 clean:
 	@rm -f HashWrapper.js empty.js assert.js
 
-push: assert.js
+push: myassert-browserified.js
 	clasp push
 
 pull:
@@ -28,6 +28,10 @@ prepare:
 	sudo npm -g update ;\
 	sudo npm -g install npm @google/clasp;
 
-assert.js: MyAssert/assert.js MyAssert
+myassert.js: MyAssert/myassert.js MyAssert
 	cp $< $@
+
+myassert-browserified.js: MyAssert/myassert-browserified.js MyAssert
+	cp $< $@
+
 

@@ -4,6 +4,7 @@
   @return {void}
 */
 function putArray_(key, array) {
+	var assert = require("myassert");
   assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isArray(array);
@@ -22,6 +23,7 @@ exports.putArray_ = putArray_;
  * @return {Array}
  */
 function getArray_(key){
+	var assert = require("myassert");
   assert.lengthOf(arguments, 1);
   assert.isString(key);
   const stringified = this.read(L(key));

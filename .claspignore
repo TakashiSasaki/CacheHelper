@@ -8,4 +8,13 @@ myassert.js
 MyAssert/*
 MyAssert/.git
 MyAssert/.gitignore
+MyAssert/.claspignore
 package.json
+.claspignore.swp
+.GasCache.js.swp
+.SimpleCache.js.swp
+.test.js.swp
+.Makefile.swp
+.test.js.swp
+.claspignore
+.GasCache.js.swp

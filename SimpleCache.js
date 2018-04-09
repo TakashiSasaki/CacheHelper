@@ -1,4 +1,5 @@
 function SimpleCache(){
+	var assert = require("myassert");
   assert.lengthOf(arguments, 0);
   this.o = {};
   

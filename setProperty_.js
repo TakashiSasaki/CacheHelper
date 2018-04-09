@@ -1,4 +1,5 @@
 function setProperty_(key, property, value){
+	var assert = require("myassert");
   assert.lengthOf(arguments, 3);
   assert.isString(key);
   assert.isString(property);

@@ -1,6 +1,5 @@
-require("myassert");
-
 function testHashWrapper_(cache){
+	var assert = require("myassert");
   assert.isNotUndefined(cache);
   assert.lengthOf(arguments, 1);
 

@@ -1,4 +1,5 @@
 function getObject_(key) {
+	var assert = require("myassert");
   assert.lengthOf(arguments, 1);
   assert.isString(key);
 
@@ -19,6 +20,7 @@ function getObject_(key) {
 }//getObject_
 
 function putObject_(key, object) {
+	var assert = require("myassert");
   assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isObject(object);
@@ -34,6 +36,7 @@ function putObject_(key, object) {
 }//putObject_
 
 function isObject_(key){
+	var assert = require("myassert");
   assert.lengthOf(arguments, 1);
   assert.isString(key);
   if(!this.exist(O(key))) {
@@ -48,6 +51,7 @@ function isObject_(key){
 }//isObject_
 
 function appendObject_(key, object){
+	var assert = require("myassert");
   assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isObject(object);

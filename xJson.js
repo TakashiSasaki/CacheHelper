@@ -1,4 +1,5 @@
 function getJson_(key){
+	var assert = require("myassert");
   assert.lengthOf(arguments, 1);
   assert.isString(key);
   const stringified = this.read(J(key));
@@ -8,6 +9,7 @@ function getJson_(key){
 }//getJson_
 
 function putJson_(key, any) {
+	var assert = require("myassert");
   assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isNotUndefined(any);
