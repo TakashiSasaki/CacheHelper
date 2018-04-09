@@ -1,9 +1,14 @@
 .PHONY: test clean push pull publish MyAssert
 
-all: test
+NODE=NODE_PATH=$(NODE_PATH):MyAssert:. node
 
-test:  test.js 
-	node $<
+all: testHashWrapper testSimpleCache
+
+testHashWrapper:  testHashWrapper.js 
+	$(NODE) $<
+
+testSimpleCache: testSimpleCache.js
+	$(NODE) $<
 
 MyAssert:
 	make -C $@ 
@@ -11,7 +16,7 @@ MyAssert:
 clean:
 	@rm -f HashWrapper.js empty.js assert.js
 
-push: assert.js
+push: myassert-browserified.js
 	clasp push
 
 pull:
@@ -26,6 +31,6 @@ prepare:
 	sudo npm -g update ;\
 	sudo npm -g install npm @google/clasp;
 
-assert.js: MyAssert/assert.js MyAssert
+myassert-browserified.js: MyAssert/myassert-browserified.js MyAssert
 	cp $< $@
 

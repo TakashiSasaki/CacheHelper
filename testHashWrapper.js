@@ -1,20 +1,12 @@
-require("./assert");
+function testHashWrapper_(cache){
+  var assert = require("myassert");
+  if(typeof HashWrapper === "undefined") HashWrapper = require("HashWrapper").HashWrapper;
+  if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache").SimpleCache;
 
-function testHashWrapper_(storage){
-  assert.isNotUndefined(storage);
+  assert.isNotUndefined(cache);
   assert.lengthOf(arguments, 1);
 
-  (function(){
-    var stringMap = new StringMap();
-    var hw1 = new HashWrapper(stringMap);
-    var hw2 = new HashWrapper(stringMap);
-    hw1.put("abc", 1);
-    hw1.commit();
-    assert.strictEqual(hw1.get("abc"), 1);
-    assert.strictEqual(hw2.get("abc"), 1);
-  })();
-
-  var hw = HashWrapper(storage);
+  var hw = new HashWrapper(cache, 1000);
   hw.reset();
   hw.roundtripTest("abc", {"a": 23});
   hw.roundtripTest("k", null); 
@@ -63,32 +55,25 @@ function testHashWrapper_(storage){
 
 //for Node.js
 if(typeof process !== "undefined") {
-  var modules = [
-    "JOLSH",
-    "HashWrapper",
-    "StringMap", 
-    "xObject",
-    "xJson",
-    "xString", 
-    "xArray",
-    "setProperty_",
-    "appendArray_",
-  ];
-  for(var i in modules) {
-    var module = require("./" + modules[i]);
-    for(var j in module) {
-      if(typeof module[j] === "function") {
-        global[j] = module[j];
-        console.log("importing " + j + " from " + modules[i]);
-      }
-    }
-  }
-  testHashWrapper_(new StringMap());
-  console.log("testHashWrapper finished");
+  if(typeof SimpleCache === "undefined") var SimpleCache = require("SimpleCache").SimpleCache;
+  var simpleCache = new SimpleCache();
+  testHashWrapper_(simpleCache);
+  console.log("testHashWrapper_ finished");
 }
 
 //for Google Apps Script
-function test(){ 
-  testHashWrapper_(new StringMap());
-  testHashWrapper_(CacheService.getScriptCache());
+function testSimpleCache(){ 
+  var simpleCache = new SimpleCache();
+  testHashWrapper_(simpleCache);
 }
+
+function testUserCache(){
+  var userCache = new UserCache(10000);
+  testHashWrapper_(userCache);
+}
+
+function testScriptCache(){
+  var scriptCache = new ScriptCache(10000);
+  testHashWrapper_(scriptCache);
+}//test()
+

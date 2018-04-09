@@ -1,9 +1,11 @@
 function J(key){
+	var assert = require("myassert");
   assert.isString(key);
   return "(" + key + ")";
 }
 
 function O(key, i){
+	var assert = require("myassert");
   assert.isString(key);
   assert(i === undefined || typeof i === "string");
   if(i === undefined) return "{" + key + "}";
@@ -11,6 +13,7 @@ function O(key, i){
 }
 
 function L(key, i){
+	var assert = require("myassert");
   assert.isString(key);
   assert(i === undefined || typeof i === "number");
   if(i === undefined) return "[" + key + "]";
@@ -18,6 +21,7 @@ function L(key, i){
 }
 
 function S(key, i) {  
+	var assert = require("myassert");
   assert.isString(key);
   assert(i === undefined || typeof i === "number");
   if(i === undefined) return "$" + key + "$";
@@ -25,6 +29,7 @@ function S(key, i) {
 }
 
 function H(key) {  // generate hint-key
+	var assert = require("myassert");
   assert.isString(key);
   return "#" + key + "#";
 }

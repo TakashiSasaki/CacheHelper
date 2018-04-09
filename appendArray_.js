@@ -3,6 +3,7 @@
  * @param {array} array
 */
 function appendArray_(key, array) {
+	var assert = require("myassert");
   assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isArray(array);
