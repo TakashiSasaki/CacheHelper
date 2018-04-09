@@ -3,7 +3,7 @@ function HashWrapper(storage, maxValueLength){
   this.maxValueLength = maxValueLength;
 
   if(typeof this.storage === "undefined") {
-      this.storage = new StringMap();
+      this.storage = new SimpleCache();
   }
   
   if(typeof this.maxValueLength === "undefined") {

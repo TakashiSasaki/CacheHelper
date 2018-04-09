@@ -1,4 +1,4 @@
-function StringMap(){
+function SimpleCache(){
   assert.lengthOf(arguments, 0);
   this.o = {};
   
@@ -44,4 +44,5 @@ function StringMap(){
 }
 
 if(typeof exports === "undefined") exports = {};
-exports.StringMap = StringMap;
+exports.SimpleCache = SimpleCache;
+

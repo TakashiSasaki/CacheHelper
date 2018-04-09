@@ -5,9 +5,9 @@ function testHashWrapper_(storage){
   assert.lengthOf(arguments, 1);
 
   (function(){
-    var stringMap = new StringMap();
-    var hw1 = new HashWrapper(stringMap);
-    var hw2 = new HashWrapper(stringMap);
+    var simpleCache = new SimpleCache();
+    var hw1 = new HashWrapper(simpleCache);
+    var hw2 = new HashWrapper(simpleCache);
     hw1.put("abc", 1);
     hw1.commit();
     assert.strictEqual(hw1.get("abc"), 1);
@@ -66,7 +66,7 @@ if(typeof process !== "undefined") {
   var modules = [
     "JOLSH",
     "HashWrapper",
-    "StringMap", 
+    "SimpleCache", 
     "xObject",
     "xJson",
     "xString", 
@@ -83,12 +83,13 @@ if(typeof process !== "undefined") {
       }
     }
   }
-  testHashWrapper_(new StringMap());
+  testHashWrapper_(new SimpleCache());
   console.log("testHashWrapper finished");
 }
 
 //for Google Apps Script
 function test(){ 
-  testHashWrapper_(new StringMap());
+  testHashWrapper_(new SimpleCache());
   testHashWrapper_(CacheService.getScriptCache());
 }
+
