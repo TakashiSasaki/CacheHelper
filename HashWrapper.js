@@ -1,3 +1,26 @@
+if(typeof process !== "undefined") {
+  var modules = [
+    "JOLSH",
+    "HashWrapper",
+    "SimpleCache", 
+    "xObject",
+    "xJson",
+    "xString", 
+    "xArray",
+    "setProperty_",
+    "appendArray_",
+  ];
+  for(var i in modules) {
+    var module = require("./" + modules[i]);
+    for(var j in module) {
+      if(typeof module[j] === "function") {
+        global[j] = module[j];
+        console.log("importing " + j + " from " + modules[i]);
+      }
+    }//for j
+  }//for i
+}
+
 function HashWrapper(cache, maxValueLength){
 	var assert = require("myassert");
   assert.isNotUndefined(cache);
@@ -202,6 +225,7 @@ function HashWrapper(cache, maxValueLength){
   return this;
 }//HashWrapper
 
+//if(typeof module !== "undefined") module.exports = HashWrapper;
 if(typeof exports === "undefined") exports = {};
 exports.HashWrapper = HashWrapper;
 //exports.assert = require("myassert");

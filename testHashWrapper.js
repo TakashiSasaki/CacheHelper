@@ -1,17 +1,9 @@
 function testHashWrapper_(cache){
 	var assert = require("myassert");
+  var HashWrapper = require("HashWrapper").HashWrapper;
+
   assert.isNotUndefined(cache);
   assert.lengthOf(arguments, 1);
-
-  (function(){
-    var simpleCache = new SimpleCache();
-    var hw1 = new HashWrapper(simpleCache, 1000);
-    var hw2 = new HashWrapper(simpleCache, 1000);
-    hw1.put("abc", 1);
-    hw1.commit();
-    assert.strictEqual(hw1.get("abc"), 1);
-    assert.strictEqual(hw2.get("abc"), 1);
-  })();
 
   var hw = new HashWrapper(cache, 1000);
   hw.reset();
@@ -62,26 +54,7 @@ function testHashWrapper_(cache){
 
 //for Node.js
 if(typeof process !== "undefined") {
-  var modules = [
-    "JOLSH",
-    "HashWrapper",
-    "SimpleCache", 
-    "xObject",
-    "xJson",
-    "xString", 
-    "xArray",
-    "setProperty_",
-    "appendArray_",
-  ];
-  for(var i in modules) {
-    var module = require("./" + modules[i]);
-    for(var j in module) {
-      if(typeof module[j] === "function") {
-        global[j] = module[j];
-        console.log("importing " + j + " from " + modules[i]);
-      }
-    }//for j
-  }//for i
+  const SimpleCache = require("SimpleCache").SimpleCache;
   const simpleCache = new SimpleCache();
   testHashWrapper_(simpleCache);
   console.log("testHashWrapper finished");

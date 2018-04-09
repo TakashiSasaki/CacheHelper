@@ -1,10 +1,13 @@
 .PHONY: test clean push pull publish MyAssert
 
-NODE=NODE_PATH=$(NODE_PATH):MyAssert node
+NODE=NODE_PATH=$(NODE_PATH):MyAssert:. node
 
-all: test
+all: testHashWrapper testSimpleCache
 
-test:  test.js 
+testHashWrapper:  testHashWrapper.js 
+	$(NODE) $<
+
+testSimpleCache: testSimpleCache.js
 	$(NODE) $<
 
 MyAssert:
