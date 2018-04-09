@@ -1,14 +1,13 @@
-
 function GasCache(cache, expirationInSeconds){
 	var assert = require("myassert");
-  assert.isInstanceOf(cache, "Cache");
+  assert(typeof cache === "object");
   assert.isInteger(expirationInSeconds);
 
   this.cache = cache;
   this.expirationInSeconds = expirationInSeconds;
 
   this.getAll = function(keys){
-    assert.isStringArray(keys);
+    assert.isArray(keys);
     return this.cache.getAll(keys);
   };
 
@@ -23,7 +22,7 @@ function GasCache(cache, expirationInSeconds){
   };
 
   this.removeAll = function(keys){
-    assert.isStringArray(keys);
+    assert.isArray(keys);
     return this.cache.removeAll(keys);
   };
 }//GasCache
@@ -32,7 +31,7 @@ function UserCache(expirationInSeconds) {
 	var assert = require("myassert");
   assert.isPositiveInteger(expirationInSeconds);
   var cache = CacheService.getUserCache();
-  assert.isInstanceOf(cache, "Cache");
+  assert(typeof cache === "object");
   var gasCache = new GasCache(cache, expirationInSeconds);
   return gasCache;
 }//UserCache
@@ -42,8 +41,12 @@ function ScriptCache(expirationInSeconds) {
 	var assert = require("myassert");
   assert.isPositiveInteger(expirationInSeconds);
   var cache = CacheService.getScriptCache();
-  assert.isInstanceOf(cache, "Cache");
+  assert(typeof cache === "object");
   var gasCache = new GasCache(cache, expirationInSeconds);
   return gasCache;
 }//ScriptCache
+
+if(typeof exports === "undefined") exports = {};
+exports.UserCache = UserCache;
+exports.ScriptCache = ScriptCache;
 

@@ -1,5 +1,5 @@
 function testHashWrapper_(cache){
-	var assert = require("myassert");
+  var assert = require("myassert");
   if(typeof HashWrapper === "undefined") HashWrapper = require("HashWrapper").HashWrapper;
   if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache").SimpleCache;
 
@@ -58,12 +58,22 @@ if(typeof process !== "undefined") {
   if(typeof SimpleCache === "undefined") var SimpleCache = require("SimpleCache").SimpleCache;
   var simpleCache = new SimpleCache();
   testHashWrapper_(simpleCache);
-  console.log("testHashWrapper finished");
+  console.log("testHashWrapper_ finished");
 }
 
 //for Google Apps Script
-function test(){ 
-  testHashWrapper_(new SimpleCache());
-  testHashWrapper_(CacheService.getScriptCache());
+function testSimpleCache(){ 
+  var simpleCache = new SimpleCache();
+  testHashWrapper_(simpleCache);
+}
+
+function testUserCache(){
+  var userCache = new UserCache(10000);
+  testHashWrapper_(userCache);
+}
+
+function testScriptCache(){
+  var scriptCache = new ScriptCache(10000);
+  testHashWrapper_(scriptCache);
 }//test()
 
