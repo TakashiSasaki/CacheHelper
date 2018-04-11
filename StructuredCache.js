@@ -9,7 +9,6 @@ if(typeof assert  === "undefined") assert = require("myassert");
       "xString", 
       "xArray",
       "setProperty_",
-      "appendArray_",
     ];
     for(var i in modules) {
       var module = require("./" + modules[i]);
