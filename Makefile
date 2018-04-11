@@ -2,12 +2,15 @@
 
 NODE=NODE_PATH=$(NODE_PATH):MyAssert:. node
 
-all: testStructuredCache testSimpleCache
+all: testStructuredCache testSimpleCache testAssert
 
 testStructuredCache:  testStructuredCache.js 
 	$(NODE) $<
 
 testSimpleCache: testSimpleCache.js
+	$(NODE) $<
+
+testAssert: testAssert.js
 	$(NODE) $<
 
 MyAssert:

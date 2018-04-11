@@ -1,5 +1,6 @@
+if(typeof assert === "undefined") require("myassert");
+
 function SimpleCache(){
-	var assert = require("myassert");
   assert.lengthOf(arguments, 0);
   this.o = {};
   
@@ -44,6 +45,7 @@ function SimpleCache(){
   }//removeAll
 }
 
-if(typeof exports === "undefined") exports = {};
-exports.SimpleCache = SimpleCache;
+if(typeof module !== "undefined") module.exports = SimpleCache;
+//if(typeof exports === "undefined") exports = {};
+//exports.SimpleCache = SimpleCache;
 

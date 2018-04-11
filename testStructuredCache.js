@@ -1,8 +1,8 @@
-function testStructuredCache_(cache){
-  var assert = require("myassert");
-  if(typeof StructuredCache === "undefined") StructuredCache = require("StructuredCache").StructuredCache;
-  if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache").SimpleCache;
+if(typeof assert === "undefined") require("myassert");
+if(typeof StructuredCache === "undefined") StructuredCache = require("StructuredCache");
+if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache");
 
+function testStructuredCache_(cache){
   assert.isNotUndefined(cache);
   assert.lengthOf(arguments, 1);
 
@@ -22,6 +22,11 @@ function testStructuredCache_(cache){
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   });
+  assert.deepStrictEqual(hw.getProperties("testObject1"), ["a", "b", "c", "d"]);
+  assert(hw.exist(J(O("testObject1", "a"))));
+  assert(hw.exist(J(O("testObject1", "b"))));
+  assert(hw.exist(S(O("testObject1", "c"))));
+  assert(hw.exist(S(O("testObject1", "d"))));
   hw.roundtripTest("testObject1", {
     a: 1,
     b: null,
@@ -55,7 +60,6 @@ function testStructuredCache_(cache){
 
 //for Node.js
 if(typeof process !== "undefined") {
-  if(typeof SimpleCache === "undefined") var SimpleCache = require("SimpleCache").SimpleCache;
   var simpleCache = new SimpleCache();
   testStructuredCache_(simpleCache);
   console.log("testStructuredCache_ finished");
