@@ -1,4 +1,5 @@
-function StringMap(){
+function SimpleCache(){
+	var assert = require("myassert");
   assert.lengthOf(arguments, 0);
   this.o = {};
   
@@ -44,4 +45,5 @@ function StringMap(){
 }
 
 if(typeof exports === "undefined") exports = {};
-exports.StringMap = StringMap;
+exports.SimpleCache = SimpleCache;
+

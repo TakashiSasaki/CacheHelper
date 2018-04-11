@@ -1,8 +1,4 @@
 HashWrapper.js
-.Makefile.swp
+/*.swp
+/*.swo
 assert.js
-.getJson.js.swp
-.test.js.swp
-.gitignore.swp
-.putJson.js.swp
-.xJson.js.swp

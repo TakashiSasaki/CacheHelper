@@ -1,17 +1,22 @@
 .PHONY: test clean push pull publish MyAssert
 
-all: test
+NODE=NODE_PATH=$(NODE_PATH):MyAssert:. node
 
-test:  test.js 
-	node $<
+all: testStructuredCache testSimpleCache
+
+testStructuredCache:  testStructuredCache.js 
+	$(NODE) $<
+
+testSimpleCache: testSimpleCache.js
+	$(NODE) $<
 
 MyAssert:
 	make -C $@ 
 
 clean:
-	@rm -f HashWrapper.js empty.js assert.js
+	@rm -f StructuredCache.js empty.js assert.js
 
-push: assert.js
+push: myassert-browserified.js
 	clasp push
 
 pull:
@@ -26,6 +31,11 @@ prepare:
 	sudo npm -g update ;\
 	sudo npm -g install npm @google/clasp;
 
-assert.js: MyAssert/assert.js MyAssert
+myassert-browserified.js: MyAssert/myassert-browserified.js MyAssert
 	cp $< $@
 
+merge:
+	git pull ;\
+	git merge github/SurfaePro5 ;\
+	git merge github/sasaki64 ;\
+	git push

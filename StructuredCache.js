@@ -1,14 +1,31 @@
-function HashWrapper(storage, maxValueLength){
-  this.storage = storage;
-  this.maxValueLength = maxValueLength;
+if(typeof process !== "undefined") {
+  var modules = [
+    "JOLSH",
+    "xObject",
+    "xJson",
+    "xString", 
+    "xArray",
+    "setProperty_",
+    "appendArray_",
+  ];
+  for(var i in modules) {
+    var module = require("./" + modules[i]);
+    for(var j in module) {
+      if(typeof module[j] === "function") {
+        global[j] = module[j];
+        console.log("importing " + j + " from " + modules[i]);
+      }
+    }//for j
+  }//for i
+}
 
-  if(typeof this.storage === "undefined") {
-      this.storage = new StringMap();
-  }
-  
-  if(typeof this.maxValueLength === "undefined") {
-    this.maxValueLength = 1000;
-  }
+function StructuredCache(cache, maxValueLength){
+	var assert = require("myassert");
+  assert.isNotUndefined(cache);
+  assert.isPositiveInteger(maxValueLength);
+
+  this.cache = cache;
+  this.maxValueLength = maxValueLength;
   
   this.appendArray = appendArray_;
   this.appendObject = appendObject_;
@@ -35,7 +52,7 @@ function HashWrapper(storage, maxValueLength){
     } else if(any instanceof Object) {
       this.putObject(key, any);
     } else {
-      throw "HashWrapper#put: unexpected type of value. " + typeof any;
+      throw "StructuredCache#put: unexpected type of value. " + typeof any;
     }
   };//put
   
@@ -49,7 +66,7 @@ function HashWrapper(storage, maxValueLength){
     }//for
     if(keysToRead.length > 0) {
       this.getAllCount += 1;
-      var x = this.storage.getAll(keysToRead);
+      var x = this.cache.getAll(keysToRead);
       assert(x instanceof Object);
       for(var l in x) {
         this.readBuffer[l] = x[l];
@@ -68,7 +85,7 @@ function HashWrapper(storage, maxValueLength){
     }// for i
     if(keysToRemove.length > 0) {
       this.removeAllCount += 1;
-      this.storage.removeAll(keysToRemove);
+      this.cache.removeAll(keysToRemove);
     }
     
     if(typeof key === "string") {
@@ -81,7 +98,7 @@ function HashWrapper(storage, maxValueLength){
     }//if
     
     this.putAllCount += 1;
-    this.storage.putAll(this.writeBuffer);
+    this.cache.putAll(this.writeBuffer);
     for(var j in this.writeBuffer){
       this.readBuffer[j] = this.writeBuffer[j];
     }// for j
@@ -133,7 +150,7 @@ function HashWrapper(storage, maxValueLength){
     } else if(typeof this.readBuffer[O(key)] === "string") {
       return this.getObject(key);
     } else {
-      throw "HashWrapper#get: key " + key + " not found in readBuffer.";
+      throw "StructuredCache#get: key " + key + " not found in readBuffer.";
     }
   }//get
 
@@ -166,7 +183,7 @@ function HashWrapper(storage, maxValueLength){
     assert.isString(key);
     if(this.readBuffer[key] === undefined) {
       this.getCount += 1;
-      this.readBuffer[key] = this.storage.get(key);
+      this.readBuffer[key] = this.cache.get(key);
       if(this.readBuffer[key] === null) this.readBuffer[key] = undefined;
     }
     return this.readBuffer[key];
@@ -204,8 +221,9 @@ function HashWrapper(storage, maxValueLength){
   
   this.reset();
   return this;
-}//HashWrapper
+}//StructuredCache
 
+//if(typeof module !== "undefined") module.exports = StructuredCache;
 if(typeof exports === "undefined") exports = {};
-exports.HashWrapper = HashWrapper;
-exports.assert = require("./myassert").assert;
+exports.StructuredCache = StructuredCache;
+//exports.assert = require("myassert");
