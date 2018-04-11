@@ -1,5 +1,5 @@
+if(typeof assert === "undefined") require("myassert");
 if(typeof StructuredCache === "undefined") StructuredCache = require("StructuredCache");
-if(typeof assert === "undefined") assert = require("myassert");
 if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache");
 
 function testStructuredCache_(cache){

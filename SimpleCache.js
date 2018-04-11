@@ -1,4 +1,4 @@
-if(typeof assert === "undefined") assert = require("myassert");
+if(typeof assert === "undefined") require("myassert");
 
 function SimpleCache(){
   assert.lengthOf(arguments, 0);
