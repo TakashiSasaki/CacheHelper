@@ -1,4 +1,4 @@
-if(typeof assert === "undefined") require("myassert");
+if(typeof assert === "undefined") require("myassert-browserified");
 if(typeof StructuredCache === "undefined") StructuredCache = require("StructuredCache");
 if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache");
 
