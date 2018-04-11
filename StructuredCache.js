@@ -29,7 +29,6 @@ function StructuredCache(cache, maxValueLength){
   this.maxValueLength = maxValueLength;
   
   this.appendArray = appendArray_;
-  this.appendObject = appendObject_;
   this.setProperty = setProperty_;
   this.getArray = getArray_;
   this.putArray = putArray_;

@@ -49,18 +49,6 @@ function isObject_(key){
   return true;
 }//isObject_
 
-function appendObject_(key, object){
-  assert.lengthOf(arguments, 2);
-  assert.isString(key);
-  assert.isObject(object);
-  
-  for(var i in object){
-    this.appendValue(key, i, object[i]);
-  }//for i
-  
-  this.write(O(key), JSON.stringify(properties));
-}//appendObject_
-
 function setProperty_(key, property, value){
   assert.lengthOf(arguments, 3);
   assert.isString(key);
@@ -77,7 +65,6 @@ function setProperty_(key, property, value){
 
 if(typeof exports === "undefined") exports = {};
 exports.setProperty_ = setProperty_;
-exports.appendObject_ = appendObject_;
 exports.getObject_  = getObject_;
 exports.putObject_ = putObject_;
 exports.isObject_ = isObject_;
