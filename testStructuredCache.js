@@ -23,6 +23,10 @@ function testStructuredCache_(cache){
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   });
   assert.deepStrictEqual(hw.getProperties("testObject1"), ["a", "b", "c", "d"]);
+  assert(hw.exist(J(O("testObject1", "a"))));
+  assert(hw.exist(J(O("testObject1", "b"))));
+  assert(hw.exist(S(O("testObject1", "c"))));
+  assert(hw.exist(S(O("testObject1", "d"))));
   hw.roundtripTest("testObject1", {
     a: 1,
     b: null,
