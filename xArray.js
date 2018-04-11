@@ -1,10 +1,6 @@
-/**
-  @param {string} key
-  @param {Array} array
-  @return {void}
-*/
+if(typeof assert === "undefined") assert = require("myassert");
+
 function putArray_(key, array) {
-	var assert = require("myassert");
   assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isArray(array);
@@ -15,15 +11,7 @@ function putArray_(key, array) {
   }//for
 }//putArray_
 
-if(typeof exports === "undefined") exports = {};
-exports.putArray_ = putArray_;
-
-/**
- * @param {stirng} key
- * @return {Array}
- */
 function getArray_(key){
-	var assert = require("myassert");
   assert.lengthOf(arguments, 1);
   assert.isString(key);
   const stringified = this.read(L(key));
@@ -38,5 +26,6 @@ function getArray_(key){
 }//getArray
 
 if(typeof exports === "undefined") exports = {};
+exports.putArray_ = putArray_;
 exports.getArray_ = getArray_;
 

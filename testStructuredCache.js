@@ -1,8 +1,8 @@
-function testStructuredCache_(cache){
-  var assert = require("myassert");
-  if(typeof StructuredCache === "undefined") StructuredCache = require("StructuredCache").StructuredCache;
-  if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache").SimpleCache;
+if(typeof StructuredCache === "undefined") StructuredCache = require("StructuredCache");
+if(typeof assert === "undefined") assert = require("myassert");
+if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache");
 
+function testStructuredCache_(cache){
   assert.isNotUndefined(cache);
   assert.lengthOf(arguments, 1);
 
@@ -55,7 +55,6 @@ function testStructuredCache_(cache){
 
 //for Node.js
 if(typeof process !== "undefined") {
-  if(typeof SimpleCache === "undefined") var SimpleCache = require("SimpleCache").SimpleCache;
   var simpleCache = new SimpleCache();
   testStructuredCache_(simpleCache);
   console.log("testStructuredCache_ finished");

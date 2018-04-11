@@ -1,26 +1,29 @@
-if(typeof process !== "undefined") {
-  var modules = [
-    "JOLSH",
-    "xObject",
-    "xJson",
-    "xString", 
-    "xArray",
-    "setProperty_",
-    "appendArray_",
-  ];
-  for(var i in modules) {
-    var module = require("./" + modules[i]);
-    for(var j in module) {
-      if(typeof module[j] === "function") {
-        global[j] = module[j];
-        console.log("importing " + j + " from " + modules[i]);
-      }
-    }//for j
-  }//for i
-}
+if(typeof assert  === "undefined") assert = require("myassert");
+
+(function(){
+  if(typeof process !== "undefined") {
+    var modules = [
+      "JOLSH",
+      "xObject",
+      "xJson",
+      "xString", 
+      "xArray",
+      "setProperty_",
+      "appendArray_",
+    ];
+    for(var i in modules) {
+      var module = require("./" + modules[i]);
+      for(var j in module) {
+        if(typeof module[j] === "function") {
+          global[j] = module[j];
+          console.log("importing " + j + " from " + modules[i]);
+        }
+      }//for j
+    }//for i
+  }
+})();
 
 function StructuredCache(cache, maxValueLength){
-	var assert = require("myassert");
   assert.isNotUndefined(cache);
   assert.isPositiveInteger(maxValueLength);
 
@@ -223,7 +226,6 @@ function StructuredCache(cache, maxValueLength){
   return this;
 }//StructuredCache
 
-//if(typeof module !== "undefined") module.exports = StructuredCache;
-if(typeof exports === "undefined") exports = {};
-exports.StructuredCache = StructuredCache;
-//exports.assert = require("myassert");
+if(typeof module === "object") module.exports = StructuredCache;
+//if(typeof exports === "undefined") exports = {};
+//exports.StructuredCache = StructuredCache;

@@ -1,9 +1,6 @@
-/**
- * @param {string} key
- * @param {array} array
-*/
+if(typeof assert === "undefined") assert = require("myassert");
+
 function appendArray_(key, array) {
-	var assert = require("myassert");
   assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isArray(array);
