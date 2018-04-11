@@ -34,3 +34,6 @@ prepare:
 myassert-browserified.js: MyAssert/myassert-browserified.js MyAssert
 	cp $< $@
 
+merge:
+	git merge github/SurfaePro5 ;\
+		git merge github/sasaki64
