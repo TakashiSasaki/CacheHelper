@@ -63,7 +63,17 @@ function setProperty_(key, property, value){
   this.write(O(key), JSON.stringify(properties));
 }//setProeprty_
 
+function getProperties_(key){
+  assert.isString(key);
+  this.isObject(key);
+  var stringified = this.read(O(key));
+  var properties = JSON.parse(stringified);
+  assert.isStringArray(properties);
+  return properties;
+}//getProperties_
+
 if(typeof exports === "undefined") exports = {};
+exports.getProperties_ = getProperties_;
 exports.setProperty_ = setProperty_;
 exports.getObject_  = getObject_;
 exports.putObject_ = putObject_;

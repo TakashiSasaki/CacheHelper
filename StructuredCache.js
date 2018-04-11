@@ -30,6 +30,7 @@ function StructuredCache(cache, maxValueLength){
   
   this.appendArray = appendArray_;
   this.setProperty = setProperty_;
+  this.getProperties = getProperties_;
   this.getArray = getArray_;
   this.putArray = putArray_;
   this.getJson = getJson_;

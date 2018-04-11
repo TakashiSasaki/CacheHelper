@@ -22,6 +22,7 @@ function testStructuredCache_(cache){
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   });
+  assert.deepStrictEqual(hw.getProperties("testObject1"), ["a", "b", "c", "d"]);
   hw.roundtripTest("testObject1", {
     a: 1,
     b: null,
