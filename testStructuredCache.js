@@ -1,12 +1,12 @@
-function testHashWrapper_(cache){
+function testStructuredCache_(cache){
   var assert = require("myassert");
-  if(typeof HashWrapper === "undefined") HashWrapper = require("HashWrapper").HashWrapper;
+  if(typeof StructuredCache === "undefined") StructuredCache = require("StructuredCache").StructuredCache;
   if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache").SimpleCache;
 
   assert.isNotUndefined(cache);
   assert.lengthOf(arguments, 1);
 
-  var hw = new HashWrapper(cache, 1000);
+  var hw = new StructuredCache(cache, 1000);
   hw.reset();
   hw.roundtripTest("abc", {"a": 23});
   hw.roundtripTest("k", null); 
@@ -57,23 +57,23 @@ function testHashWrapper_(cache){
 if(typeof process !== "undefined") {
   if(typeof SimpleCache === "undefined") var SimpleCache = require("SimpleCache").SimpleCache;
   var simpleCache = new SimpleCache();
-  testHashWrapper_(simpleCache);
-  console.log("testHashWrapper_ finished");
+  testStructuredCache_(simpleCache);
+  console.log("testStructuredCache_ finished");
 }
 
 //for Google Apps Script
 function testSimpleCache(){ 
   var simpleCache = new SimpleCache();
-  testHashWrapper_(simpleCache);
+  testStructuredCache_(simpleCache);
 }
 
 function testUserCache(){
   var userCache = new UserCache(10000);
-  testHashWrapper_(userCache);
+  testStructuredCache_(userCache);
 }
 
 function testScriptCache(){
   var scriptCache = new ScriptCache(10000);
-  testHashWrapper_(scriptCache);
+  testStructuredCache_(scriptCache);
 }//test()
 

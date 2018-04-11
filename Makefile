@@ -2,9 +2,9 @@
 
 NODE=NODE_PATH=$(NODE_PATH):MyAssert:. node
 
-all: testHashWrapper testSimpleCache
+all: testStructuredCache testSimpleCache
 
-testHashWrapper:  testHashWrapper.js 
+testStructuredCache:  testStructuredCache.js 
 	$(NODE) $<
 
 testSimpleCache: testSimpleCache.js
@@ -14,7 +14,7 @@ MyAssert:
 	make -C $@ 
 
 clean:
-	@rm -f HashWrapper.js empty.js assert.js
+	@rm -f StructuredCache.js empty.js assert.js
 
 push: myassert-browserified.js
 	clasp push

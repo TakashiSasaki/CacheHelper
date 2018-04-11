@@ -19,7 +19,7 @@ if(typeof process !== "undefined") {
   }//for i
 }
 
-function HashWrapper(cache, maxValueLength){
+function StructuredCache(cache, maxValueLength){
 	var assert = require("myassert");
   assert.isNotUndefined(cache);
   assert.isPositiveInteger(maxValueLength);
@@ -52,7 +52,7 @@ function HashWrapper(cache, maxValueLength){
     } else if(any instanceof Object) {
       this.putObject(key, any);
     } else {
-      throw "HashWrapper#put: unexpected type of value. " + typeof any;
+      throw "StructuredCache#put: unexpected type of value. " + typeof any;
     }
   };//put
   
@@ -150,7 +150,7 @@ function HashWrapper(cache, maxValueLength){
     } else if(typeof this.readBuffer[O(key)] === "string") {
       return this.getObject(key);
     } else {
-      throw "HashWrapper#get: key " + key + " not found in readBuffer.";
+      throw "StructuredCache#get: key " + key + " not found in readBuffer.";
     }
   }//get
 
@@ -221,9 +221,9 @@ function HashWrapper(cache, maxValueLength){
   
   this.reset();
   return this;
-}//HashWrapper
+}//StructuredCache
 
-//if(typeof module !== "undefined") module.exports = HashWrapper;
+//if(typeof module !== "undefined") module.exports = StructuredCache;
 if(typeof exports === "undefined") exports = {};
-exports.HashWrapper = HashWrapper;
+exports.StructuredCache = StructuredCache;
 //exports.assert = require("myassert");

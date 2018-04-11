@@ -1,9 +1,9 @@
 function doGet(e) {
-  var hw = new HashWrapper();
+  var hw = new StructuredCache();
   hw.put("abcabc", {"hello":123.456});
   hw.commit();
   assert.deepStrictEqual(hw.get("abcabc"), {"hello":123.456}); 
-  var hw2 = new HashWrapper();
+  var hw2 = new StructuredCache();
   hw2.put("defdef", {"hello2":456.789});
   assert.deepStrictEqual(hw2.get("abcabc"), {"hello":123.456});
   assert.deepStrictEqual(hw2.get("defdef"), {"hello2":456.789}); 
@@ -29,13 +29,13 @@ function getJsdoit(kind){
 
 
 function get(keyString){
-  var hw = new HashWrapper();
+  var hw = new StructuredCache();
   assert.isString(keyString);
   return hw.get(keyString);
 }
 
 function put(keyString, value){
-  var hw = new HashWrapper();
+  var hw = new StructuredCache();
   assert.isString(keyString);
   hw.put(keyString, value);
   hw.commit();
