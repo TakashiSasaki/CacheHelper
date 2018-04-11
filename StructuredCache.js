@@ -1,5 +1,3 @@
-if(typeof assert  === "undefined") assert = require("myassert");
-
 (function(){
   if(typeof process !== "undefined") {
     var modules = [

@@ -1,5 +1,3 @@
-if(typeof assert === "undefined") assert = require("myassert");
-
 function GasCache(cache, expirationInSeconds){
   assert(typeof cache === "object");
   assert.isInteger(expirationInSeconds);

@@ -1,5 +1,3 @@
-if(typeof assert === "undefined") assert = require("myassert");
-
 function J(key){
   assert.isString(key);
   return "(" + key + ")";

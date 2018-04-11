@@ -1,5 +1,3 @@
-if(typeof assert === "undefined") assert = require("myassert");
-
 function putArray_(key, array) {
   assert.lengthOf(arguments, 2);
   assert.isString(key);
