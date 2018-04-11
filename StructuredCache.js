@@ -8,7 +8,6 @@ if(typeof assert  === "undefined") assert = require("myassert");
       "xJson",
       "xString", 
       "xArray",
-      "setProperty_",
     ];
     for(var i in modules) {
       var module = require("./" + modules[i]);
@@ -226,5 +225,3 @@ function StructuredCache(cache, maxValueLength){
 }//StructuredCache
 
 if(typeof module === "object") module.exports = StructuredCache;
-//if(typeof exports === "undefined") exports = {};
-//exports.StructuredCache = StructuredCache;
