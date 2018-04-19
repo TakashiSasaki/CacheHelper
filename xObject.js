@@ -1,5 +1,4 @@
 function getObject_(key) {
-	var assert = require("myassert");
   assert.lengthOf(arguments, 1);
   assert.isString(key);
 
@@ -20,7 +19,6 @@ function getObject_(key) {
 }//getObject_
 
 function putObject_(key, object) {
-	var assert = require("myassert");
   assert.lengthOf(arguments, 2);
   assert.isString(key);
   assert.isObject(object);
@@ -36,7 +34,6 @@ function putObject_(key, object) {
 }//putObject_
 
 function isObject_(key){
-	var assert = require("myassert");
   assert.lengthOf(arguments, 1);
   assert.isString(key);
   if(!this.exist(O(key))) {
@@ -50,21 +47,32 @@ function isObject_(key){
   return true;
 }//isObject_
 
-function appendObject_(key, object){
-	var assert = require("myassert");
-  assert.lengthOf(arguments, 2);
+function setProperty_(key, property, value){
+  assert.lengthOf(arguments, 3);
   assert.isString(key);
-  assert.isObject(object);
-  
-  for(var i in object){
-    this.appendValue(key, i, object[i]);
-  }//for i
-  
+  assert.isString(property);
+  assert.isNotUndefined(value);
+  var properties = JSON.parse(this.read(O(key)));
+  assert.isArray(properties);
+  this.put(O(key,property), value);
+  if(properties.indexOf(property) < 0) {
+    properties.push(property);
+  }
   this.write(O(key), JSON.stringify(properties));
-}//appendObject_
+}//setProeprty_
+
+function getProperties_(key){
+  assert.isString(key);
+  this.isObject(key);
+  var stringified = this.read(O(key));
+  var properties = JSON.parse(stringified);
+  assert.isStringArray(properties);
+  return properties;
+}//getProperties_
 
 if(typeof exports === "undefined") exports = {};
-exports.appendObject_ = appendObject_;
+exports.getProperties_ = getProperties_;
+exports.setProperty_ = setProperty_;
 exports.getObject_  = getObject_;
 exports.putObject_ = putObject_;
 exports.isObject_ = isObject_;

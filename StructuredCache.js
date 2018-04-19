@@ -1,26 +1,25 @@
-if(typeof process !== "undefined") {
-  var modules = [
-    "JOLSH",
-    "xObject",
-    "xJson",
-    "xString", 
-    "xArray",
-    "setProperty_",
-    "appendArray_",
-  ];
-  for(var i in modules) {
-    var module = require("./" + modules[i]);
-    for(var j in module) {
-      if(typeof module[j] === "function") {
-        global[j] = module[j];
-        console.log("importing " + j + " from " + modules[i]);
-      }
-    }//for j
-  }//for i
-}
+(function(){
+  if(typeof process !== "undefined") {
+    var modules = [
+      "JOLSH",
+      "xObject",
+      "xJson",
+      "xString", 
+      "xArray",
+    ];
+    for(var i in modules) {
+      var module = require("./" + modules[i]);
+      for(var j in module) {
+        if(typeof module[j] === "function") {
+          global[j] = module[j];
+          console.log("importing " + j + " from " + modules[i]);
+        }
+      }//for j
+    }//for i
+  }
+})();
 
-function HashWrapper(cache, maxValueLength){
-	var assert = require("myassert");
+function StructuredCache(cache, maxValueLength){
   assert.isNotUndefined(cache);
   assert.isPositiveInteger(maxValueLength);
 
@@ -28,8 +27,8 @@ function HashWrapper(cache, maxValueLength){
   this.maxValueLength = maxValueLength;
   
   this.appendArray = appendArray_;
-  this.appendObject = appendObject_;
   this.setProperty = setProperty_;
+  this.getProperties = getProperties_;
   this.getArray = getArray_;
   this.putArray = putArray_;
   this.getJson = getJson_;
@@ -52,7 +51,7 @@ function HashWrapper(cache, maxValueLength){
     } else if(any instanceof Object) {
       this.putObject(key, any);
     } else {
-      throw "HashWrapper#put: unexpected type of value. " + typeof any;
+      throw "StructuredCache#put: unexpected type of value. " + typeof any;
     }
   };//put
   
@@ -150,7 +149,7 @@ function HashWrapper(cache, maxValueLength){
     } else if(typeof this.readBuffer[O(key)] === "string") {
       return this.getObject(key);
     } else {
-      throw "HashWrapper#get: key " + key + " not found in readBuffer.";
+      throw "StructuredCache#get: key " + key + " not found in readBuffer.";
     }
   }//get
 
@@ -221,9 +220,6 @@ function HashWrapper(cache, maxValueLength){
   
   this.reset();
   return this;
-}//HashWrapper
+}//StructuredCache
 
-//if(typeof module !== "undefined") module.exports = HashWrapper;
-if(typeof exports === "undefined") exports = {};
-exports.HashWrapper = HashWrapper;
-//exports.assert = require("myassert");
+if(typeof module === "object") module.exports = StructuredCache;

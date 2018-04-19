@@ -1,5 +1,4 @@
 function GasCache(cache, expirationInSeconds){
-	var assert = require("myassert");
   assert(typeof cache === "object");
   assert.isInteger(expirationInSeconds);
 
@@ -28,7 +27,6 @@ function GasCache(cache, expirationInSeconds){
 }//GasCache
 
 function UserCache(expirationInSeconds) {
-	var assert = require("myassert");
   assert.isPositiveInteger(expirationInSeconds);
   var cache = CacheService.getUserCache();
   assert(typeof cache === "object");
@@ -38,7 +36,6 @@ function UserCache(expirationInSeconds) {
 
 
 function ScriptCache(expirationInSeconds) {
-	var assert = require("myassert");
   assert.isPositiveInteger(expirationInSeconds);
   var cache = CacheService.getScriptCache();
   assert(typeof cache === "object");

@@ -2,19 +2,22 @@
 
 NODE=NODE_PATH=$(NODE_PATH):MyAssert:. node
 
-all: testHashWrapper testSimpleCache
+all: testStructuredCache testSimpleCache testAssert
 
-testHashWrapper:  testHashWrapper.js 
+testStructuredCache:  testStructuredCache.js 
 	$(NODE) $<
 
 testSimpleCache: testSimpleCache.js
+	$(NODE) $<
+
+testAssert: testAssert.js
 	$(NODE) $<
 
 MyAssert:
 	make -C $@ 
 
 clean:
-	@rm -f HashWrapper.js empty.js assert.js
+	@rm -f StructuredCache.js empty.js assert.js
 
 push: myassert-browserified.js
 	clasp push
@@ -34,3 +37,8 @@ prepare:
 myassert-browserified.js: MyAssert/myassert-browserified.js MyAssert
 	cp $< $@
 
+merge:
+	git pull ;\
+	git merge github/SurfaePro5 ;\
+	git merge github/sasaki64 ;\
+	git push

@@ -1,10 +1,11 @@
+if(typeof assert === "undefined") require("myassert-browserified");
+if(typeof StructuredCache === "undefined") StructuredCache = require("StructuredCache");
+if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache");
+
 function testSimpleCache(){
-  const assert = require("myassert");
-  if(typeof HashWrapper === "undefined") HashWrapper = require("HashWrapper").HashWrapper;
-  if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache").SimpleCache;
   var simpleCache = new SimpleCache();
-  const hw1 = new HashWrapper(simpleCache, 1000);
-  const hw2 = new HashWrapper(simpleCache, 1000);
+  const hw1 = new StructuredCache(simpleCache, 1000);
+  const hw2 = new StructuredCache(simpleCache, 1000);
   hw1.put("abc", 1);
   hw1.commit();
   assert.strictEqual(hw1.get("abc"), 1);

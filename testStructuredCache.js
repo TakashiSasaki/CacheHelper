@@ -1,12 +1,12 @@
-function testHashWrapper_(cache){
-  var assert = require("myassert");
-  if(typeof HashWrapper === "undefined") HashWrapper = require("HashWrapper").HashWrapper;
-  if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache").SimpleCache;
+if(typeof assert === "undefined") require("myassert-browserified");
+if(typeof StructuredCache === "undefined") StructuredCache = require("StructuredCache");
+if(typeof SimpleCache === "undefined") SimpleCache = require("SimpleCache");
 
+function testStructuredCache_(cache){
   assert.isNotUndefined(cache);
   assert.lengthOf(arguments, 1);
 
-  var hw = new HashWrapper(cache, 1000);
+  var hw = new StructuredCache(cache, 1000);
   hw.reset();
   hw.roundtripTest("abc", {"a": 23});
   hw.roundtripTest("k", null); 
@@ -22,6 +22,11 @@ function testHashWrapper_(cache){
     c: "hello",
     d: "oajsfioajfisdajfasdjfdaajiosfpiohruiaghruipoajeofjrghriopajgrioahiogjopefjeriopajgekop:ajbuipagojerwasgbruipoa;jfvhraeuighrewgihuiopagrhj"
   });
+  assert.deepStrictEqual(hw.getProperties("testObject1"), ["a", "b", "c", "d"]);
+  assert(hw.exist(J(O("testObject1", "a"))));
+  assert(hw.exist(J(O("testObject1", "b"))));
+  assert(hw.exist(S(O("testObject1", "c"))));
+  assert(hw.exist(S(O("testObject1", "d"))));
   hw.roundtripTest("testObject1", {
     a: 1,
     b: null,
@@ -55,25 +60,24 @@ function testHashWrapper_(cache){
 
 //for Node.js
 if(typeof process !== "undefined") {
-  if(typeof SimpleCache === "undefined") var SimpleCache = require("SimpleCache").SimpleCache;
   var simpleCache = new SimpleCache();
-  testHashWrapper_(simpleCache);
-  console.log("testHashWrapper_ finished");
+  testStructuredCache_(simpleCache);
+  console.log("testStructuredCache_ finished");
 }
 
 //for Google Apps Script
 function testSimpleCache(){ 
   var simpleCache = new SimpleCache();
-  testHashWrapper_(simpleCache);
+  testStructuredCache_(simpleCache);
 }
 
 function testUserCache(){
   var userCache = new UserCache(10000);
-  testHashWrapper_(userCache);
+  testStructuredCache_(userCache);
 }
 
 function testScriptCache(){
   var scriptCache = new ScriptCache(10000);
-  testHashWrapper_(scriptCache);
+  testStructuredCache_(scriptCache);
 }//test()
 

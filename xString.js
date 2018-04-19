@@ -1,5 +1,4 @@
 function putString_(key, string) {
-	var assert = require("myassert");
   assert.lengthOf(arguments,2);
   assert.isString(key);
   assert.isString(string);
@@ -18,7 +17,6 @@ function putString_(key, string) {
 }//putString_
 
 function getString_(key) {
-	var assert = require("myassert");
   assert.lengthOf(arguments, 1);
   assert.isString(key);
   var stringified = this.read(S(key));
